@@ -1,0 +1,21 @@
+{
+    "name": "Furality Umbra Shader",
+    "id": "com.furality.umbrashader",
+    "version": "0.1.0",
+    "description": "Furality Umbra Avatar Shader for VRChat. Created by Naito @ Furality, Inc.",
+    "gitDependencies": {},
+    "author": {
+      "email": "help@furality.org",
+      "name": "Furality, Inc.",
+      "url": "https://furality.org"
+    },
+    "vpmDependencies": {
+      "com.llealloo.audiolink": "0.3.2"
+    },
+    "legacyFolders": {},
+    "legacyFiles": {},
+    "localPath": "Packages\\com.furality.umbrashader",
+    "hideInEditor": false,
+    "license": "Furality, Inc. Asset License"
+  }
+  
