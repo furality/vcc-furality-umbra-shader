@@ -298,7 +298,7 @@ Material:
     - _ShowEmissionMain: 0
     - _ShowGreenAL: 0
     - _ShowGreenGlow: 0
-    - _ShowLighting: 1
+    - _ShowLighting: 0
     - _ShowMain: 0
     - _ShowMaps: 0
     - _ShowRedAL: 0
