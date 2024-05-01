@@ -573,6 +573,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: Syntex
       objectReference: {fileID: 0}
+    - target: {fileID: 8164078558771037576, guid: 78ac341cdd1dcae4ea2091742971fe39,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []

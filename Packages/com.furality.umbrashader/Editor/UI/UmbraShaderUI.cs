@@ -59,6 +59,7 @@ public class UmbraShaderUI : ShaderGUI
         this.editor = editor;
         this.properties = properties;
         this.target = editor.target as Material;
+        string workflow = "_Workflow";
 
         //Setup UI
         SetLogoImage();
@@ -67,6 +68,8 @@ public class UmbraShaderUI : ShaderGUI
         //EditorGUI.indentLevel += 2;
         GUILayout.Space(10);
         DoBlendMode();
+        GUILayout.Space(10);
+        editor.ShaderProperty(FindProperty(workflow), "Workflow", 2);
 
         if ((BlendMode)target.GetFloat("_BlendModeIndex") == BlendMode.Transparent)
         {
@@ -563,7 +566,7 @@ public class UmbraShaderUI : ShaderGUI
         bool ShowMain;
         string tog = "_ShowMaps";
         string title = "Masks/Maps";
-        string workflow = "_Workflow";
+        //string workflow = "_Workflow";
 
 
 
@@ -583,7 +586,7 @@ public class UmbraShaderUI : ShaderGUI
             target.SetFloat(tog, 1);
 
             GUILayout.Space(10);
-            editor.ShaderProperty(FindProperty(workflow), "Workflow", 2);
+            //editor.ShaderProperty(FindProperty(workflow), "Workflow", 2);
 
             GUILayout.BeginVertical("box");
             DoMaskMap1();
@@ -641,23 +644,34 @@ public class UmbraShaderUI : ShaderGUI
             GUILayout.BeginVertical("box");
             EditorGUILayout.LabelField("Metallic", EditorStyles.boldLabel);
             editor.ShaderProperty(FindProperty("_MetallicMult"), "Metallic Multipler", 2);
-            editor.ShaderProperty(FindProperty("_MetallicMask"), "Map", 2);
-            editor.ShaderProperty(FindProperty("_MetallicChannel"), "Channel", 2);
+            if (target.GetFloat("_Workflow") == 1 || target.GetFloat("_Workflow") == 2)
+            {
+                editor.ShaderProperty(FindProperty("_MetallicMask"), "Map", 2);
+                editor.ShaderProperty(FindProperty("_MetallicChannel"), "Channel", 2);
+            }
             GUILayout.EndVertical();
 
             //Gloss
             EditorGUILayout.LabelField("Gloss", EditorStyles.boldLabel);
             editor.ShaderProperty(FindProperty("_GlossMult"), "Smoothness", 2);
             editor.ShaderProperty(FindProperty("_InvertGloss"), "Invert Smoothness", 2);
-            editor.ShaderProperty(FindProperty("_GlossMap"), "Map", 2);
-            editor.ShaderProperty(FindProperty("_GlossChannel"), "Channel", 2);
+            if (target.GetFloat("_Workflow") == 2)
+            {
+                editor.ShaderProperty(FindProperty("_GlossMap"), "Map", 2);
+                editor.ShaderProperty(FindProperty("_GlossChannel"), "Channel", 2);
+            }
+
 
             //Oclusion
             GUILayout.BeginVertical("box");
             EditorGUILayout.LabelField("Occlusion", EditorStyles.boldLabel);
             editor.ShaderProperty(FindProperty("_OcclusionPower"), "Occlusion Power", 2);
-            editor.ShaderProperty(FindProperty("_OcclusionMap"), "Map", 2);
-            editor.ShaderProperty(FindProperty("_OcclusionChannel"), "Channel", 2);
+            if (target.GetFloat("_Workflow") == 2)
+            {
+                editor.ShaderProperty(FindProperty("_OcclusionMap"), "Map", 2);
+                editor.ShaderProperty(FindProperty("_OcclusionChannel"), "Channel", 2);
+            }
+
             GUILayout.EndVertical();
 
             //Reflection Mask
@@ -672,7 +686,11 @@ public class UmbraShaderUI : ShaderGUI
             EditorGUI.indentLevel += 1;
             EditorGUILayout.LabelField("Color/Tint", EditorStyles.miniBoldLabel);
             editor.ShaderProperty(FindProperty("_SpecularTint"), "Specular Tint", 2);
-            editor.ShaderProperty(FindProperty("_SpecularTintMap"), "Tint Map", 2);
+            if (target.GetFloat("_Workflow") == 2)
+            {
+                editor.ShaderProperty(FindProperty("_SpecularTintMap"), "Tint Map", 2);
+            }
+
             //Specular Mask
             EditorGUILayout.LabelField("Mask", EditorStyles.miniBoldLabel);
             editor.ShaderProperty(FindProperty("_SpecularMask"), "Map", 2);
@@ -717,9 +735,13 @@ public class UmbraShaderUI : ShaderGUI
                     editor.ShaderProperty(FindProperty("_GlintHighlightMap"), "Gloss Map", 2);
                     editor.ShaderProperty(FindProperty("_GlintHighlightChannel"), "Channel", 2);
                 }
-                EditorGUILayout.LabelField("Mask", EditorStyles.miniBoldLabel);
-                editor.ShaderProperty(FindProperty("_GlintMap"), "Map", 2);
-                editor.ShaderProperty(FindProperty("_GlintChannel"), "Channel", 2);
+                if (target.GetFloat("_Workflow") < 3)
+                {
+                    EditorGUILayout.LabelField("Mask", EditorStyles.miniBoldLabel);
+                    editor.ShaderProperty(FindProperty("_GlintMap"), "Map", 2);
+                    editor.ShaderProperty(FindProperty("_GlintChannel"), "Channel", 2);
+                }
+
                 EditorGUI.indentLevel -= 1;
             }
 
@@ -734,9 +756,12 @@ public class UmbraShaderUI : ShaderGUI
 
                 EditorGUILayout.LabelField("Main", EditorStyles.miniBoldLabel);
                 editor.ShaderProperty(FindProperty("_ClearCoatReflection"), "Coat Smoothness", 2);
-                editor.ShaderProperty(FindProperty("_ClearCoatReflectionMap"), "Gloss Map", 2);
-                editor.ShaderProperty(FindProperty("_ClearCoatReflectionChannel"), "Channel", 2);
-                editor.ShaderProperty(FindProperty("_InvertReflectionGloss"), "Invert Gloss Map", 2);
+                if (target.GetFloat("_Workflow") < 3)
+                {
+                    editor.ShaderProperty(FindProperty("_ClearCoatReflectionMap"), "Gloss Map", 2);
+                    editor.ShaderProperty(FindProperty("_ClearCoatReflectionChannel"), "Channel", 2);
+                    editor.ShaderProperty(FindProperty("_InvertReflectionGloss"), "Invert Gloss Map", 2);
+                }
 
                 EditorGUILayout.LabelField("Highlight", EditorStyles.miniBoldLabel);
                 editor.ShaderProperty(FindProperty("_ClearCoatHighlight"), "Highlight Smoothness", 2);
@@ -749,9 +774,12 @@ public class UmbraShaderUI : ShaderGUI
                 editor.ShaderProperty(FindProperty("_ClearCoatDetailNormalScale"), "Detail Normal Scale", 2);
                 editor.ShaderProperty(FindProperty("_ClearCoatNormal"), "Normal Map", 2);
 
-                EditorGUILayout.LabelField("Mask", EditorStyles.miniBoldLabel);
-                editor.ShaderProperty(FindProperty("_ClearCoatMap"), "Map", 2);
-                editor.ShaderProperty(FindProperty("_ClearCoatChannel"), "Channel", 2);
+                if (target.GetFloat("_Workflow") < 3)
+                {
+                    EditorGUILayout.LabelField("Mask", EditorStyles.miniBoldLabel);
+                    editor.ShaderProperty(FindProperty("_ClearCoatMap"), "Map", 2);
+                    editor.ShaderProperty(FindProperty("_ClearCoatChannel"), "Channel", 2);
+                }
 
                 EditorGUI.indentLevel -= 1;
             }
@@ -908,17 +936,17 @@ public class UmbraShaderUI : ShaderGUI
     {
         string texTitle = "";
 
-        if (target.GetFloat("_Workflow") == 0)
+        if (target.GetFloat("_Workflow") == 0 || target.GetFloat("_Workflow") == 3)
         {
             texTitle = "Metallic (Mask Map 01)";
         }
 
-        if (target.GetFloat("_Workflow") == 1)
+        else if (target.GetFloat("_Workflow") == 1)
         {
             texTitle = "Specular (Mask Map01)";
         }
 
-        if (target.GetFloat("_Workflow") == 2)
+        else if (target.GetFloat("_Workflow") == 2)
         {
             texTitle = "Mask Map 01";
         }
@@ -949,6 +977,11 @@ public class UmbraShaderUI : ShaderGUI
         if (target.GetFloat("_Workflow") == 2)
         {
             texTitle = "Mask Map 02";
+        }
+
+        if (target.GetFloat("_Workflow") == 3)
+        {
+            texTitle = "Furality Mask Map";
         }
 
         MaterialProperty mainTex = FindProperty("_MaskMap02");
