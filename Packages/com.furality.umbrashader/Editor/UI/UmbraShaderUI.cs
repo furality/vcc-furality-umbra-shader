@@ -15,11 +15,11 @@ public class UmbraShaderUI : ShaderGUI
 
     //Shader locations
     Shader defaultOpaque = Shader.Find("Furality/Umbra Shader/Umbra Opaque");
-    Shader defaultCutout = Shader.Find("Furality/Umbra Shader/Umbra Opaque");
-    Shader defaultTransparent = Shader.Find("Furality/Umbra Shader/Umbra Opaque");
+    Shader defaultCutout = Shader.Find("Furality/Umbra Shader/Umbra Cutout");
+    Shader defaultTransparent = Shader.Find("Furality/Umbra Shader/Umbra Transparent");
     Shader noOutlineOpaque = Shader.Find("Furality/Umbra Shader/Umbra Opaque");
-    Shader noOutlineCutout = Shader.Find("Furality/Umbra Shader/Umbra Opaque");
-    Shader noOutlineTransparent = Shader.Find("Furality/Umbra Shader/Umbra Opaque");
+    Shader noOutlineCutout = Shader.Find("Furality/Umbra Shader/Umbra Cutout");
+    Shader noOutlineTransparent = Shader.Find("Furality/Umbra Shader/Umbra Transparent");
 
     bool enableOutline;
 
@@ -69,7 +69,7 @@ public class UmbraShaderUI : ShaderGUI
         GUILayout.Space(10);
         DoBlendMode();
         GUILayout.Space(10);
-        editor.ShaderProperty(FindProperty(workflow), "Workflow", 2);
+        editor.ShaderProperty(FindProperty(workflow), "Workflow");
 
         if ((BlendMode)target.GetFloat("_BlendModeIndex") == BlendMode.Transparent)
         {
@@ -674,10 +674,23 @@ public class UmbraShaderUI : ShaderGUI
 
             GUILayout.EndVertical();
 
+
             //Reflection Mask
             EditorGUILayout.LabelField("Reflection Mask", EditorStyles.boldLabel);
             editor.ShaderProperty(FindProperty("_ReflectionMask"), "Map", 2);
             editor.ShaderProperty(FindProperty("_ReflectionMaskChannel"), "Channel", 2);
+
+            if ((BlendMode)target.GetFloat("_BlendModeIndex") == BlendMode.Transparent || (BlendMode)target.GetFloat("_BlendModeIndex") == BlendMode.Cutout)
+            {
+                //Opacity
+                EditorGUILayout.LabelField("Opacity", EditorStyles.boldLabel);
+                editor.ShaderProperty(FindProperty("_OpacityMap"), "Map", 2);
+                if(target.GetFloat("_OpacityMap") < 5)
+                {
+                    editor.ShaderProperty(FindProperty("_OpacityChannel"), "Channel", 2);
+                }
+                
+            }
 
             //Specular
             GUILayout.BeginVertical("box");
@@ -2488,8 +2501,8 @@ void DoEmission()
     //BlendOP Selector
     void DoBlendOPSelctor()
     {
-        MaterialProperty src = FindProperty("_BlendOPsrc");
-        MaterialProperty dst = FindProperty("_BlendOPdst");
+        MaterialProperty src = FindProperty("_SourceBlendRGB");
+        MaterialProperty dst = FindProperty("_DestinationBlendRGB");
 
         BlendOP operation = (BlendOP)target.GetFloat("_BlendOPIndex");
         EditorGUI.BeginChangeCheck();
@@ -2503,26 +2516,26 @@ void DoEmission()
 
             if (target.GetFloat("_BlendOPIndex") == 0)
             {
-                target.SetFloat("_BlendOPsrc", 5);
-                target.SetFloat("_BlendOPdst", 10);
+                target.SetFloat("_SourceBlendRGB", 5);
+                target.SetFloat("_DestinationBlendRGB", 10);
             }
 
             if (target.GetFloat("_BlendOPIndex") == 1)
             {
-                target.SetFloat("_BlendOPsrc", 1);
-                target.SetFloat("_BlendOPdst", 1);
+                target.SetFloat("_SourceBlendRGB", 1);
+                target.SetFloat("_DestinationBlendRGB", 1);
             }
 
             if (target.GetFloat("_BlendOPIndex") == 2)
             {
-                target.SetFloat("_BlendOPsrc", 4);
-                target.SetFloat("_BlendOPdst", 1);
+                target.SetFloat("_SourceBlendRGB", 4);
+                target.SetFloat("_DestinationBlendRGB", 1);
             }
 
             if (target.GetFloat("_BlendOPIndex") == 3)
             {
-                target.SetFloat("_BlendOPsrc", 2);
-                target.SetFloat("_BlendOPdst", 0);
+                target.SetFloat("_SourceBlendRGB", 2);
+                target.SetFloat("_DestinationBlendRGB", 0);
             }
 
         }
