@@ -90,8 +90,8 @@ Shader "Furality/Umbra Shader/Umbra Opaque"
 		_GreenChReactiveRadialCenter("GreenChReactiveRadialCenter", Vector) = (0.5,0.5,0,0)
 		_ShowGreenGlow("_ShowGreenGlow", Float) = 0
 		_ShowGreenAL("_ShowGreenAL", Float) = 0
-		[HideInInspector] _texcoord( "", 2D ) = "white" {}
 		[ToggleUI]_EnableGreenChannel("_EnableGreenChannel", Float) = 0
+		[HideInInspector] _texcoord( "", 2D ) = "white" {}
 		[ToggleUI]_UseFallback2("Use Fallback 2", Float) = 0
 		[HDR]_BlueChGlowTint("BlueChGlowTint", Color) = (1,1,1,0)
 		[HDR]_BlueChGlowFallback("BlueChGlowFallback", Color) = (1,1,1,0)
@@ -335,7 +335,7 @@ Shader "Furality/Umbra Shader/Umbra Opaque"
 			float2 vertexToFrag51_g5488;
 			float2 vertexToFrag51_g5489;
 			float2 uv_texcoord;
-			float2 vertexToFrag51_g7502;
+			float2 vertexToFrag51_g7680;
 			float3 worldNormal;
 			INTERNAL_DATA
 			float2 vertexToFrag51_g5577;
@@ -356,16 +356,6 @@ Shader "Furality/Umbra Shader/Umbra Opaque"
 			UnityGIInput GIData;
 		};
 
-		uniform float _ShowBlueGlow;
-		uniform float _ShowBlueAL;
-		uniform float _ShowEmissGlow;
-		uniform float _ShowEmissAL;
-		uniform float _ShowRedGlow;
-		uniform float _ShowRedAL;
-		uniform float _ShowGreenGlow;
-		uniform float _ShowGreenAL;
-		uniform float _ShowAlphaGlow;
-		uniform float _ShowAlphaAL;
 		uniform float _Culling;
 		uniform float _BlendOPdst;
 		uniform float _BlendOPsrc;
@@ -387,8 +377,18 @@ Shader "Furality/Umbra Shader/Umbra Opaque"
 		uniform float _BlendOPIndex;
 		uniform float _BlendModeIndex;
 		uniform float _MaskClipValue;
-		uniform float _OpacityChannel;
 		uniform float _OpacityMap;
+		uniform float _OpacityChannel;
+		uniform float _ShowGreenGlow;
+		uniform float _ShowGreenAL;
+		uniform float _ShowBlueGlow;
+		uniform float _ShowBlueAL;
+		uniform float _ShowAlphaGlow;
+		uniform float _ShowAlphaAL;
+		uniform float _ShowEmissGlow;
+		uniform float _ShowEmissAL;
+		uniform float _ShowRedGlow;
+		uniform float _ShowRedAL;
 		uniform float _TileDiscardUV;
 		uniform float _UVTileDissolveAlpha_Row0_0;
 		uniform float _UDIMDiscardRow0_0;
@@ -674,73 +674,73 @@ Shader "Furality/Umbra Shader/Umbra Opaque"
 		}
 
 
-		inline int IsLumaActive11_g7543( int Band )
+		inline int IsLumaActive11_g7755( int Band )
 		{
 			return AudioLinkData( ALPASS_AUDIOLINK + uint2( 0, Band ) ).r;
 		}
 
 
-		inline float3 LumaGlowData2_g7542( int Band, int Delay )
+		inline float3 LumaGlowData2_g7754( int Band, int Delay )
 		{
 			return AudioLinkData( ALPASS_AUDIOLINK + uint2( Delay, Band ) );
 		}
 
 
-		inline int IsLumaActive11_g7545( int Band )
+		inline int IsLumaActive11_g7757( int Band )
 		{
 			return AudioLinkData( ALPASS_AUDIOLINK + uint2( 0, Band ) ).r;
 		}
 
 
-		inline int AudioLinkDecodeDataAsUInt6_g7549( int Band, int Mode )
+		inline int AudioLinkDecodeDataAsUInt6_g7761( int Band, int Mode )
 		{
 			return AudioLinkDecodeDataAsUInt( ALPASS_CHRONOTENSITY + int2(Mode, Band));
 		}
 
 
-		inline float glslmod13_g7536( float x, float y )
+		inline float glslmod13_g7748( float x, float y )
 		{
 			return glsl_mod(x,y);
 		}
 
 
-		inline float glslmod12_g7536( float x, float y )
+		inline float glslmod12_g7748( float x, float y )
 		{
 			return glsl_mod(x,y);
 		}
 
 
-		inline float glslmod34_g7536( float x, float y )
+		inline float glslmod34_g7748( float x, float y )
 		{
 			return glsl_mod(x,y);
 		}
 
 
-		inline float3 LumaGlowLerp11_g7544( int Band, float Delay )
+		inline float3 LumaGlowLerp11_g7756( int Band, float Delay )
 		{
 			return AudioLinkLerp( ALPASS_AUDIOLINK + float2( Delay, Band ) );
 		}
 
 
-		inline float4 AudioLinkLerp1_g7548( float Position )
+		inline float4 AudioLinkLerp1_g7760( float Position )
 		{
 			return AudioLinkLerp( ALPASS_CCSTRIP + float2( Position * 128., 0 ) ).rgba;;
 		}
 
 
-		inline float3 LumaGlowLerp11_g7546( int Band, float Delay )
+		inline float3 LumaGlowLerp11_g7758( int Band, float Delay )
 		{
 			return AudioLinkLerp( ALPASS_AUDIOLINK + float2( Delay, Band ) );
 		}
 
 
-		inline int IsLumaActive11_g7547( int Band )
+		inline int IsLumaActive11_g7759( int Band )
 		{
 			return AudioLinkData( ALPASS_AUDIOLINK + uint2( 0, Band ) ).r;
 		}
 
 
-		int IfAudioLinkv2Exists1_g7552(  )
+		int IfAudioLinkv2Exists1_g7764(  )
 		{
 			int w = 0; 
 			int h; 
@@ -753,43 +753,43 @@ Shader "Furality/Umbra Shader/Umbra Opaque"
 		}
 
 
-		inline float AudioLinkData3_g7537( int Band, int Delay )
+		inline float AudioLinkData3_g7749( int Band, int Delay )
 		{
 			return AudioLinkData( ALPASS_AUDIOLINK + uint2( Delay, Band ) ).rrrr;
 		}
 
 
-		inline float glslmod96_g7536( float x, float y )
+		inline float glslmod96_g7748( float x, float y )
 		{
 			return glsl_mod(x,y);
 		}
 
 
-		inline float glslmod97_g7536( float x, float y )
+		inline float glslmod97_g7748( float x, float y )
 		{
 			return glsl_mod(x,y);
 		}
 
 
-		inline float glslmod98_g7536( float x, float y )
+		inline float glslmod98_g7748( float x, float y )
 		{
 			return glsl_mod(x,y);
 		}
 
 
-		inline float AudioLinkLerp3_g7539( int Band, float Delay )
+		inline float AudioLinkLerp3_g7751( int Band, float Delay )
 		{
 			return AudioLinkLerp( ALPASS_AUDIOLINK + float2( Delay, Band ) ).r;
 		}
 
 
-		inline float AudioLinkLerp3_g7541( int Band, float FilteredAmount )
+		inline float AudioLinkLerp3_g7753( int Band, float FilteredAmount )
 		{
 			return AudioLinkLerp( ALPASS_FILTEREDAUDIOLINK + float2( FilteredAmount, Band ) ).r;
 		}
 
 
-		int IfAudioLinkv2Exists1_g7551(  )
+		int IfAudioLinkv2Exists1_g7763(  )
 		{
 			int w = 0; 
 			int h; 
@@ -802,73 +802,73 @@ Shader "Furality/Umbra Shader/Umbra Opaque"
 		}
 
 
-		inline int IsLumaActive11_g7560( int Band )
+		inline int IsLumaActive11_g7688( int Band )
 		{
 			return AudioLinkData( ALPASS_AUDIOLINK + uint2( 0, Band ) ).r;
 		}
 
 
-		inline float3 LumaGlowData2_g7559( int Band, int Delay )
+		inline float3 LumaGlowData2_g7687( int Band, int Delay )
 		{
 			return AudioLinkData( ALPASS_AUDIOLINK + uint2( Delay, Band ) );
 		}
 
 
-		inline int IsLumaActive11_g7562( int Band )
+		inline int IsLumaActive11_g7690( int Band )
 		{
 			return AudioLinkData( ALPASS_AUDIOLINK + uint2( 0, Band ) ).r;
 		}
 
 
-		inline int AudioLinkDecodeDataAsUInt6_g7566( int Band, int Mode )
+		inline int AudioLinkDecodeDataAsUInt6_g7694( int Band, int Mode )
 		{
 			return AudioLinkDecodeDataAsUInt( ALPASS_CHRONOTENSITY + int2(Mode, Band));
 		}
 
 
-		inline float glslmod13_g7553( float x, float y )
+		inline float glslmod13_g7681( float x, float y )
 		{
 			return glsl_mod(x,y);
 		}
 
 
-		inline float glslmod12_g7553( float x, float y )
+		inline float glslmod12_g7681( float x, float y )
 		{
 			return glsl_mod(x,y);
 		}
 
 
-		inline float glslmod34_g7553( float x, float y )
+		inline float glslmod34_g7681( float x, float y )
 		{
 			return glsl_mod(x,y);
 		}
 
 
-		inline float3 LumaGlowLerp11_g7561( int Band, float Delay )
+		inline float3 LumaGlowLerp11_g7689( int Band, float Delay )
 		{
 			return AudioLinkLerp( ALPASS_AUDIOLINK + float2( Delay, Band ) );
 		}
 
 
-		inline float4 AudioLinkLerp1_g7565( float Position )
+		inline float4 AudioLinkLerp1_g7693( float Position )
 		{
 			return AudioLinkLerp( ALPASS_CCSTRIP + float2( Position * 128., 0 ) ).rgba;;
 		}
 
 
-		inline float3 LumaGlowLerp11_g7563( int Band, float Delay )
+		inline float3 LumaGlowLerp11_g7691( int Band, float Delay )
 		{
 			return AudioLinkLerp( ALPASS_AUDIOLINK + float2( Delay, Band ) );
 		}
 
 
-		inline int IsLumaActive11_g7564( int Band )
+		inline int IsLumaActive11_g7692( int Band )
 		{
 			return AudioLinkData( ALPASS_AUDIOLINK + uint2( 0, Band ) ).r;
 		}
 
 
-		int IfAudioLinkv2Exists1_g7569(  )
+		int IfAudioLinkv2Exists1_g7697(  )
 		{
 			int w = 0; 
 			int h; 
@@ -881,43 +881,43 @@ Shader "Furality/Umbra Shader/Umbra Opaque"
 		}
 
 
-		inline float AudioLinkData3_g7554( int Band, int Delay )
+		inline float AudioLinkData3_g7682( int Band, int Delay )
 		{
 			return AudioLinkData( ALPASS_AUDIOLINK + uint2( Delay, Band ) ).rrrr;
 		}
 
 
-		inline float glslmod96_g7553( float x, float y )
+		inline float glslmod96_g7681( float x, float y )
 		{
 			return glsl_mod(x,y);
 		}
 
 
-		inline float glslmod97_g7553( float x, float y )
+		inline float glslmod97_g7681( float x, float y )
 		{
 			return glsl_mod(x,y);
 		}
 
 
-		inline float glslmod98_g7553( float x, float y )
+		inline float glslmod98_g7681( float x, float y )
 		{
 			return glsl_mod(x,y);
 		}
 
 
-		inline float AudioLinkLerp3_g7556( int Band, float Delay )
+		inline float AudioLinkLerp3_g7684( int Band, float Delay )
 		{
 			return AudioLinkLerp( ALPASS_AUDIOLINK + float2( Delay, Band ) ).r;
 		}
 
 
-		inline float AudioLinkLerp3_g7558( int Band, float FilteredAmount )
+		inline float AudioLinkLerp3_g7686( int Band, float FilteredAmount )
 		{
 			return AudioLinkLerp( ALPASS_FILTEREDAUDIOLINK + float2( FilteredAmount, Band ) ).r;
 		}
 
 
-		int IfAudioLinkv2Exists1_g7568(  )
+		int IfAudioLinkv2Exists1_g7696(  )
 		{
 			int w = 0; 
 			int h; 
@@ -930,73 +930,73 @@ Shader "Furality/Umbra Shader/Umbra Opaque"
 		}
 
 
-		inline int IsLumaActive11_g7510( int Band )
+		inline int IsLumaActive11_g7705( int Band )
 		{
 			return AudioLinkData( ALPASS_AUDIOLINK + uint2( 0, Band ) ).r;
 		}
 
 
-		inline float3 LumaGlowData2_g7509( int Band, int Delay )
+		inline float3 LumaGlowData2_g7704( int Band, int Delay )
 		{
 			return AudioLinkData( ALPASS_AUDIOLINK + uint2( Delay, Band ) );
 		}
 
 
-		inline int IsLumaActive11_g7512( int Band )
+		inline int IsLumaActive11_g7707( int Band )
 		{
 			return AudioLinkData( ALPASS_AUDIOLINK + uint2( 0, Band ) ).r;
 		}
 
 
-		inline int AudioLinkDecodeDataAsUInt6_g7516( int Band, int Mode )
+		inline int AudioLinkDecodeDataAsUInt6_g7711( int Band, int Mode )
 		{
 			return AudioLinkDecodeDataAsUInt( ALPASS_CHRONOTENSITY + int2(Mode, Band));
 		}
 
 
-		inline float glslmod13_g7503( float x, float y )
+		inline float glslmod13_g7698( float x, float y )
 		{
 			return glsl_mod(x,y);
 		}
 
 
-		inline float glslmod12_g7503( float x, float y )
+		inline float glslmod12_g7698( float x, float y )
 		{
 			return glsl_mod(x,y);
 		}
 
 
-		inline float glslmod34_g7503( float x, float y )
+		inline float glslmod34_g7698( float x, float y )
 		{
 			return glsl_mod(x,y);
 		}
 
 
-		inline float3 LumaGlowLerp11_g7511( int Band, float Delay )
+		inline float3 LumaGlowLerp11_g7706( int Band, float Delay )
 		{
 			return AudioLinkLerp( ALPASS_AUDIOLINK + float2( Delay, Band ) );
 		}
 
 
-		inline float4 AudioLinkLerp1_g7515( float Position )
+		inline float4 AudioLinkLerp1_g7710( float Position )
 		{
 			return AudioLinkLerp( ALPASS_CCSTRIP + float2( Position * 128., 0 ) ).rgba;;
 		}
 
 
-		inline float3 LumaGlowLerp11_g7513( int Band, float Delay )
+		inline float3 LumaGlowLerp11_g7708( int Band, float Delay )
 		{
 			return AudioLinkLerp( ALPASS_AUDIOLINK + float2( Delay, Band ) );
 		}
 
 
-		inline int IsLumaActive11_g7514( int Band )
+		inline int IsLumaActive11_g7709( int Band )
 		{
 			return AudioLinkData( ALPASS_AUDIOLINK + uint2( 0, Band ) ).r;
 		}
 
 
-		int IfAudioLinkv2Exists1_g7519(  )
+		int IfAudioLinkv2Exists1_g7714(  )
 		{
 			int w = 0; 
 			int h; 
@@ -1009,43 +1009,43 @@ Shader "Furality/Umbra Shader/Umbra Opaque"
 		}
 
 
-		inline float AudioLinkData3_g7504( int Band, int Delay )
+		inline float AudioLinkData3_g7699( int Band, int Delay )
 		{
 			return AudioLinkData( ALPASS_AUDIOLINK + uint2( Delay, Band ) ).rrrr;
 		}
 
 
-		inline float glslmod96_g7503( float x, float y )
+		inline float glslmod96_g7698( float x, float y )
 		{
 			return glsl_mod(x,y);
 		}
 
 
-		inline float glslmod97_g7503( float x, float y )
+		inline float glslmod97_g7698( float x, float y )
 		{
 			return glsl_mod(x,y);
 		}
 
 
-		inline float glslmod98_g7503( float x, float y )
+		inline float glslmod98_g7698( float x, float y )
 		{
 			return glsl_mod(x,y);
 		}
 
 
-		inline float AudioLinkLerp3_g7506( int Band, float Delay )
+		inline float AudioLinkLerp3_g7701( int Band, float Delay )
 		{
 			return AudioLinkLerp( ALPASS_AUDIOLINK + float2( Delay, Band ) ).r;
 		}
 
 
-		inline float AudioLinkLerp3_g7508( int Band, float FilteredAmount )
+		inline float AudioLinkLerp3_g7703( int Band, float FilteredAmount )
 		{
 			return AudioLinkLerp( ALPASS_FILTEREDAUDIOLINK + float2( FilteredAmount, Band ) ).r;
 		}
 
 
-		int IfAudioLinkv2Exists1_g7518(  )
+		int IfAudioLinkv2Exists1_g7713(  )
 		{
 			int w = 0; 
 			int h; 
@@ -1058,73 +1058,73 @@ Shader "Furality/Umbra Shader/Umbra Opaque"
 		}
 
 
-		inline int IsLumaActive11_g7577( int Band )
+		inline int IsLumaActive11_g7722( int Band )
 		{
 			return AudioLinkData( ALPASS_AUDIOLINK + uint2( 0, Band ) ).r;
 		}
 
 
-		inline float3 LumaGlowData2_g7576( int Band, int Delay )
+		inline float3 LumaGlowData2_g7721( int Band, int Delay )
 		{
 			return AudioLinkData( ALPASS_AUDIOLINK + uint2( Delay, Band ) );
 		}
 
 
-		inline int IsLumaActive11_g7579( int Band )
+		inline int IsLumaActive11_g7724( int Band )
 		{
 			return AudioLinkData( ALPASS_AUDIOLINK + uint2( 0, Band ) ).r;
 		}
 
 
-		inline int AudioLinkDecodeDataAsUInt6_g7583( int Band, int Mode )
+		inline int AudioLinkDecodeDataAsUInt6_g7728( int Band, int Mode )
 		{
 			return AudioLinkDecodeDataAsUInt( ALPASS_CHRONOTENSITY + int2(Mode, Band));
 		}
 
 
-		inline float glslmod13_g7570( float x, float y )
+		inline float glslmod13_g7715( float x, float y )
 		{
 			return glsl_mod(x,y);
 		}
 
 
-		inline float glslmod12_g7570( float x, float y )
+		inline float glslmod12_g7715( float x, float y )
 		{
 			return glsl_mod(x,y);
 		}
 
 
-		inline float glslmod34_g7570( float x, float y )
+		inline float glslmod34_g7715( float x, float y )
 		{
 			return glsl_mod(x,y);
 		}
 
 
-		inline float3 LumaGlowLerp11_g7578( int Band, float Delay )
+		inline float3 LumaGlowLerp11_g7723( int Band, float Delay )
 		{
 			return AudioLinkLerp( ALPASS_AUDIOLINK + float2( Delay, Band ) );
 		}
 
 
-		inline float4 AudioLinkLerp1_g7582( float Position )
+		inline float4 AudioLinkLerp1_g7727( float Position )
 		{
 			return AudioLinkLerp( ALPASS_CCSTRIP + float2( Position * 128., 0 ) ).rgba;;
 		}
 
 
-		inline float3 LumaGlowLerp11_g7580( int Band, float Delay )
+		inline float3 LumaGlowLerp11_g7725( int Band, float Delay )
 		{
 			return AudioLinkLerp( ALPASS_AUDIOLINK + float2( Delay, Band ) );
 		}
 
 
-		inline int IsLumaActive11_g7581( int Band )
+		inline int IsLumaActive11_g7726( int Band )
 		{
 			return AudioLinkData( ALPASS_AUDIOLINK + uint2( 0, Band ) ).r;
 		}
 
 
-		int IfAudioLinkv2Exists1_g7586(  )
+		int IfAudioLinkv2Exists1_g7731(  )
 		{
 			int w = 0; 
 			int h; 
@@ -1137,43 +1137,43 @@ Shader "Furality/Umbra Shader/Umbra Opaque"
 		}
 
 
-		inline float AudioLinkData3_g7571( int Band, int Delay )
+		inline float AudioLinkData3_g7716( int Band, int Delay )
 		{
 			return AudioLinkData( ALPASS_AUDIOLINK + uint2( Delay, Band ) ).rrrr;
 		}
 
 
-		inline float glslmod96_g7570( float x, float y )
+		inline float glslmod96_g7715( float x, float y )
 		{
 			return glsl_mod(x,y);
 		}
 
 
-		inline float glslmod97_g7570( float x, float y )
+		inline float glslmod97_g7715( float x, float y )
 		{
 			return glsl_mod(x,y);
 		}
 
 
-		inline float glslmod98_g7570( float x, float y )
+		inline float glslmod98_g7715( float x, float y )
 		{
 			return glsl_mod(x,y);
 		}
 
 
-		inline float AudioLinkLerp3_g7573( int Band, float Delay )
+		inline float AudioLinkLerp3_g7718( int Band, float Delay )
 		{
 			return AudioLinkLerp( ALPASS_AUDIOLINK + float2( Delay, Band ) ).r;
 		}
 
 
-		inline float AudioLinkLerp3_g7575( int Band, float FilteredAmount )
+		inline float AudioLinkLerp3_g7720( int Band, float FilteredAmount )
 		{
 			return AudioLinkLerp( ALPASS_FILTEREDAUDIOLINK + float2( FilteredAmount, Band ) ).r;
 		}
 
 
-		int IfAudioLinkv2Exists1_g7585(  )
+		int IfAudioLinkv2Exists1_g7730(  )
 		{
 			int w = 0; 
 			int h; 
@@ -1186,115 +1186,115 @@ Shader "Furality/Umbra Shader/Umbra Opaque"
 		}
 
 
-		inline int IsLumaActive11_g7532( int Band )
+		inline int IsLumaActive11_g7744( int Band )
 		{
 			return AudioLinkData( ALPASS_AUDIOLINK + uint2( 0, Band ) ).r;
 		}
 
 
-		inline float3 LumaGlowData2_g7531( int Band, int Delay )
+		inline float3 LumaGlowData2_g7743( int Band, int Delay )
 		{
 			return AudioLinkData( ALPASS_AUDIOLINK + uint2( Delay, Band ) );
 		}
 
 
-		inline int IsLumaActive11_g7534( int Band )
+		inline int IsLumaActive11_g7746( int Band )
 		{
 			return AudioLinkData( ALPASS_AUDIOLINK + uint2( 0, Band ) ).r;
 		}
 
 
-		inline int AudioLinkDecodeDataAsUInt6_g7526( int Band, int Mode )
+		inline int AudioLinkDecodeDataAsUInt6_g7738( int Band, int Mode )
 		{
 			return AudioLinkDecodeDataAsUInt( ALPASS_CHRONOTENSITY + int2(Mode, Band));
 		}
 
 
-		inline float glslmod13_g7520( float x, float y )
+		inline float glslmod13_g7732( float x, float y )
 		{
 			return glsl_mod(x,y);
 		}
 
 
-		inline float glslmod12_g7520( float x, float y )
+		inline float glslmod12_g7732( float x, float y )
 		{
 			return glsl_mod(x,y);
 		}
 
 
-		inline float glslmod34_g7520( float x, float y )
+		inline float glslmod34_g7732( float x, float y )
 		{
 			return glsl_mod(x,y);
 		}
 
 
-		inline float3 LumaGlowLerp11_g7533( int Band, float Delay )
+		inline float3 LumaGlowLerp11_g7745( int Band, float Delay )
 		{
 			return AudioLinkLerp( ALPASS_AUDIOLINK + float2( Delay, Band ) );
 		}
 
 
-		inline float4 AudioLinkLerp1_g7530( float Position )
+		inline float4 AudioLinkLerp1_g7742( float Position )
 		{
 			return AudioLinkLerp( ALPASS_CCSTRIP + float2( Position * 128., 0 ) ).rgba;;
 		}
 
 
-		inline float3 LumaGlowLerp11_g7528( int Band, float Delay )
+		inline float3 LumaGlowLerp11_g7740( int Band, float Delay )
 		{
 			return AudioLinkLerp( ALPASS_AUDIOLINK + float2( Delay, Band ) );
 		}
 
 
-		inline int IsLumaActive11_g7529( int Band )
+		inline int IsLumaActive11_g7741( int Band )
 		{
 			return AudioLinkData( ALPASS_AUDIOLINK + uint2( 0, Band ) ).r;
 		}
 
 
-		inline float AudioLinkData3_g7521( int Band, int Delay )
+		inline float AudioLinkData3_g7733( int Band, int Delay )
 		{
 			return AudioLinkData( ALPASS_AUDIOLINK + uint2( Delay, Band ) ).rrrr;
 		}
 
 
-		inline float glslmod96_g7520( float x, float y )
+		inline float glslmod96_g7732( float x, float y )
 		{
 			return glsl_mod(x,y);
 		}
 
 
-		inline float glslmod97_g7520( float x, float y )
+		inline float glslmod97_g7732( float x, float y )
 		{
 			return glsl_mod(x,y);
 		}
 
 
-		inline float glslmod98_g7520( float x, float y )
+		inline float glslmod98_g7732( float x, float y )
 		{
 			return glsl_mod(x,y);
 		}
 
 
-		inline float AudioLinkLerp3_g7523( int Band, float Delay )
+		inline float AudioLinkLerp3_g7735( int Band, float Delay )
 		{
 			return AudioLinkLerp( ALPASS_AUDIOLINK + float2( Delay, Band ) ).r;
 		}
 
 
-		inline float AudioLinkLerp3_g7525( int Band, float FilteredAmount )
+		inline float AudioLinkLerp3_g7737( int Band, float FilteredAmount )
 		{
 			return AudioLinkLerp( ALPASS_FILTEREDAUDIOLINK + float2( FilteredAmount, Band ) ).r;
 		}
 
 
-		inline float glslmod270_g7520( float x, float y )
+		inline float glslmod270_g7732( float x, float y )
 		{
 			return glsl_mod(x,y);
 		}
 
 
-		int IfAudioLinkv2Exists1_g7535(  )
+		int IfAudioLinkv2Exists1_g7747(  )
 		{
 			int w = 0; 
 			int h; 
@@ -1461,65 +1461,65 @@ Shader "Furality/Umbra Shader/Umbra Opaque"
 		{
 			UNITY_INITIALIZE_OUTPUT( Input, o );
 			float2 _Vector4 = float2(0,0);
-			float temp_output_14_0_g7587 = _TileDiscardUV;
-			float2 lerpResult31_g7587 = lerp( v.texcoord.xy , v.texcoord1.xy , saturate( temp_output_14_0_g7587 ));
-			float temp_output_36_0_g7587 = ( temp_output_14_0_g7587 - 1.0 );
-			float2 lerpResult34_g7587 = lerp( lerpResult31_g7587 , v.texcoord2.xy , saturate( temp_output_36_0_g7587 ));
-			float temp_output_40_0_g7587 = ( temp_output_36_0_g7587 - 1.0 );
-			float2 lerpResult38_g7587 = lerp( lerpResult34_g7587 , v.texcoord3.xy , saturate( temp_output_40_0_g7587 ));
-			float2 lerpResult41_g7587 = lerp( lerpResult38_g7587 , v.ase_texcoord4.xy , saturate( ( temp_output_40_0_g7587 - 1.0 ) ));
-			float2 vertexToFrag51_g7587 = lerpResult41_g7587;
-			float2 TileDiscardUVs18_g7588 = ( vertexToFrag51_g7587 + -1.0 );
-			float2 break10_g7588 = TileDiscardUVs18_g7588;
-			float Row0Col071_g7588 = saturate( ( max( max( step( _Vector4.x , break10_g7588.x ) , step( -( _Vector4.x - 1.0 ) , -break10_g7588.x ) ) , max( step( _Vector4.y , break10_g7588.y ) , step( -( _Vector4.y - 1.0 ) , -break10_g7588.y ) ) ) + ( ( 1.0 - _UVTileDissolveAlpha_Row0_0 ) * ( 1.0 - _UDIMDiscardRow0_0 ) ) ) );
+			float temp_output_14_0_g7676 = _TileDiscardUV;
+			float2 lerpResult31_g7676 = lerp( v.texcoord.xy , v.texcoord1.xy , saturate( temp_output_14_0_g7676 ));
+			float temp_output_36_0_g7676 = ( temp_output_14_0_g7676 - 1.0 );
+			float2 lerpResult34_g7676 = lerp( lerpResult31_g7676 , v.texcoord2.xy , saturate( temp_output_36_0_g7676 ));
+			float temp_output_40_0_g7676 = ( temp_output_36_0_g7676 - 1.0 );
+			float2 lerpResult38_g7676 = lerp( lerpResult34_g7676 , v.texcoord3.xy , saturate( temp_output_40_0_g7676 ));
+			float2 lerpResult41_g7676 = lerp( lerpResult38_g7676 , v.ase_texcoord4.xy , saturate( ( temp_output_40_0_g7676 - 1.0 ) ));
+			float2 vertexToFrag51_g7676 = lerpResult41_g7676;
+			float2 TileDiscardUVs18_g7677 = ( vertexToFrag51_g7676 + -1.0 );
+			float2 break10_g7677 = TileDiscardUVs18_g7677;
+			float Row0Col071_g7677 = saturate( ( max( max( step( _Vector4.x , break10_g7677.x ) , step( -( _Vector4.x - 1.0 ) , -break10_g7677.x ) ) , max( step( _Vector4.y , break10_g7677.y ) , step( -( _Vector4.y - 1.0 ) , -break10_g7677.y ) ) ) + ( ( 1.0 - _UVTileDissolveAlpha_Row0_0 ) * ( 1.0 - _UDIMDiscardRow0_0 ) ) ) );
 			float2 _Vector5 = float2(1,0);
-			float2 break82_g7588 = TileDiscardUVs18_g7588;
-			float Row0Col189_g7588 = saturate( ( max( max( step( _Vector5.x , break82_g7588.x ) , step( -( _Vector5.x - 1.0 ) , -break82_g7588.x ) ) , max( step( _Vector5.y , break82_g7588.y ) , step( -( _Vector5.y - 1.0 ) , -break82_g7588.y ) ) ) + ( ( 1.0 - _UVTileDissolveAlpha_Row0_1 ) * ( 1.0 - _UDIMDiscardRow0_1 ) ) ) );
+			float2 break82_g7677 = TileDiscardUVs18_g7677;
+			float Row0Col189_g7677 = saturate( ( max( max( step( _Vector5.x , break82_g7677.x ) , step( -( _Vector5.x - 1.0 ) , -break82_g7677.x ) ) , max( step( _Vector5.y , break82_g7677.y ) , step( -( _Vector5.y - 1.0 ) , -break82_g7677.y ) ) ) + ( ( 1.0 - _UVTileDissolveAlpha_Row0_1 ) * ( 1.0 - _UDIMDiscardRow0_1 ) ) ) );
 			float2 _Vector6 = float2(2,0);
-			float2 break100_g7588 = TileDiscardUVs18_g7588;
-			float Row0Col2106_g7588 = saturate( ( max( max( step( _Vector6.x , break100_g7588.x ) , step( -( _Vector6.x - 1.0 ) , -break100_g7588.x ) ) , max( step( _Vector6.y , break100_g7588.y ) , step( -( _Vector6.y - 1.0 ) , -break100_g7588.y ) ) ) + ( ( 1.0 - _UVTileDissolveAlpha_Row0_2 ) * ( 1.0 - _UDIMDiscardRow0_2 ) ) ) );
+			float2 break100_g7677 = TileDiscardUVs18_g7677;
+			float Row0Col2106_g7677 = saturate( ( max( max( step( _Vector6.x , break100_g7677.x ) , step( -( _Vector6.x - 1.0 ) , -break100_g7677.x ) ) , max( step( _Vector6.y , break100_g7677.y ) , step( -( _Vector6.y - 1.0 ) , -break100_g7677.y ) ) ) + ( ( 1.0 - _UVTileDissolveAlpha_Row0_2 ) * ( 1.0 - _UDIMDiscardRow0_2 ) ) ) );
 			float2 _Vector7 = float2(3,0);
-			float2 break118_g7588 = TileDiscardUVs18_g7588;
-			float Row0Col3124_g7588 = saturate( ( max( max( step( _Vector7.x , break118_g7588.x ) , step( -( _Vector7.x - 1.0 ) , -break118_g7588.x ) ) , max( step( _Vector7.y , break118_g7588.y ) , step( -( _Vector7.y - 1.0 ) , -break118_g7588.y ) ) ) + ( ( 1.0 - _UVTileDissolveAlpha_Row0_3 ) * ( 1.0 - _UDIMDiscardRow0_3 ) ) ) );
+			float2 break118_g7677 = TileDiscardUVs18_g7677;
+			float Row0Col3124_g7677 = saturate( ( max( max( step( _Vector7.x , break118_g7677.x ) , step( -( _Vector7.x - 1.0 ) , -break118_g7677.x ) ) , max( step( _Vector7.y , break118_g7677.y ) , step( -( _Vector7.y - 1.0 ) , -break118_g7677.y ) ) ) + ( ( 1.0 - _UVTileDissolveAlpha_Row0_3 ) * ( 1.0 - _UDIMDiscardRow0_3 ) ) ) );
 			float2 _Vector8 = float2(0,1);
-			float2 break141_g7588 = TileDiscardUVs18_g7588;
-			float Row1Col0148_g7588 = saturate( ( max( max( step( _Vector8.x , break141_g7588.x ) , step( -( _Vector8.x - 1.0 ) , -break141_g7588.x ) ) , max( step( _Vector8.y , break141_g7588.y ) , step( -( _Vector8.y - 1.0 ) , -break141_g7588.y ) ) ) + ( ( 1.0 - _UVTileDissolveAlpha_Row1_0 ) * ( 1.0 - _UDIMDiscardRow1_0 ) ) ) );
+			float2 break141_g7677 = TileDiscardUVs18_g7677;
+			float Row1Col0148_g7677 = saturate( ( max( max( step( _Vector8.x , break141_g7677.x ) , step( -( _Vector8.x - 1.0 ) , -break141_g7677.x ) ) , max( step( _Vector8.y , break141_g7677.y ) , step( -( _Vector8.y - 1.0 ) , -break141_g7677.y ) ) ) + ( ( 1.0 - _UVTileDissolveAlpha_Row1_0 ) * ( 1.0 - _UDIMDiscardRow1_0 ) ) ) );
 			float2 _Vector9 = float2(1,1);
-			float2 break159_g7588 = TileDiscardUVs18_g7588;
-			float Row1Col1165_g7588 = saturate( ( max( max( step( _Vector9.x , break159_g7588.x ) , step( -( _Vector9.x - 1.0 ) , -break159_g7588.x ) ) , max( step( _Vector9.y , break159_g7588.y ) , step( -( _Vector9.y - 1.0 ) , -break159_g7588.y ) ) ) + ( ( 1.0 - _UVTileDissolveAlpha_Row1_1 ) * ( 1.0 - _UDIMDiscardRow1_1 ) ) ) );
+			float2 break159_g7677 = TileDiscardUVs18_g7677;
+			float Row1Col1165_g7677 = saturate( ( max( max( step( _Vector9.x , break159_g7677.x ) , step( -( _Vector9.x - 1.0 ) , -break159_g7677.x ) ) , max( step( _Vector9.y , break159_g7677.y ) , step( -( _Vector9.y - 1.0 ) , -break159_g7677.y ) ) ) + ( ( 1.0 - _UVTileDissolveAlpha_Row1_1 ) * ( 1.0 - _UDIMDiscardRow1_1 ) ) ) );
 			float2 _Vector10 = float2(2,1);
-			float2 break177_g7588 = TileDiscardUVs18_g7588;
-			float Row1Col2183_g7588 = saturate( ( max( max( step( _Vector10.x , break177_g7588.x ) , step( -( _Vector10.x - 1.0 ) , -break177_g7588.x ) ) , max( step( _Vector10.y , break177_g7588.y ) , step( -( _Vector10.y - 1.0 ) , -break177_g7588.y ) ) ) + ( ( 1.0 - _UVTileDissolveAlpha_Row1_2 ) * ( 1.0 - _UDIMDiscardRow1_2 ) ) ) );
+			float2 break177_g7677 = TileDiscardUVs18_g7677;
+			float Row1Col2183_g7677 = saturate( ( max( max( step( _Vector10.x , break177_g7677.x ) , step( -( _Vector10.x - 1.0 ) , -break177_g7677.x ) ) , max( step( _Vector10.y , break177_g7677.y ) , step( -( _Vector10.y - 1.0 ) , -break177_g7677.y ) ) ) + ( ( 1.0 - _UVTileDissolveAlpha_Row1_2 ) * ( 1.0 - _UDIMDiscardRow1_2 ) ) ) );
 			float2 _Vector11 = float2(3,1);
-			float2 break195_g7588 = TileDiscardUVs18_g7588;
-			float Row1Col3201_g7588 = saturate( ( max( max( step( _Vector11.x , break195_g7588.x ) , step( -( _Vector11.x - 1.0 ) , -break195_g7588.x ) ) , max( step( _Vector11.y , break195_g7588.y ) , step( -( _Vector11.y - 1.0 ) , -break195_g7588.y ) ) ) + ( ( 1.0 - _UVTileDissolveAlpha_Row1_3 ) * ( 1.0 - _UDIMDiscardRow1_3 ) ) ) );
+			float2 break195_g7677 = TileDiscardUVs18_g7677;
+			float Row1Col3201_g7677 = saturate( ( max( max( step( _Vector11.x , break195_g7677.x ) , step( -( _Vector11.x - 1.0 ) , -break195_g7677.x ) ) , max( step( _Vector11.y , break195_g7677.y ) , step( -( _Vector11.y - 1.0 ) , -break195_g7677.y ) ) ) + ( ( 1.0 - _UVTileDissolveAlpha_Row1_3 ) * ( 1.0 - _UDIMDiscardRow1_3 ) ) ) );
 			float2 _Vector12 = float2(0,2);
-			float2 break222_g7588 = TileDiscardUVs18_g7588;
-			float Row2Col0229_g7588 = saturate( ( max( max( step( _Vector12.x , break222_g7588.x ) , step( -( _Vector12.x - 1.0 ) , -break222_g7588.x ) ) , max( step( _Vector12.y , break222_g7588.y ) , step( -( _Vector12.y - 1.0 ) , -break222_g7588.y ) ) ) + ( ( 1.0 - _UVTileDissolveAlpha_Row2_0 ) * ( 1.0 - _UDIMDiscardRow2_0 ) ) ) );
+			float2 break222_g7677 = TileDiscardUVs18_g7677;
+			float Row2Col0229_g7677 = saturate( ( max( max( step( _Vector12.x , break222_g7677.x ) , step( -( _Vector12.x - 1.0 ) , -break222_g7677.x ) ) , max( step( _Vector12.y , break222_g7677.y ) , step( -( _Vector12.y - 1.0 ) , -break222_g7677.y ) ) ) + ( ( 1.0 - _UVTileDissolveAlpha_Row2_0 ) * ( 1.0 - _UDIMDiscardRow2_0 ) ) ) );
 			float2 _Vector13 = float2(1,2);
-			float2 break239_g7588 = TileDiscardUVs18_g7588;
-			float Row2Col1245_g7588 = saturate( ( max( max( step( _Vector13.x , break239_g7588.x ) , step( -( _Vector13.x - 1.0 ) , -break239_g7588.x ) ) , max( step( _Vector13.y , break239_g7588.y ) , step( -( _Vector13.y - 1.0 ) , -break239_g7588.y ) ) ) + ( ( 1.0 - _UVTileDissolveAlpha_Row2_1 ) * ( 1.0 - _UDIMDiscardRow2_1 ) ) ) );
+			float2 break239_g7677 = TileDiscardUVs18_g7677;
+			float Row2Col1245_g7677 = saturate( ( max( max( step( _Vector13.x , break239_g7677.x ) , step( -( _Vector13.x - 1.0 ) , -break239_g7677.x ) ) , max( step( _Vector13.y , break239_g7677.y ) , step( -( _Vector13.y - 1.0 ) , -break239_g7677.y ) ) ) + ( ( 1.0 - _UVTileDissolveAlpha_Row2_1 ) * ( 1.0 - _UDIMDiscardRow2_1 ) ) ) );
 			float2 _Vector14 = float2(2,2);
-			float2 break256_g7588 = TileDiscardUVs18_g7588;
-			float Row2Col2262_g7588 = saturate( ( max( max( step( _Vector14.x , break256_g7588.x ) , step( -( _Vector14.x - 1.0 ) , -break256_g7588.x ) ) , max( step( _Vector14.y , break256_g7588.y ) , step( -( _Vector14.y - 1.0 ) , -break256_g7588.y ) ) ) + ( ( 1.0 - _UVTileDissolveAlpha_Row2_2 ) * ( 1.0 - _UDIMDiscardRow2_2 ) ) ) );
+			float2 break256_g7677 = TileDiscardUVs18_g7677;
+			float Row2Col2262_g7677 = saturate( ( max( max( step( _Vector14.x , break256_g7677.x ) , step( -( _Vector14.x - 1.0 ) , -break256_g7677.x ) ) , max( step( _Vector14.y , break256_g7677.y ) , step( -( _Vector14.y - 1.0 ) , -break256_g7677.y ) ) ) + ( ( 1.0 - _UVTileDissolveAlpha_Row2_2 ) * ( 1.0 - _UDIMDiscardRow2_2 ) ) ) );
 			float2 _Vector15 = float2(3,2);
-			float2 break273_g7588 = TileDiscardUVs18_g7588;
-			float Row2Col3279_g7588 = saturate( ( max( max( step( _Vector15.x , break273_g7588.x ) , step( -( _Vector15.x - 1.0 ) , -break273_g7588.x ) ) , max( step( _Vector15.y , break273_g7588.y ) , step( -( _Vector15.y - 1.0 ) , -break273_g7588.y ) ) ) + ( ( 1.0 - _UVTileDissolveAlpha_Row2_3 ) * ( 1.0 - _UDIMDiscardRow2_3 ) ) ) );
+			float2 break273_g7677 = TileDiscardUVs18_g7677;
+			float Row2Col3279_g7677 = saturate( ( max( max( step( _Vector15.x , break273_g7677.x ) , step( -( _Vector15.x - 1.0 ) , -break273_g7677.x ) ) , max( step( _Vector15.y , break273_g7677.y ) , step( -( _Vector15.y - 1.0 ) , -break273_g7677.y ) ) ) + ( ( 1.0 - _UVTileDissolveAlpha_Row2_3 ) * ( 1.0 - _UDIMDiscardRow2_3 ) ) ) );
 			float2 _Vector19 = float2(0,3);
-			float2 break294_g7588 = TileDiscardUVs18_g7588;
-			float Row3Col0352_g7588 = saturate( ( max( max( step( _Vector19.x , break294_g7588.x ) , step( -( _Vector19.x - 1.0 ) , -break294_g7588.x ) ) , max( step( _Vector19.y , break294_g7588.y ) , step( -( _Vector19.y - 1.0 ) , -break294_g7588.y ) ) ) + ( ( 1.0 - _UVTileDissolveAlpha_Row3_0 ) * ( 1.0 - _UDIMDiscardRow3_0 ) ) ) );
+			float2 break294_g7677 = TileDiscardUVs18_g7677;
+			float Row3Col0352_g7677 = saturate( ( max( max( step( _Vector19.x , break294_g7677.x ) , step( -( _Vector19.x - 1.0 ) , -break294_g7677.x ) ) , max( step( _Vector19.y , break294_g7677.y ) , step( -( _Vector19.y - 1.0 ) , -break294_g7677.y ) ) ) + ( ( 1.0 - _UVTileDissolveAlpha_Row3_0 ) * ( 1.0 - _UDIMDiscardRow3_0 ) ) ) );
 			float2 _Vector16 = float2(1,3);
-			float2 break309_g7588 = TileDiscardUVs18_g7588;
-			float Row3Col1351_g7588 = saturate( ( max( max( step( _Vector16.x , break309_g7588.x ) , step( -( _Vector16.x - 1.0 ) , -break309_g7588.x ) ) , max( step( _Vector16.y , break309_g7588.y ) , step( -( _Vector16.y - 1.0 ) , -break309_g7588.y ) ) ) + ( ( 1.0 - _UVTileDissolveAlpha_Row3_1 ) * ( 1.0 - _UDIMDiscardRow3_1 ) ) ) );
+			float2 break309_g7677 = TileDiscardUVs18_g7677;
+			float Row3Col1351_g7677 = saturate( ( max( max( step( _Vector16.x , break309_g7677.x ) , step( -( _Vector16.x - 1.0 ) , -break309_g7677.x ) ) , max( step( _Vector16.y , break309_g7677.y ) , step( -( _Vector16.y - 1.0 ) , -break309_g7677.y ) ) ) + ( ( 1.0 - _UVTileDissolveAlpha_Row3_1 ) * ( 1.0 - _UDIMDiscardRow3_1 ) ) ) );
 			float2 _Vector17 = float2(2,3);
-			float2 break325_g7588 = TileDiscardUVs18_g7588;
-			float Row3Col2350_g7588 = saturate( ( max( max( step( _Vector17.x , break325_g7588.x ) , step( -( _Vector17.x - 1.0 ) , -break325_g7588.x ) ) , max( step( _Vector17.y , break325_g7588.y ) , step( -( _Vector17.y - 1.0 ) , -break325_g7588.y ) ) ) + ( ( 1.0 - _UVTileDissolveAlpha_Row3_2 ) * ( 1.0 - _UDIMDiscardRow3_2 ) ) ) );
+			float2 break325_g7677 = TileDiscardUVs18_g7677;
+			float Row3Col2350_g7677 = saturate( ( max( max( step( _Vector17.x , break325_g7677.x ) , step( -( _Vector17.x - 1.0 ) , -break325_g7677.x ) ) , max( step( _Vector17.y , break325_g7677.y ) , step( -( _Vector17.y - 1.0 ) , -break325_g7677.y ) ) ) + ( ( 1.0 - _UVTileDissolveAlpha_Row3_2 ) * ( 1.0 - _UDIMDiscardRow3_2 ) ) ) );
 			float2 _Vector18 = float2(3,3);
-			float2 break341_g7588 = TileDiscardUVs18_g7588;
-			float Row3Col3349_g7588 = saturate( ( max( max( step( _Vector18.x , break341_g7588.x ) , step( -( _Vector18.x - 1.0 ) , -break341_g7588.x ) ) , max( step( _Vector18.y , break341_g7588.y ) , step( -( _Vector18.y - 1.0 ) , -break341_g7588.y ) ) ) + ( ( 1.0 - _UVTileDissolveAlpha_Row3_3 ) * ( 1.0 - _UDIMDiscardRow3_3 ) ) ) );
+			float2 break341_g7677 = TileDiscardUVs18_g7677;
+			float Row3Col3349_g7677 = saturate( ( max( max( step( _Vector18.x , break341_g7677.x ) , step( -( _Vector18.x - 1.0 ) , -break341_g7677.x ) ) , max( step( _Vector18.y , break341_g7677.y ) , step( -( _Vector18.y - 1.0 ) , -break341_g7677.y ) ) ) + ( ( 1.0 - _UVTileDissolveAlpha_Row3_3 ) * ( 1.0 - _UDIMDiscardRow3_3 ) ) ) );
 			float3 temp_cast_0 = (( 0.0 / 0.0 )).xxx;
 			float3 ase_vertex3Pos = v.vertex.xyz;
-			v.vertex.xyz = ( ( ( ( Row0Col071_g7588 * Row0Col189_g7588 * Row0Col2106_g7588 * Row0Col3124_g7588 ) * ( Row1Col0148_g7588 * Row1Col1165_g7588 * Row1Col2183_g7588 * Row1Col3201_g7588 ) ) * ( ( Row2Col0229_g7588 * Row2Col1245_g7588 * Row2Col2262_g7588 * Row2Col3279_g7588 ) * ( Row3Col0352_g7588 * Row3Col1351_g7588 * Row3Col2350_g7588 * Row3Col3349_g7588 ) ) ) < 0.001 ? temp_cast_0 : ase_vertex3Pos );
+			v.vertex.xyz = ( ( ( ( Row0Col071_g7677 * Row0Col189_g7677 * Row0Col2106_g7677 * Row0Col3124_g7677 ) * ( Row1Col0148_g7677 * Row1Col1165_g7677 * Row1Col2183_g7677 * Row1Col3201_g7677 ) ) * ( ( Row2Col0229_g7677 * Row2Col1245_g7677 * Row2Col2262_g7677 * Row2Col3279_g7677 ) * ( Row3Col0352_g7677 * Row3Col1351_g7677 * Row3Col2350_g7677 * Row3Col3349_g7677 ) ) ) < 0.001 ? temp_cast_0 : ase_vertex3Pos );
 			v.vertex.w = 1;
 			float2 uv_MaskMap01 = v.texcoord.xy * _MaskMap01_ST.xy + _MaskMap01_ST.zw;
 			float2 uv2_MaskMap01 = v.texcoord1.xy * _MaskMap01_ST.xy + _MaskMap01_ST.zw;
@@ -1575,17 +1575,17 @@ Shader "Furality/Umbra Shader/Umbra Opaque"
 			o.vertexToFrag51_g5489 = lerpResult27_g5489;
 			float2 uv_DirectionalMap = v.texcoord.xy * _DirectionalMap_ST.xy + _DirectionalMap_ST.zw;
 			float2 uv2_DirectionalMap = v.texcoord1.xy * _DirectionalMap_ST.xy + _DirectionalMap_ST.zw;
-			float temp_output_14_0_g7502 = _DirectionMapUV;
-			float2 lerpResult11_g7502 = lerp( uv_DirectionalMap , uv2_DirectionalMap , saturate( temp_output_14_0_g7502 ));
+			float temp_output_14_0_g7680 = _DirectionMapUV;
+			float2 lerpResult11_g7680 = lerp( uv_DirectionalMap , uv2_DirectionalMap , saturate( temp_output_14_0_g7680 ));
 			float2 uv3_DirectionalMap = v.texcoord2.xy * _DirectionalMap_ST.xy + _DirectionalMap_ST.zw;
-			float temp_output_16_0_g7502 = ( temp_output_14_0_g7502 - 1.0 );
-			float2 lerpResult12_g7502 = lerp( lerpResult11_g7502 , uv3_DirectionalMap , saturate( temp_output_16_0_g7502 ));
+			float temp_output_16_0_g7680 = ( temp_output_14_0_g7680 - 1.0 );
+			float2 lerpResult12_g7680 = lerp( lerpResult11_g7680 , uv3_DirectionalMap , saturate( temp_output_16_0_g7680 ));
 			float2 uv4_DirectionalMap = v.texcoord3.xy * _DirectionalMap_ST.xy + _DirectionalMap_ST.zw;
-			float temp_output_21_0_g7502 = ( temp_output_16_0_g7502 - 1.0 );
-			float2 lerpResult19_g7502 = lerp( lerpResult12_g7502 , uv4_DirectionalMap , saturate( temp_output_21_0_g7502 ));
+			float temp_output_21_0_g7680 = ( temp_output_16_0_g7680 - 1.0 );
+			float2 lerpResult19_g7680 = lerp( lerpResult12_g7680 , uv4_DirectionalMap , saturate( temp_output_21_0_g7680 ));
 			float2 uv5_DirectionalMap = v.ase_texcoord4 * _DirectionalMap_ST.xy + _DirectionalMap_ST.zw;
-			float2 lerpResult27_g7502 = lerp( lerpResult19_g7502 , uv5_DirectionalMap.xy , saturate( ( temp_output_21_0_g7502 - 1.0 ) ));
-			o.vertexToFrag51_g7502 = lerpResult27_g7502;
+			float2 lerpResult27_g7680 = lerp( lerpResult19_g7680 , uv5_DirectionalMap.xy , saturate( ( temp_output_21_0_g7680 - 1.0 ) ));
+			o.vertexToFrag51_g7680 = lerpResult27_g7680;
 			float2 uv_DetailNormal = v.texcoord.xy * _DetailNormal_ST.xy + _DetailNormal_ST.zw;
 			float2 uv2_DetailNormal = v.texcoord1.xy * _DetailNormal_ST.xy + _DetailNormal_ST.zw;
 			float temp_output_14_0_g5577 = _DetailUV;
@@ -2356,7 +2356,7 @@ Shader "Furality/Umbra Shader/Umbra Opaque"
 		{
 			o.SurfInput = i;
 			o.Normal = float3(0,0,1);
-			float4 FallbackColor289_g7536 = _RedChGlowFallback;
+			float4 FallbackColor289_g7748 = _RedChGlowFallback;
 			float4 tex2DNode9 = tex2D( _MaskMap01, i.vertexToFrag51_g5486 );
 			float4 MM01RGBA295 = tex2DNode9;
 			float4 tex2DNode52 = tex2D( _MaskMap02, i.vertexToFrag51_g5487 );
@@ -2414,532 +2414,532 @@ Shader "Furality/Umbra Shader/Umbra Opaque"
 			float lerpResult1108 = lerp( lerpResult1105 , (lerpResult1094).a , saturate( ( temp_output_1099_0 - 1.0 ) ));
 			float GlowMask3Channel1110 = lerpResult1108;
 			float4 appendResult1117 = (float4(GlowMask0Channel1009 , GlowMask1Channel1042 , GlowMask2Channel1076 , GlowMask3Channel1110));
-			float4 GlowMaskRGBA174_g7501 = appendResult1117;
-			float temp_output_236_0_g7536 = (GlowMaskRGBA174_g7501).x;
-			float4 temp_output_291_0_g7536 = ( FallbackColor289_g7536 * _UseFallback0 * temp_output_236_0_g7536 );
+			float4 GlowMaskRGBA174_g7679 = appendResult1117;
+			float temp_output_236_0_g7748 = (GlowMaskRGBA174_g7679).x;
+			float4 temp_output_291_0_g7748 = ( FallbackColor289_g7748 * _UseFallback0 * temp_output_236_0_g7748 );
 			float4 temp_cast_5 = (1.0).xxxx;
 			float3 temp_cast_7 = (1.0).xxx;
-			int EmissionGlowZone47_g7536 = _RedChGlowZone;
-			int clampResult8_g7542 = clamp( EmissionGlowZone47_g7536 , 1 , 4 );
-			int temp_output_3_0_g7542 = ( clampResult8_g7542 - 1 );
-			int Zone16_g7542 = temp_output_3_0_g7542;
-			float3 localgetThemeData16_g7542 = getThemeData( Zone16_g7542 );
-			int Band11_g7543 = 56;
-			int localIsLumaActive11_g7543 = IsLumaActive11_g7543( Band11_g7543 );
-			int temp_output_14_0_g7542 = localIsLumaActive11_g7543;
-			int lerpResult15_g7542 = lerp( temp_output_3_0_g7542 , ( 63 - temp_output_3_0_g7542 ) , (float)temp_output_14_0_g7542);
-			int Band2_g7542 = lerpResult15_g7542;
-			int Delay2_g7542 = 0;
-			float3 localLumaGlowData2_g7542 = LumaGlowData2_g7542( Band2_g7542 , Delay2_g7542 );
-			float3 lerpResult17_g7542 = lerp( ( localgetThemeData16_g7542 * localLumaGlowData2_g7542 ) , localLumaGlowData2_g7542 , (float)temp_output_14_0_g7542);
-			int temp_output_21_0_g7536 = saturate( EmissionGlowZone47_g7536 );
-			float3 lerpResult20_g7536 = lerp( temp_cast_7 , lerpResult17_g7542 , (float)temp_output_21_0_g7536);
+			int EmissionGlowZone47_g7748 = _RedChGlowZone;
+			int clampResult8_g7754 = clamp( EmissionGlowZone47_g7748 , 1 , 4 );
+			int temp_output_3_0_g7754 = ( clampResult8_g7754 - 1 );
+			int Zone16_g7754 = temp_output_3_0_g7754;
+			float3 localgetThemeData16_g7754 = getThemeData( Zone16_g7754 );
+			int Band11_g7755 = 56;
+			int localIsLumaActive11_g7755 = IsLumaActive11_g7755( Band11_g7755 );
+			int temp_output_14_0_g7754 = localIsLumaActive11_g7755;
+			int lerpResult15_g7754 = lerp( temp_output_3_0_g7754 , ( 63 - temp_output_3_0_g7754 ) , (float)temp_output_14_0_g7754);
+			int Band2_g7754 = lerpResult15_g7754;
+			int Delay2_g7754 = 0;
+			float3 localLumaGlowData2_g7754 = LumaGlowData2_g7754( Band2_g7754 , Delay2_g7754 );
+			float3 lerpResult17_g7754 = lerp( ( localgetThemeData16_g7754 * localLumaGlowData2_g7754 ) , localLumaGlowData2_g7754 , (float)temp_output_14_0_g7754);
+			int temp_output_21_0_g7748 = saturate( EmissionGlowZone47_g7748 );
+			float3 lerpResult20_g7748 = lerp( temp_cast_7 , lerpResult17_g7754 , (float)temp_output_21_0_g7748);
 			float3 temp_cast_11 = (1.0).xxx;
-			int clampResult8_g7544 = clamp( EmissionGlowZone47_g7536 , 1 , 4 );
-			int temp_output_3_0_g7544 = ( clampResult8_g7544 - 1 );
-			int Zone15_g7544 = temp_output_3_0_g7544;
-			float3 localgetThemeData15_g7544 = getThemeData( Zone15_g7544 );
-			int Band11_g7545 = 56;
-			int localIsLumaActive11_g7545 = IsLumaActive11_g7545( Band11_g7545 );
-			int temp_output_13_0_g7544 = localIsLumaActive11_g7545;
-			int lerpResult14_g7544 = lerp( temp_output_3_0_g7544 , ( 63 - temp_output_3_0_g7544 ) , (float)temp_output_13_0_g7544);
-			int Band11_g7544 = lerpResult14_g7544;
-			float cos6_g7536 = cos( radians( _RedChGlowPulseDir ) );
-			float sin6_g7536 = sin( radians( _RedChGlowPulseDir ) );
-			float2 rotator6_g7536 = mul( i.uv_texcoord - float2( 0.5,0.5 ) , float2x2( cos6_g7536 , -sin6_g7536 , sin6_g7536 , cos6_g7536 )) + float2( 0.5,0.5 );
-			int Band6_g7549 = _RedChGlowAnimationBand;
-			int Mode6_g7549 = ( ( _RedChGlowAnimationMode * 2 ) + _RedChGlowAnimationSpeed );
-			int localAudioLinkDecodeDataAsUInt6_g7549 = AudioLinkDecodeDataAsUInt6_g7549( Band6_g7549 , Mode6_g7549 );
-			float localGetLocalTime2_g7550 = ( AudioLinkDecodeDataAsSeconds( ALPASS_GENERALVU_LOCAL_TIME ) );
-			float lerpResult206_g7536 = lerp( ( ( localAudioLinkDecodeDataAsUInt6_g7549 % 628319 ) / 100000.0 ) , localGetLocalTime2_g7550 , (float)saturate( ( _RedChGlowAnimationMode - 3 ) ));
-			float EmissionGlowAnimation195_g7536 = ( _RedChGlowAnimationStrength * lerpResult206_g7536 * step( _RedChGlowAnimationBand , 9 ) );
-			float x13_g7536 = ( ( rotator6_g7536.x * _RedChGlowPulseScale ) + _RedChGlowPulseOffset + EmissionGlowAnimation195_g7536 );
-			float y13_g7536 = 127.0;
-			float localglslmod13_g7536 = glslmod13_g7536( x13_g7536 , y13_g7536 );
-			float2 temp_output_34_0_g7538 = ( i.uv_texcoord - _RedChGlowRadialCenter );
-			float2 break39_g7538 = temp_output_34_0_g7538;
-			float2 appendResult50_g7538 = (float2(( _RedChGlowPulseScale * ( length( temp_output_34_0_g7538 ) * 2.0 ) ) , ( ( atan2( break39_g7538.x , break39_g7538.y ) * ( 1.0 / 6.28318548202515 ) ) * 1.0 )));
-			float x12_g7536 = ( _RedChGlowPulseOffset + appendResult50_g7538.x + EmissionGlowAnimation195_g7536 );
-			float y12_g7536 = 127.0;
-			float localglslmod12_g7536 = glslmod12_g7536( x12_g7536 , y12_g7536 );
-			int EmissionGlowMode35_g7536 = _RedChGlowMode;
-			int temp_output_37_0_g7536 = ( EmissionGlowMode35_g7536 - 1 );
-			float lerpResult5_g7536 = lerp( localglslmod13_g7536 , localglslmod12_g7536 , (float)saturate( temp_output_37_0_g7536 ));
-			float Direction27_g7501 = tex2D( _DirectionalMap, i.vertexToFrag51_g7502 ).r;
-			float DirectionalMap106_g7536 = Direction27_g7501;
-			float lerpResult179_g7536 = lerp( DirectionalMap106_g7536 , ( 1.0 - DirectionalMap106_g7536 ) , (float)saturate( ( EmissionGlowMode35_g7536 - 0 ) ));
-			float x34_g7536 = ( _RedChGlowPulseOffset + ( _RedChGlowPulseScale * lerpResult179_g7536 ) + EmissionGlowAnimation195_g7536 );
-			float y34_g7536 = 127.0;
-			float localglslmod34_g7536 = glslmod34_g7536( x34_g7536 , y34_g7536 );
-			float lerpResult30_g7536 = lerp( lerpResult5_g7536 , localglslmod34_g7536 , (float)saturate( ( temp_output_37_0_g7536 - 1 ) ));
-			float EmissionGlowDelay56_g7536 = lerpResult30_g7536;
-			float Delay11_g7544 = EmissionGlowDelay56_g7536;
-			float3 localLumaGlowLerp11_g7544 = LumaGlowLerp11_g7544( Band11_g7544 , Delay11_g7544 );
-			float3 lerpResult17_g7544 = lerp( ( localgetThemeData15_g7544 * localLumaGlowLerp11_g7544 ) , localLumaGlowLerp11_g7544 , (float)temp_output_13_0_g7544);
-			float3 lerpResult22_g7536 = lerp( temp_cast_11 , lerpResult17_g7544 , (float)temp_output_21_0_g7536);
-			float3 lerpResult23_g7536 = lerp( lerpResult20_g7536 , lerpResult22_g7536 , (float)saturate( EmissionGlowMode35_g7536 ));
+			int clampResult8_g7756 = clamp( EmissionGlowZone47_g7748 , 1 , 4 );
+			int temp_output_3_0_g7756 = ( clampResult8_g7756 - 1 );
+			int Zone15_g7756 = temp_output_3_0_g7756;
+			float3 localgetThemeData15_g7756 = getThemeData( Zone15_g7756 );
+			int Band11_g7757 = 56;
+			int localIsLumaActive11_g7757 = IsLumaActive11_g7757( Band11_g7757 );
+			int temp_output_13_0_g7756 = localIsLumaActive11_g7757;
+			int lerpResult14_g7756 = lerp( temp_output_3_0_g7756 , ( 63 - temp_output_3_0_g7756 ) , (float)temp_output_13_0_g7756);
+			int Band11_g7756 = lerpResult14_g7756;
+			float cos6_g7748 = cos( radians( _RedChGlowPulseDir ) );
+			float sin6_g7748 = sin( radians( _RedChGlowPulseDir ) );
+			float2 rotator6_g7748 = mul( i.uv_texcoord - float2( 0.5,0.5 ) , float2x2( cos6_g7748 , -sin6_g7748 , sin6_g7748 , cos6_g7748 )) + float2( 0.5,0.5 );
+			int Band6_g7761 = _RedChGlowAnimationBand;
+			int Mode6_g7761 = ( ( _RedChGlowAnimationMode * 2 ) + _RedChGlowAnimationSpeed );
+			int localAudioLinkDecodeDataAsUInt6_g7761 = AudioLinkDecodeDataAsUInt6_g7761( Band6_g7761 , Mode6_g7761 );
+			float localGetLocalTime2_g7762 = ( AudioLinkDecodeDataAsSeconds( ALPASS_GENERALVU_LOCAL_TIME ) );
+			float lerpResult206_g7748 = lerp( ( ( localAudioLinkDecodeDataAsUInt6_g7761 % 628319 ) / 100000.0 ) , localGetLocalTime2_g7762 , (float)saturate( ( _RedChGlowAnimationMode - 3 ) ));
+			float EmissionGlowAnimation195_g7748 = ( _RedChGlowAnimationStrength * lerpResult206_g7748 * step( _RedChGlowAnimationBand , 9 ) );
+			float x13_g7748 = ( ( rotator6_g7748.x * _RedChGlowPulseScale ) + _RedChGlowPulseOffset + EmissionGlowAnimation195_g7748 );
+			float y13_g7748 = 127.0;
+			float localglslmod13_g7748 = glslmod13_g7748( x13_g7748 , y13_g7748 );
+			float2 temp_output_34_0_g7750 = ( i.uv_texcoord - _RedChGlowRadialCenter );
+			float2 break39_g7750 = temp_output_34_0_g7750;
+			float2 appendResult50_g7750 = (float2(( _RedChGlowPulseScale * ( length( temp_output_34_0_g7750 ) * 2.0 ) ) , ( ( atan2( break39_g7750.x , break39_g7750.y ) * ( 1.0 / 6.28318548202515 ) ) * 1.0 )));
+			float x12_g7748 = ( _RedChGlowPulseOffset + appendResult50_g7750.x + EmissionGlowAnimation195_g7748 );
+			float y12_g7748 = 127.0;
+			float localglslmod12_g7748 = glslmod12_g7748( x12_g7748 , y12_g7748 );
+			int EmissionGlowMode35_g7748 = _RedChGlowMode;
+			int temp_output_37_0_g7748 = ( EmissionGlowMode35_g7748 - 1 );
+			float lerpResult5_g7748 = lerp( localglslmod13_g7748 , localglslmod12_g7748 , (float)saturate( temp_output_37_0_g7748 ));
+			float Direction27_g7679 = tex2D( _DirectionalMap, i.vertexToFrag51_g7680 ).r;
+			float DirectionalMap106_g7748 = Direction27_g7679;
+			float lerpResult179_g7748 = lerp( DirectionalMap106_g7748 , ( 1.0 - DirectionalMap106_g7748 ) , (float)saturate( ( EmissionGlowMode35_g7748 - 3 ) ));
+			float x34_g7748 = ( _RedChGlowPulseOffset + ( _RedChGlowPulseScale * lerpResult179_g7748 ) + EmissionGlowAnimation195_g7748 );
+			float y34_g7748 = 127.0;
+			float localglslmod34_g7748 = glslmod34_g7748( x34_g7748 , y34_g7748 );
+			float lerpResult30_g7748 = lerp( lerpResult5_g7748 , localglslmod34_g7748 , (float)saturate( ( temp_output_37_0_g7748 - 1 ) ));
+			float EmissionGlowDelay56_g7748 = lerpResult30_g7748;
+			float Delay11_g7756 = EmissionGlowDelay56_g7748;
+			float3 localLumaGlowLerp11_g7756 = LumaGlowLerp11_g7756( Band11_g7756 , Delay11_g7756 );
+			float3 lerpResult17_g7756 = lerp( ( localgetThemeData15_g7756 * localLumaGlowLerp11_g7756 ) , localLumaGlowLerp11_g7756 , (float)temp_output_13_0_g7756);
+			float3 lerpResult22_g7748 = lerp( temp_cast_11 , lerpResult17_g7756 , (float)temp_output_21_0_g7748);
+			float3 lerpResult23_g7748 = lerp( lerpResult20_g7748 , lerpResult22_g7748 , (float)saturate( EmissionGlowMode35_g7748 ));
 			float4 temp_cast_21 = (1.0).xxxx;
-			float temp_output_10_0_g7546 = EmissionGlowDelay56_g7536;
-			float Position1_g7548 = ( temp_output_10_0_g7546 / 127.0 );
-			float4 localAudioLinkLerp1_g7548 = AudioLinkLerp1_g7548( Position1_g7548 );
-			int clampResult8_g7546 = clamp( ( EmissionGlowZone47_g7536 - 0 ) , 1 , 3 );
-			int Band11_g7546 = ( 59 - ( clampResult8_g7546 - 1 ) );
-			float Delay11_g7546 = temp_output_10_0_g7546;
-			float3 localLumaGlowLerp11_g7546 = LumaGlowLerp11_g7546( Band11_g7546 , Delay11_g7546 );
-			int Band11_g7547 = 56;
-			int localIsLumaActive11_g7547 = IsLumaActive11_g7547( Band11_g7547 );
-			float4 lerpResult14_g7546 = lerp( localAudioLinkLerp1_g7548 , float4( localLumaGlowLerp11_g7546 , 0.0 ) , (float)localIsLumaActive11_g7547);
-			float4 lerpResult52_g7536 = lerp( temp_cast_21 , lerpResult14_g7546 , (float)saturate( EmissionGlowZone47_g7536 ));
-			float4 lerpResult51_g7536 = lerp( float4( lerpResult23_g7536 , 0.0 ) , lerpResult52_g7536 , (float)saturate( ( EmissionGlowZone47_g7536 - 0 ) ));
+			float temp_output_10_0_g7758 = EmissionGlowDelay56_g7748;
+			float Position1_g7760 = ( temp_output_10_0_g7758 / 127.0 );
+			float4 localAudioLinkLerp1_g7760 = AudioLinkLerp1_g7760( Position1_g7760 );
+			int clampResult8_g7758 = clamp( ( EmissionGlowZone47_g7748 - 4 ) , 1 , 3 );
+			int Band11_g7758 = ( 59 - ( clampResult8_g7758 - 1 ) );
+			float Delay11_g7758 = temp_output_10_0_g7758;
+			float3 localLumaGlowLerp11_g7758 = LumaGlowLerp11_g7758( Band11_g7758 , Delay11_g7758 );
+			int Band11_g7759 = 56;
+			int localIsLumaActive11_g7759 = IsLumaActive11_g7759( Band11_g7759 );
+			float4 lerpResult14_g7758 = lerp( localAudioLinkLerp1_g7760 , float4( localLumaGlowLerp11_g7758 , 0.0 ) , (float)localIsLumaActive11_g7759);
+			float4 lerpResult52_g7748 = lerp( temp_cast_21 , lerpResult14_g7758 , (float)saturate( EmissionGlowZone47_g7748 ));
+			float4 lerpResult51_g7748 = lerp( float4( lerpResult23_g7748 , 0.0 ) , lerpResult52_g7748 , (float)saturate( ( EmissionGlowZone47_g7748 - 4 ) ));
 			float4 temp_cast_26 = (_RedChGlowMinBrightness).xxxx;
 			float4 temp_cast_27 = (( _RedChGlowMinBrightness + 1.0 )).xxxx;
-			int temp_output_254_0_g7536 = saturate( EmissionGlowZone47_g7536 );
-			int localIfAudioLinkv2Exists1_g7552 = IfAudioLinkv2Exists1_g7552();
-			float4 lerpResult284_g7536 = lerp( _RedChGlowFallback , ( (temp_cast_26 + (lerpResult51_g7536 - float4( 0,0,0,0 )) * (temp_cast_27 - temp_cast_26) / (float4( 1,1,1,1 ) - float4( 0,0,0,0 ))) * _RedChGlowTint * temp_output_254_0_g7536 ) , (float)localIfAudioLinkv2Exists1_g7552);
-			float4 EmissionGlow142_g7536 = lerpResult284_g7536;
-			float4 lerpResult257_g7536 = lerp( temp_cast_5 , EmissionGlow142_g7536 , (float)temp_output_254_0_g7536);
-			float4 EmissionGlowTog258_g7536 = lerpResult257_g7536;
-			int EmissionReactiveBand243_g7536 = _RedChReactiveBand;
-			int Band3_g7537 = EmissionReactiveBand243_g7536;
-			int Delay3_g7537 = 0;
-			float localAudioLinkData3_g7537 = AudioLinkData3_g7537( Band3_g7537 , Delay3_g7537 );
-			int temp_output_64_0_g7536 = step( _RedChReactiveBand , 9 );
-			float lerpResult66_g7536 = lerp( 1.0 , localAudioLinkData3_g7537 , (float)temp_output_64_0_g7536);
-			int Band3_g7539 = _RedChReactiveBand;
-			float cos78_g7536 = cos( radians( _RedChReactivePulseDir ) );
-			float sin78_g7536 = sin( radians( _RedChReactivePulseDir ) );
-			float2 rotator78_g7536 = mul( i.uv_texcoord - float2( 0.5,0.5 ) , float2x2( cos78_g7536 , -sin78_g7536 , sin78_g7536 , cos78_g7536 )) + float2( 0.5,0.5 );
-			float x96_g7536 = ( ( rotator78_g7536.x * _RedChReactivePulseScale ) + _RedChReactivePulseOffset );
-			float y96_g7536 = 127.0;
-			float localglslmod96_g7536 = glslmod96_g7536( x96_g7536 , y96_g7536 );
-			float2 temp_output_34_0_g7540 = ( i.uv_texcoord - _RedChReactiveRadialCenter );
-			float2 break39_g7540 = temp_output_34_0_g7540;
-			float2 appendResult50_g7540 = (float2(( _RedChReactivePulseScale * ( length( temp_output_34_0_g7540 ) * 2.0 ) ) , ( ( atan2( break39_g7540.x , break39_g7540.y ) * ( 1.0 / 6.28318548202515 ) ) * 1.0 )));
-			float x97_g7536 = ( _RedChReactivePulseOffset + appendResult50_g7540.x );
-			float y97_g7536 = 127.0;
-			float localglslmod97_g7536 = glslmod97_g7536( x97_g7536 , y97_g7536 );
-			int EmissionReactiveMode99_g7536 = _RedChReactiveMode;
-			int temp_output_90_0_g7536 = ( EmissionReactiveMode99_g7536 - 1 );
-			float lerpResult77_g7536 = lerp( localglslmod96_g7536 , localglslmod97_g7536 , (float)saturate( temp_output_90_0_g7536 ));
-			float lerpResult174_g7536 = lerp( DirectionalMap106_g7536 , ( 1.0 - DirectionalMap106_g7536 ) , (float)saturate( ( EmissionReactiveMode99_g7536 - 0 ) ));
-			float x98_g7536 = ( _RedChReactivePulseOffset + ( _RedChReactivePulseScale * lerpResult174_g7536 ) );
-			float y98_g7536 = 127.0;
-			float localglslmod98_g7536 = glslmod98_g7536( x98_g7536 , y98_g7536 );
-			float lerpResult87_g7536 = lerp( lerpResult77_g7536 , localglslmod98_g7536 , (float)saturate( ( temp_output_90_0_g7536 - 1 ) ));
-			float Delay3_g7539 = lerpResult87_g7536;
-			float localAudioLinkLerp3_g7539 = AudioLinkLerp3_g7539( Band3_g7539 , Delay3_g7539 );
-			float lerpResult102_g7536 = lerp( 1.0 , localAudioLinkLerp3_g7539 , (float)temp_output_64_0_g7536);
-			float lerpResult103_g7536 = lerp( lerpResult66_g7536 , lerpResult102_g7536 , (float)saturate( EmissionReactiveMode99_g7536 ));
-			int Band3_g7541 = _RedChReactiveBand;
-			float FilteredAmount3_g7541 = ( ( 1.0 - _RedChReactiveGlobalSmoothing ) * 15.0 );
-			float localAudioLinkLerp3_g7541 = AudioLinkLerp3_g7541( Band3_g7541 , FilteredAmount3_g7541 );
-			float lerpResult168_g7536 = lerp( 1.0 , localAudioLinkLerp3_g7541 , (float)temp_output_64_0_g7536);
-			float lerpResult172_g7536 = lerp( lerpResult103_g7536 , lerpResult168_g7536 , (float)saturate( ( EmissionReactiveMode99_g7536 - 0 ) ));
-			float ReactivityAlpha132_g7536 = (_RedChReactiveMinBrightness + (lerpResult172_g7536 - 0.0) * (( _RedChReactiveMinBrightness + 1.0 ) - _RedChReactiveMinBrightness) / (1.0 - 0.0));
+			int temp_output_254_0_g7748 = saturate( EmissionGlowZone47_g7748 );
+			int localIfAudioLinkv2Exists1_g7764 = IfAudioLinkv2Exists1_g7764();
+			float4 lerpResult284_g7748 = lerp( _RedChGlowFallback , ( (temp_cast_26 + (lerpResult51_g7748 - float4( 0,0,0,0 )) * (temp_cast_27 - temp_cast_26) / (float4( 1,1,1,1 ) - float4( 0,0,0,0 ))) * _RedChGlowTint * temp_output_254_0_g7748 ) , (float)localIfAudioLinkv2Exists1_g7764);
+			float4 EmissionGlow142_g7748 = lerpResult284_g7748;
+			float4 lerpResult257_g7748 = lerp( temp_cast_5 , EmissionGlow142_g7748 , (float)temp_output_254_0_g7748);
+			float4 EmissionGlowTog258_g7748 = lerpResult257_g7748;
+			int EmissionReactiveBand243_g7748 = _RedChReactiveBand;
+			int Band3_g7749 = EmissionReactiveBand243_g7748;
+			int Delay3_g7749 = 0;
+			float localAudioLinkData3_g7749 = AudioLinkData3_g7749( Band3_g7749 , Delay3_g7749 );
+			int temp_output_64_0_g7748 = step( _RedChReactiveBand , 9 );
+			float lerpResult66_g7748 = lerp( 1.0 , localAudioLinkData3_g7749 , (float)temp_output_64_0_g7748);
+			int Band3_g7751 = _RedChReactiveBand;
+			float cos78_g7748 = cos( radians( _RedChReactivePulseDir ) );
+			float sin78_g7748 = sin( radians( _RedChReactivePulseDir ) );
+			float2 rotator78_g7748 = mul( i.uv_texcoord - float2( 0.5,0.5 ) , float2x2( cos78_g7748 , -sin78_g7748 , sin78_g7748 , cos78_g7748 )) + float2( 0.5,0.5 );
+			float x96_g7748 = ( ( rotator78_g7748.x * _RedChReactivePulseScale ) + _RedChReactivePulseOffset );
+			float y96_g7748 = 127.0;
+			float localglslmod96_g7748 = glslmod96_g7748( x96_g7748 , y96_g7748 );
+			float2 temp_output_34_0_g7752 = ( i.uv_texcoord - _RedChReactiveRadialCenter );
+			float2 break39_g7752 = temp_output_34_0_g7752;
+			float2 appendResult50_g7752 = (float2(( _RedChReactivePulseScale * ( length( temp_output_34_0_g7752 ) * 2.0 ) ) , ( ( atan2( break39_g7752.x , break39_g7752.y ) * ( 1.0 / 6.28318548202515 ) ) * 1.0 )));
+			float x97_g7748 = ( _RedChReactivePulseOffset + appendResult50_g7752.x );
+			float y97_g7748 = 127.0;
+			float localglslmod97_g7748 = glslmod97_g7748( x97_g7748 , y97_g7748 );
+			int EmissionReactiveMode99_g7748 = _RedChReactiveMode;
+			int temp_output_90_0_g7748 = ( EmissionReactiveMode99_g7748 - 1 );
+			float lerpResult77_g7748 = lerp( localglslmod96_g7748 , localglslmod97_g7748 , (float)saturate( temp_output_90_0_g7748 ));
+			float lerpResult174_g7748 = lerp( DirectionalMap106_g7748 , ( 1.0 - DirectionalMap106_g7748 ) , (float)saturate( ( EmissionReactiveMode99_g7748 - 3 ) ));
+			float x98_g7748 = ( _RedChReactivePulseOffset + ( _RedChReactivePulseScale * lerpResult174_g7748 ) );
+			float y98_g7748 = 127.0;
+			float localglslmod98_g7748 = glslmod98_g7748( x98_g7748 , y98_g7748 );
+			float lerpResult87_g7748 = lerp( lerpResult77_g7748 , localglslmod98_g7748 , (float)saturate( ( temp_output_90_0_g7748 - 1 ) ));
+			float Delay3_g7751 = lerpResult87_g7748;
+			float localAudioLinkLerp3_g7751 = AudioLinkLerp3_g7751( Band3_g7751 , Delay3_g7751 );
+			float lerpResult102_g7748 = lerp( 1.0 , localAudioLinkLerp3_g7751 , (float)temp_output_64_0_g7748);
+			float lerpResult103_g7748 = lerp( lerpResult66_g7748 , lerpResult102_g7748 , (float)saturate( EmissionReactiveMode99_g7748 ));
+			int Band3_g7753 = _RedChReactiveBand;
+			float FilteredAmount3_g7753 = ( ( 1.0 - _RedChReactiveGlobalSmoothing ) * 15.0 );
+			float localAudioLinkLerp3_g7753 = AudioLinkLerp3_g7753( Band3_g7753 , FilteredAmount3_g7753 );
+			float lerpResult168_g7748 = lerp( 1.0 , localAudioLinkLerp3_g7753 , (float)temp_output_64_0_g7748);
+			float lerpResult172_g7748 = lerp( lerpResult103_g7748 , lerpResult168_g7748 , (float)saturate( ( EmissionReactiveMode99_g7748 - 4 ) ));
+			float ReactivityAlpha132_g7748 = (_RedChReactiveMinBrightness + (lerpResult172_g7748 - 0.0) * (( _RedChReactiveMinBrightness + 1.0 ) - _RedChReactiveMinBrightness) / (1.0 - 0.0));
 			float4 temp_cast_39 = (1.0).xxxx;
-			float4 lerpResult253_g7536 = lerp( temp_cast_39 , _RedChReactiveTint , (float)step( EmissionReactiveBand243_g7536 , 0 ));
-			float4 FinalReactivity68_g7536 = ( ReactivityAlpha132_g7536 * lerpResult253_g7536 );
-			float4 lerpResult146_g7536 = lerp( ( EmissionGlowTog258_g7536 * FinalReactivity68_g7536 ) , ( EmissionGlow142_g7536 + FinalReactivity68_g7536 ) , (float)saturate( _RedChReactiveBlendMode ));
-			float4 ReversedReactivity152_g7536 = ( ( 1.0 - ReactivityAlpha132_g7536 ) * lerpResult253_g7536 );
-			int temp_output_157_0_g7536 = ( _RedChReactiveBlendMode - 1 );
-			float4 lerpResult114_g7536 = lerp( lerpResult146_g7536 , ( EmissionGlowTog258_g7536 * ReversedReactivity152_g7536 ) , (float)saturate( temp_output_157_0_g7536 ));
-			float4 lerpResult164_g7536 = lerp( lerpResult114_g7536 , ( EmissionGlow142_g7536 + ( ReversedReactivity152_g7536 * step( EmissionReactiveBand243_g7536 , 0 ) ) ) , (float)max( saturate( ( temp_output_157_0_g7536 - 1 ) ) , ( 1.0 - step( EmissionReactiveBand243_g7536 , 0 ) ) ));
-			int localIfAudioLinkv2Exists1_g7551 = IfAudioLinkv2Exists1_g7551();
-			float4 temp_output_213_0_g7536 = ( lerpResult164_g7536 * temp_output_236_0_g7536 * saturate( ( localIfAudioLinkv2Exists1_g7551 + _UseFallback0 ) ) );
-			float4 lerpResult280_g7536 = lerp( temp_output_291_0_g7536 , temp_output_213_0_g7536 , _EnableRedChannel);
-			float temp_output_236_0_g7553 = (GlowMaskRGBA174_g7501).y;
-			float4 temp_output_283_0_g7553 = ( _GreenChGlowFallback * temp_output_236_0_g7553 * _UseFallback1 );
+			float4 lerpResult253_g7748 = lerp( temp_cast_39 , _RedChReactiveTint , (float)step( EmissionReactiveBand243_g7748 , 9 ));
+			float4 FinalReactivity68_g7748 = ( ReactivityAlpha132_g7748 * lerpResult253_g7748 );
+			float4 lerpResult146_g7748 = lerp( ( EmissionGlowTog258_g7748 * FinalReactivity68_g7748 ) , ( EmissionGlow142_g7748 + FinalReactivity68_g7748 ) , (float)saturate( _RedChReactiveBlendMode ));
+			float4 ReversedReactivity152_g7748 = ( ( 1.0 - ReactivityAlpha132_g7748 ) * lerpResult253_g7748 );
+			int temp_output_157_0_g7748 = ( _RedChReactiveBlendMode - 1 );
+			float4 lerpResult114_g7748 = lerp( lerpResult146_g7748 , ( EmissionGlowTog258_g7748 * ReversedReactivity152_g7748 ) , (float)saturate( temp_output_157_0_g7748 ));
+			float4 lerpResult164_g7748 = lerp( lerpResult114_g7748 , ( EmissionGlow142_g7748 + ( ReversedReactivity152_g7748 * step( EmissionReactiveBand243_g7748 , 9 ) ) ) , (float)max( saturate( ( temp_output_157_0_g7748 - 1 ) ) , ( 1.0 - step( EmissionReactiveBand243_g7748 , 9 ) ) ));
+			int localIfAudioLinkv2Exists1_g7763 = IfAudioLinkv2Exists1_g7763();
+			float4 temp_output_213_0_g7748 = ( lerpResult164_g7748 * temp_output_236_0_g7748 * saturate( ( localIfAudioLinkv2Exists1_g7763 + _UseFallback0 ) ) );
+			float4 lerpResult280_g7748 = lerp( temp_output_291_0_g7748 , temp_output_213_0_g7748 , _EnableRedChannel);
+			float temp_output_236_0_g7681 = (GlowMaskRGBA174_g7679).y;
+			float4 temp_output_283_0_g7681 = ( _GreenChGlowFallback * temp_output_236_0_g7681 * _UseFallback1 );
 			float4 temp_cast_49 = (1.0).xxxx;
 			float3 temp_cast_51 = (1.0).xxx;
-			int EmissionGlowZone47_g7553 = _GreenChGlowZone;
-			int clampResult8_g7559 = clamp( EmissionGlowZone47_g7553 , 1 , 4 );
-			int temp_output_3_0_g7559 = ( clampResult8_g7559 - 1 );
-			int Zone16_g7559 = temp_output_3_0_g7559;
-			float3 localgetThemeData16_g7559 = getThemeData( Zone16_g7559 );
-			int Band11_g7560 = 56;
-			int localIsLumaActive11_g7560 = IsLumaActive11_g7560( Band11_g7560 );
-			int temp_output_14_0_g7559 = localIsLumaActive11_g7560;
-			int lerpResult15_g7559 = lerp( temp_output_3_0_g7559 , ( 63 - temp_output_3_0_g7559 ) , (float)temp_output_14_0_g7559);
-			int Band2_g7559 = lerpResult15_g7559;
-			int Delay2_g7559 = 0;
-			float3 localLumaGlowData2_g7559 = LumaGlowData2_g7559( Band2_g7559 , Delay2_g7559 );
-			float3 lerpResult17_g7559 = lerp( ( localgetThemeData16_g7559 * localLumaGlowData2_g7559 ) , localLumaGlowData2_g7559 , (float)temp_output_14_0_g7559);
-			int temp_output_21_0_g7553 = saturate( EmissionGlowZone47_g7553 );
-			float3 lerpResult20_g7553 = lerp( temp_cast_51 , lerpResult17_g7559 , (float)temp_output_21_0_g7553);
+			int EmissionGlowZone47_g7681 = _GreenChGlowZone;
+			int clampResult8_g7687 = clamp( EmissionGlowZone47_g7681 , 1 , 4 );
+			int temp_output_3_0_g7687 = ( clampResult8_g7687 - 1 );
+			int Zone16_g7687 = temp_output_3_0_g7687;
+			float3 localgetThemeData16_g7687 = getThemeData( Zone16_g7687 );
+			int Band11_g7688 = 56;
+			int localIsLumaActive11_g7688 = IsLumaActive11_g7688( Band11_g7688 );
+			int temp_output_14_0_g7687 = localIsLumaActive11_g7688;
+			int lerpResult15_g7687 = lerp( temp_output_3_0_g7687 , ( 63 - temp_output_3_0_g7687 ) , (float)temp_output_14_0_g7687);
+			int Band2_g7687 = lerpResult15_g7687;
+			int Delay2_g7687 = 0;
+			float3 localLumaGlowData2_g7687 = LumaGlowData2_g7687( Band2_g7687 , Delay2_g7687 );
+			float3 lerpResult17_g7687 = lerp( ( localgetThemeData16_g7687 * localLumaGlowData2_g7687 ) , localLumaGlowData2_g7687 , (float)temp_output_14_0_g7687);
+			int temp_output_21_0_g7681 = saturate( EmissionGlowZone47_g7681 );
+			float3 lerpResult20_g7681 = lerp( temp_cast_51 , lerpResult17_g7687 , (float)temp_output_21_0_g7681);
 			float3 temp_cast_55 = (1.0).xxx;
-			int clampResult8_g7561 = clamp( EmissionGlowZone47_g7553 , 1 , 4 );
-			int temp_output_3_0_g7561 = ( clampResult8_g7561 - 1 );
-			int Zone15_g7561 = temp_output_3_0_g7561;
-			float3 localgetThemeData15_g7561 = getThemeData( Zone15_g7561 );
-			int Band11_g7562 = 56;
-			int localIsLumaActive11_g7562 = IsLumaActive11_g7562( Band11_g7562 );
-			int temp_output_13_0_g7561 = localIsLumaActive11_g7562;
-			int lerpResult14_g7561 = lerp( temp_output_3_0_g7561 , ( 63 - temp_output_3_0_g7561 ) , (float)temp_output_13_0_g7561);
-			int Band11_g7561 = lerpResult14_g7561;
-			float cos6_g7553 = cos( radians( _GreenChGlowPulseDir ) );
-			float sin6_g7553 = sin( radians( _GreenChGlowPulseDir ) );
-			float2 rotator6_g7553 = mul( i.uv_texcoord - float2( 0.5,0.5 ) , float2x2( cos6_g7553 , -sin6_g7553 , sin6_g7553 , cos6_g7553 )) + float2( 0.5,0.5 );
-			int Band6_g7566 = _GreenChGlowAnimationBand;
-			int Mode6_g7566 = ( ( _GreenChGlowAnimationMode * 2 ) + _GreenChGlowAnimationSpeed );
-			int localAudioLinkDecodeDataAsUInt6_g7566 = AudioLinkDecodeDataAsUInt6_g7566( Band6_g7566 , Mode6_g7566 );
-			float localGetLocalTime2_g7567 = ( AudioLinkDecodeDataAsSeconds( ALPASS_GENERALVU_LOCAL_TIME ) );
-			float lerpResult206_g7553 = lerp( ( ( localAudioLinkDecodeDataAsUInt6_g7566 % 628319 ) / 100000.0 ) , localGetLocalTime2_g7567 , (float)saturate( ( _GreenChGlowAnimationMode - 3 ) ));
-			float EmissionGlowAnimation195_g7553 = ( _GreenChGlowAnimationStrength * lerpResult206_g7553 * step( _GreenChGlowAnimationBand , 9 ) );
-			float x13_g7553 = ( ( rotator6_g7553.x * _GreenChGlowPulseScale ) + _GreenChGlowPulseOffset + EmissionGlowAnimation195_g7553 );
-			float y13_g7553 = 127.0;
-			float localglslmod13_g7553 = glslmod13_g7553( x13_g7553 , y13_g7553 );
-			float2 temp_output_34_0_g7555 = ( i.uv_texcoord - _GreenChGlowRadialCenter );
-			float2 break39_g7555 = temp_output_34_0_g7555;
-			float2 appendResult50_g7555 = (float2(( _GreenChGlowPulseScale * ( length( temp_output_34_0_g7555 ) * 2.0 ) ) , ( ( atan2( break39_g7555.x , break39_g7555.y ) * ( 1.0 / 6.28318548202515 ) ) * 1.0 )));
-			float x12_g7553 = ( _GreenChGlowPulseOffset + appendResult50_g7555.x + EmissionGlowAnimation195_g7553 );
-			float y12_g7553 = 127.0;
-			float localglslmod12_g7553 = glslmod12_g7553( x12_g7553 , y12_g7553 );
-			int EmissionGlowMode35_g7553 = _GreenChGlowMode;
-			int temp_output_37_0_g7553 = ( EmissionGlowMode35_g7553 - 1 );
-			float lerpResult5_g7553 = lerp( localglslmod13_g7553 , localglslmod12_g7553 , (float)saturate( temp_output_37_0_g7553 ));
-			float DirectionalMap106_g7553 = Direction27_g7501;
-			float lerpResult179_g7553 = lerp( DirectionalMap106_g7553 , ( 1.0 - DirectionalMap106_g7553 ) , (float)saturate( ( EmissionGlowMode35_g7553 - 3 ) ));
-			float x34_g7553 = ( _GreenChGlowPulseOffset + ( _GreenChGlowPulseScale * lerpResult179_g7553 ) + EmissionGlowAnimation195_g7553 );
-			float y34_g7553 = 127.0;
-			float localglslmod34_g7553 = glslmod34_g7553( x34_g7553 , y34_g7553 );
-			float lerpResult30_g7553 = lerp( lerpResult5_g7553 , localglslmod34_g7553 , (float)saturate( ( temp_output_37_0_g7553 - 1 ) ));
-			float EmissionGlowDelay56_g7553 = lerpResult30_g7553;
-			float Delay11_g7561 = EmissionGlowDelay56_g7553;
-			float3 localLumaGlowLerp11_g7561 = LumaGlowLerp11_g7561( Band11_g7561 , Delay11_g7561 );
-			float3 lerpResult17_g7561 = lerp( ( localgetThemeData15_g7561 * localLumaGlowLerp11_g7561 ) , localLumaGlowLerp11_g7561 , (float)temp_output_13_0_g7561);
-			float3 lerpResult22_g7553 = lerp( temp_cast_55 , lerpResult17_g7561 , (float)temp_output_21_0_g7553);
-			float3 lerpResult23_g7553 = lerp( lerpResult20_g7553 , lerpResult22_g7553 , (float)saturate( EmissionGlowMode35_g7553 ));
+			int clampResult8_g7689 = clamp( EmissionGlowZone47_g7681 , 1 , 4 );
+			int temp_output_3_0_g7689 = ( clampResult8_g7689 - 1 );
+			int Zone15_g7689 = temp_output_3_0_g7689;
+			float3 localgetThemeData15_g7689 = getThemeData( Zone15_g7689 );
+			int Band11_g7690 = 56;
+			int localIsLumaActive11_g7690 = IsLumaActive11_g7690( Band11_g7690 );
+			int temp_output_13_0_g7689 = localIsLumaActive11_g7690;
+			int lerpResult14_g7689 = lerp( temp_output_3_0_g7689 , ( 63 - temp_output_3_0_g7689 ) , (float)temp_output_13_0_g7689);
+			int Band11_g7689 = lerpResult14_g7689;
+			float cos6_g7681 = cos( radians( _GreenChGlowPulseDir ) );
+			float sin6_g7681 = sin( radians( _GreenChGlowPulseDir ) );
+			float2 rotator6_g7681 = mul( i.uv_texcoord - float2( 0.5,0.5 ) , float2x2( cos6_g7681 , -sin6_g7681 , sin6_g7681 , cos6_g7681 )) + float2( 0.5,0.5 );
+			int Band6_g7694 = _GreenChGlowAnimationBand;
+			int Mode6_g7694 = ( ( _GreenChGlowAnimationMode * 2 ) + _GreenChGlowAnimationSpeed );
+			int localAudioLinkDecodeDataAsUInt6_g7694 = AudioLinkDecodeDataAsUInt6_g7694( Band6_g7694 , Mode6_g7694 );
+			float localGetLocalTime2_g7695 = ( AudioLinkDecodeDataAsSeconds( ALPASS_GENERALVU_LOCAL_TIME ) );
+			float lerpResult206_g7681 = lerp( ( ( localAudioLinkDecodeDataAsUInt6_g7694 % 628319 ) / 100000.0 ) , localGetLocalTime2_g7695 , (float)saturate( ( _GreenChGlowAnimationMode - 3 ) ));
+			float EmissionGlowAnimation195_g7681 = ( _GreenChGlowAnimationStrength * lerpResult206_g7681 * step( _GreenChGlowAnimationBand , 9 ) );
+			float x13_g7681 = ( ( rotator6_g7681.x * _GreenChGlowPulseScale ) + _GreenChGlowPulseOffset + EmissionGlowAnimation195_g7681 );
+			float y13_g7681 = 127.0;
+			float localglslmod13_g7681 = glslmod13_g7681( x13_g7681 , y13_g7681 );
+			float2 temp_output_34_0_g7683 = ( i.uv_texcoord - _GreenChGlowRadialCenter );
+			float2 break39_g7683 = temp_output_34_0_g7683;
+			float2 appendResult50_g7683 = (float2(( _GreenChGlowPulseScale * ( length( temp_output_34_0_g7683 ) * 2.0 ) ) , ( ( atan2( break39_g7683.x , break39_g7683.y ) * ( 1.0 / 6.28318548202515 ) ) * 1.0 )));
+			float x12_g7681 = ( _GreenChGlowPulseOffset + appendResult50_g7683.x + EmissionGlowAnimation195_g7681 );
+			float y12_g7681 = 127.0;
+			float localglslmod12_g7681 = glslmod12_g7681( x12_g7681 , y12_g7681 );
+			int EmissionGlowMode35_g7681 = _GreenChGlowMode;
+			int temp_output_37_0_g7681 = ( EmissionGlowMode35_g7681 - 1 );
+			float lerpResult5_g7681 = lerp( localglslmod13_g7681 , localglslmod12_g7681 , (float)saturate( temp_output_37_0_g7681 ));
+			float DirectionalMap106_g7681 = Direction27_g7679;
+			float lerpResult179_g7681 = lerp( DirectionalMap106_g7681 , ( 1.0 - DirectionalMap106_g7681 ) , (float)saturate( ( EmissionGlowMode35_g7681 - 3 ) ));
+			float x34_g7681 = ( _GreenChGlowPulseOffset + ( _GreenChGlowPulseScale * lerpResult179_g7681 ) + EmissionGlowAnimation195_g7681 );
+			float y34_g7681 = 127.0;
+			float localglslmod34_g7681 = glslmod34_g7681( x34_g7681 , y34_g7681 );
+			float lerpResult30_g7681 = lerp( lerpResult5_g7681 , localglslmod34_g7681 , (float)saturate( ( temp_output_37_0_g7681 - 1 ) ));
+			float EmissionGlowDelay56_g7681 = lerpResult30_g7681;
+			float Delay11_g7689 = EmissionGlowDelay56_g7681;
+			float3 localLumaGlowLerp11_g7689 = LumaGlowLerp11_g7689( Band11_g7689 , Delay11_g7689 );
+			float3 lerpResult17_g7689 = lerp( ( localgetThemeData15_g7689 * localLumaGlowLerp11_g7689 ) , localLumaGlowLerp11_g7689 , (float)temp_output_13_0_g7689);
+			float3 lerpResult22_g7681 = lerp( temp_cast_55 , lerpResult17_g7689 , (float)temp_output_21_0_g7681);
+			float3 lerpResult23_g7681 = lerp( lerpResult20_g7681 , lerpResult22_g7681 , (float)saturate( EmissionGlowMode35_g7681 ));
 			float4 temp_cast_65 = (1.0).xxxx;
-			float temp_output_10_0_g7563 = EmissionGlowDelay56_g7553;
-			float Position1_g7565 = ( temp_output_10_0_g7563 / 127.0 );
-			float4 localAudioLinkLerp1_g7565 = AudioLinkLerp1_g7565( Position1_g7565 );
-			int clampResult8_g7563 = clamp( ( EmissionGlowZone47_g7553 - 0 ) , 1 , 3 );
-			int Band11_g7563 = ( 59 - ( clampResult8_g7563 - 1 ) );
-			float Delay11_g7563 = temp_output_10_0_g7563;
-			float3 localLumaGlowLerp11_g7563 = LumaGlowLerp11_g7563( Band11_g7563 , Delay11_g7563 );
-			int Band11_g7564 = 56;
-			int localIsLumaActive11_g7564 = IsLumaActive11_g7564( Band11_g7564 );
-			float4 lerpResult14_g7563 = lerp( localAudioLinkLerp1_g7565 , float4( localLumaGlowLerp11_g7563 , 0.0 ) , (float)localIsLumaActive11_g7564);
-			float4 lerpResult52_g7553 = lerp( temp_cast_65 , lerpResult14_g7563 , (float)saturate( EmissionGlowZone47_g7553 ));
-			float4 lerpResult51_g7553 = lerp( float4( lerpResult23_g7553 , 0.0 ) , lerpResult52_g7553 , (float)saturate( ( EmissionGlowZone47_g7553 - 0 ) ));
+			float temp_output_10_0_g7691 = EmissionGlowDelay56_g7681;
+			float Position1_g7693 = ( temp_output_10_0_g7691 / 127.0 );
+			float4 localAudioLinkLerp1_g7693 = AudioLinkLerp1_g7693( Position1_g7693 );
+			int clampResult8_g7691 = clamp( ( EmissionGlowZone47_g7681 - 4 ) , 1 , 3 );
+			int Band11_g7691 = ( 59 - ( clampResult8_g7691 - 1 ) );
+			float Delay11_g7691 = temp_output_10_0_g7691;
+			float3 localLumaGlowLerp11_g7691 = LumaGlowLerp11_g7691( Band11_g7691 , Delay11_g7691 );
+			int Band11_g7692 = 56;
+			int localIsLumaActive11_g7692 = IsLumaActive11_g7692( Band11_g7692 );
+			float4 lerpResult14_g7691 = lerp( localAudioLinkLerp1_g7693 , float4( localLumaGlowLerp11_g7691 , 0.0 ) , (float)localIsLumaActive11_g7692);
+			float4 lerpResult52_g7681 = lerp( temp_cast_65 , lerpResult14_g7691 , (float)saturate( EmissionGlowZone47_g7681 ));
+			float4 lerpResult51_g7681 = lerp( float4( lerpResult23_g7681 , 0.0 ) , lerpResult52_g7681 , (float)saturate( ( EmissionGlowZone47_g7681 - 4 ) ));
 			float4 temp_cast_70 = (_GreenChGlowMinBrightness).xxxx;
 			float4 temp_cast_71 = (( _GreenChGlowMinBrightness + 1.0 )).xxxx;
-			int temp_output_255_0_g7553 = saturate( EmissionGlowZone47_g7553 );
-			int localIfAudioLinkv2Exists1_g7569 = IfAudioLinkv2Exists1_g7569();
-			float4 lerpResult280_g7553 = lerp( _GreenChGlowFallback , ( (temp_cast_70 + (lerpResult51_g7553 - float4( 0,0,0,0 )) * (temp_cast_71 - temp_cast_70) / (float4( 1,1,1,1 ) - float4( 0,0,0,0 ))) * _GreenChGlowTint * temp_output_255_0_g7553 ) , (float)localIfAudioLinkv2Exists1_g7569);
-			float4 EmissionGlow142_g7553 = lerpResult280_g7553;
-			float4 lerpResult258_g7553 = lerp( temp_cast_49 , EmissionGlow142_g7553 , (float)temp_output_255_0_g7553);
-			float4 EmissionGlowTog259_g7553 = lerpResult258_g7553;
-			int EmissionReactiveBand243_g7553 = _GreenChReactiveBand;
-			int Band3_g7554 = EmissionReactiveBand243_g7553;
-			int Delay3_g7554 = 0;
-			float localAudioLinkData3_g7554 = AudioLinkData3_g7554( Band3_g7554 , Delay3_g7554 );
-			int temp_output_64_0_g7553 = step( _GreenChReactiveBand , 9 );
-			float lerpResult66_g7553 = lerp( 1.0 , localAudioLinkData3_g7554 , (float)temp_output_64_0_g7553);
-			int Band3_g7556 = _GreenChReactiveBand;
-			float cos78_g7553 = cos( radians( _GreenChReactivePulseDir ) );
-			float sin78_g7553 = sin( radians( _GreenChReactivePulseDir ) );
-			float2 rotator78_g7553 = mul( i.uv_texcoord - float2( 0.5,0.5 ) , float2x2( cos78_g7553 , -sin78_g7553 , sin78_g7553 , cos78_g7553 )) + float2( 0.5,0.5 );
-			float x96_g7553 = ( ( rotator78_g7553.x * _GreenChReactivePulseScale ) + _GreenChReactivePulseOffset );
-			float y96_g7553 = 127.0;
-			float localglslmod96_g7553 = glslmod96_g7553( x96_g7553 , y96_g7553 );
-			float2 temp_output_34_0_g7557 = ( i.uv_texcoord - _GreenChReactiveRadialCenter );
-			float2 break39_g7557 = temp_output_34_0_g7557;
-			float2 appendResult50_g7557 = (float2(( _GreenChReactivePulseScale * ( length( temp_output_34_0_g7557 ) * 2.0 ) ) , ( ( atan2( break39_g7557.x , break39_g7557.y ) * ( 1.0 / 6.28318548202515 ) ) * 1.0 )));
-			float x97_g7553 = ( _GreenChReactivePulseOffset + appendResult50_g7557.x );
-			float y97_g7553 = 127.0;
-			float localglslmod97_g7553 = glslmod97_g7553( x97_g7553 , y97_g7553 );
-			int EmissionReactiveMode99_g7553 = _GreenChReactiveMode;
-			int temp_output_90_0_g7553 = ( EmissionReactiveMode99_g7553 - 1 );
-			float lerpResult77_g7553 = lerp( localglslmod96_g7553 , localglslmod97_g7553 , (float)saturate( temp_output_90_0_g7553 ));
-			float lerpResult174_g7553 = lerp( DirectionalMap106_g7553 , ( 1.0 - DirectionalMap106_g7553 ) , (float)saturate( ( EmissionReactiveMode99_g7553 - 0 ) ));
-			float x98_g7553 = ( _GreenChReactivePulseOffset + ( _GreenChReactivePulseScale * lerpResult174_g7553 ) );
-			float y98_g7553 = 127.0;
-			float localglslmod98_g7553 = glslmod98_g7553( x98_g7553 , y98_g7553 );
-			float lerpResult87_g7553 = lerp( lerpResult77_g7553 , localglslmod98_g7553 , (float)saturate( ( temp_output_90_0_g7553 - 1 ) ));
-			float Delay3_g7556 = lerpResult87_g7553;
-			float localAudioLinkLerp3_g7556 = AudioLinkLerp3_g7556( Band3_g7556 , Delay3_g7556 );
-			float lerpResult102_g7553 = lerp( 1.0 , localAudioLinkLerp3_g7556 , (float)temp_output_64_0_g7553);
-			float lerpResult103_g7553 = lerp( lerpResult66_g7553 , lerpResult102_g7553 , (float)saturate( EmissionReactiveMode99_g7553 ));
-			int Band3_g7558 = _GreenChReactiveBand;
-			float FilteredAmount3_g7558 = ( ( 1.0 - _GreenChReactiveGlobalSmoothing ) * 15.0 );
-			float localAudioLinkLerp3_g7558 = AudioLinkLerp3_g7558( Band3_g7558 , FilteredAmount3_g7558 );
-			float lerpResult168_g7553 = lerp( 1.0 , localAudioLinkLerp3_g7558 , (float)temp_output_64_0_g7553);
-			float lerpResult172_g7553 = lerp( lerpResult103_g7553 , lerpResult168_g7553 , (float)saturate( ( EmissionReactiveMode99_g7553 - 0 ) ));
-			float ReactivityAlpha132_g7553 = (_GreenChReactiveMinBrightness + (lerpResult172_g7553 - 0.0) * (( _GreenChReactiveMinBrightness + 1.0 ) - _GreenChReactiveMinBrightness) / (1.0 - 0.0));
+			int temp_output_255_0_g7681 = saturate( EmissionGlowZone47_g7681 );
+			int localIfAudioLinkv2Exists1_g7697 = IfAudioLinkv2Exists1_g7697();
+			float4 lerpResult280_g7681 = lerp( _GreenChGlowFallback , ( (temp_cast_70 + (lerpResult51_g7681 - float4( 0,0,0,0 )) * (temp_cast_71 - temp_cast_70) / (float4( 1,1,1,1 ) - float4( 0,0,0,0 ))) * _GreenChGlowTint * temp_output_255_0_g7681 ) , (float)localIfAudioLinkv2Exists1_g7697);
+			float4 EmissionGlow142_g7681 = lerpResult280_g7681;
+			float4 lerpResult258_g7681 = lerp( temp_cast_49 , EmissionGlow142_g7681 , (float)temp_output_255_0_g7681);
+			float4 EmissionGlowTog259_g7681 = lerpResult258_g7681;
+			int EmissionReactiveBand243_g7681 = _GreenChReactiveBand;
+			int Band3_g7682 = EmissionReactiveBand243_g7681;
+			int Delay3_g7682 = 0;
+			float localAudioLinkData3_g7682 = AudioLinkData3_g7682( Band3_g7682 , Delay3_g7682 );
+			int temp_output_64_0_g7681 = step( _GreenChReactiveBand , 9 );
+			float lerpResult66_g7681 = lerp( 1.0 , localAudioLinkData3_g7682 , (float)temp_output_64_0_g7681);
+			int Band3_g7684 = _GreenChReactiveBand;
+			float cos78_g7681 = cos( radians( _GreenChReactivePulseDir ) );
+			float sin78_g7681 = sin( radians( _GreenChReactivePulseDir ) );
+			float2 rotator78_g7681 = mul( i.uv_texcoord - float2( 0.5,0.5 ) , float2x2( cos78_g7681 , -sin78_g7681 , sin78_g7681 , cos78_g7681 )) + float2( 0.5,0.5 );
+			float x96_g7681 = ( ( rotator78_g7681.x * _GreenChReactivePulseScale ) + _GreenChReactivePulseOffset );
+			float y96_g7681 = 127.0;
+			float localglslmod96_g7681 = glslmod96_g7681( x96_g7681 , y96_g7681 );
+			float2 temp_output_34_0_g7685 = ( i.uv_texcoord - _GreenChReactiveRadialCenter );
+			float2 break39_g7685 = temp_output_34_0_g7685;
+			float2 appendResult50_g7685 = (float2(( _GreenChReactivePulseScale * ( length( temp_output_34_0_g7685 ) * 2.0 ) ) , ( ( atan2( break39_g7685.x , break39_g7685.y ) * ( 1.0 / 6.28318548202515 ) ) * 1.0 )));
+			float x97_g7681 = ( _GreenChReactivePulseOffset + appendResult50_g7685.x );
+			float y97_g7681 = 127.0;
+			float localglslmod97_g7681 = glslmod97_g7681( x97_g7681 , y97_g7681 );
+			int EmissionReactiveMode99_g7681 = _GreenChReactiveMode;
+			int temp_output_90_0_g7681 = ( EmissionReactiveMode99_g7681 - 1 );
+			float lerpResult77_g7681 = lerp( localglslmod96_g7681 , localglslmod97_g7681 , (float)saturate( temp_output_90_0_g7681 ));
+			float lerpResult174_g7681 = lerp( DirectionalMap106_g7681 , ( 1.0 - DirectionalMap106_g7681 ) , (float)saturate( ( EmissionReactiveMode99_g7681 - 3 ) ));
+			float x98_g7681 = ( _GreenChReactivePulseOffset + ( _GreenChReactivePulseScale * lerpResult174_g7681 ) );
+			float y98_g7681 = 127.0;
+			float localglslmod98_g7681 = glslmod98_g7681( x98_g7681 , y98_g7681 );
+			float lerpResult87_g7681 = lerp( lerpResult77_g7681 , localglslmod98_g7681 , (float)saturate( ( temp_output_90_0_g7681 - 1 ) ));
+			float Delay3_g7684 = lerpResult87_g7681;
+			float localAudioLinkLerp3_g7684 = AudioLinkLerp3_g7684( Band3_g7684 , Delay3_g7684 );
+			float lerpResult102_g7681 = lerp( 1.0 , localAudioLinkLerp3_g7684 , (float)temp_output_64_0_g7681);
+			float lerpResult103_g7681 = lerp( lerpResult66_g7681 , lerpResult102_g7681 , (float)saturate( EmissionReactiveMode99_g7681 ));
+			int Band3_g7686 = _GreenChReactiveBand;
+			float FilteredAmount3_g7686 = ( ( 1.0 - _GreenChReactiveGlobalSmoothing ) * 15.0 );
+			float localAudioLinkLerp3_g7686 = AudioLinkLerp3_g7686( Band3_g7686 , FilteredAmount3_g7686 );
+			float lerpResult168_g7681 = lerp( 1.0 , localAudioLinkLerp3_g7686 , (float)temp_output_64_0_g7681);
+			float lerpResult172_g7681 = lerp( lerpResult103_g7681 , lerpResult168_g7681 , (float)saturate( ( EmissionReactiveMode99_g7681 - 4 ) ));
+			float ReactivityAlpha132_g7681 = (_GreenChReactiveMinBrightness + (lerpResult172_g7681 - 0.0) * (( _GreenChReactiveMinBrightness + 1.0 ) - _GreenChReactiveMinBrightness) / (1.0 - 0.0));
 			float4 temp_cast_83 = (1.0).xxxx;
-			float4 lerpResult264_g7553 = lerp( temp_cast_83 , _GreenChReactiveTint , (float)step( EmissionReactiveBand243_g7553 , 0 ));
-			float4 FinalReactivity68_g7553 = ( ReactivityAlpha132_g7553 * lerpResult264_g7553 );
-			float4 lerpResult146_g7553 = lerp( ( EmissionGlowTog259_g7553 * FinalReactivity68_g7553 ) , ( EmissionGlow142_g7553 + FinalReactivity68_g7553 ) , (float)saturate( _GreenChReactiveBlendMode ));
-			float4 ReversedReactivity152_g7553 = ( ( 1.0 - ReactivityAlpha132_g7553 ) * lerpResult264_g7553 );
-			int temp_output_157_0_g7553 = ( _GreenChReactiveBlendMode - 1 );
-			float4 lerpResult114_g7553 = lerp( lerpResult146_g7553 , ( EmissionGlowTog259_g7553 * ReversedReactivity152_g7553 ) , (float)saturate( temp_output_157_0_g7553 ));
-			float4 lerpResult164_g7553 = lerp( lerpResult114_g7553 , ( EmissionGlow142_g7553 + ( ReversedReactivity152_g7553 * step( EmissionReactiveBand243_g7553 , 0 ) ) ) , (float)max( saturate( ( temp_output_157_0_g7553 - 1 ) ) , ( 1.0 - step( EmissionReactiveBand243_g7553 , 0 ) ) ));
-			int localIfAudioLinkv2Exists1_g7568 = IfAudioLinkv2Exists1_g7568();
-			float4 temp_output_213_0_g7553 = ( lerpResult164_g7553 * temp_output_236_0_g7553 * saturate( ( localIfAudioLinkv2Exists1_g7568 + _UseFallback1 ) ) );
-			float4 lerpResult276_g7553 = lerp( temp_output_283_0_g7553 , temp_output_213_0_g7553 , _EnableGreenChannel);
-			float temp_output_236_0_g7503 = (GlowMaskRGBA174_g7501).z;
-			float4 temp_output_286_0_g7503 = ( _BlueChGlowFallback * temp_output_236_0_g7503 * _UseFallback2 );
+			float4 lerpResult264_g7681 = lerp( temp_cast_83 , _GreenChReactiveTint , (float)step( EmissionReactiveBand243_g7681 , 9 ));
+			float4 FinalReactivity68_g7681 = ( ReactivityAlpha132_g7681 * lerpResult264_g7681 );
+			float4 lerpResult146_g7681 = lerp( ( EmissionGlowTog259_g7681 * FinalReactivity68_g7681 ) , ( EmissionGlow142_g7681 + FinalReactivity68_g7681 ) , (float)saturate( _GreenChReactiveBlendMode ));
+			float4 ReversedReactivity152_g7681 = ( ( 1.0 - ReactivityAlpha132_g7681 ) * lerpResult264_g7681 );
+			int temp_output_157_0_g7681 = ( _GreenChReactiveBlendMode - 1 );
+			float4 lerpResult114_g7681 = lerp( lerpResult146_g7681 , ( EmissionGlowTog259_g7681 * ReversedReactivity152_g7681 ) , (float)saturate( temp_output_157_0_g7681 ));
+			float4 lerpResult164_g7681 = lerp( lerpResult114_g7681 , ( EmissionGlow142_g7681 + ( ReversedReactivity152_g7681 * step( EmissionReactiveBand243_g7681 , 9 ) ) ) , (float)max( saturate( ( temp_output_157_0_g7681 - 1 ) ) , ( 1.0 - step( EmissionReactiveBand243_g7681 , 9 ) ) ));
+			int localIfAudioLinkv2Exists1_g7696 = IfAudioLinkv2Exists1_g7696();
+			float4 temp_output_213_0_g7681 = ( lerpResult164_g7681 * temp_output_236_0_g7681 * saturate( ( localIfAudioLinkv2Exists1_g7696 + _UseFallback1 ) ) );
+			float4 lerpResult276_g7681 = lerp( temp_output_283_0_g7681 , temp_output_213_0_g7681 , _EnableGreenChannel);
+			float temp_output_236_0_g7698 = (GlowMaskRGBA174_g7679).z;
+			float4 temp_output_286_0_g7698 = ( _BlueChGlowFallback * temp_output_236_0_g7698 * _UseFallback2 );
 			float4 temp_cast_93 = (1.0).xxxx;
 			float3 temp_cast_95 = (1.0).xxx;
-			int EmissionGlowZone47_g7503 = _BlueChGlowZone;
-			int clampResult8_g7509 = clamp( EmissionGlowZone47_g7503 , 1 , 4 );
-			int temp_output_3_0_g7509 = ( clampResult8_g7509 - 1 );
-			int Zone16_g7509 = temp_output_3_0_g7509;
-			float3 localgetThemeData16_g7509 = getThemeData( Zone16_g7509 );
-			int Band11_g7510 = 56;
-			int localIsLumaActive11_g7510 = IsLumaActive11_g7510( Band11_g7510 );
-			int temp_output_14_0_g7509 = localIsLumaActive11_g7510;
-			int lerpResult15_g7509 = lerp( temp_output_3_0_g7509 , ( 63 - temp_output_3_0_g7509 ) , (float)temp_output_14_0_g7509);
-			int Band2_g7509 = lerpResult15_g7509;
-			int Delay2_g7509 = 0;
-			float3 localLumaGlowData2_g7509 = LumaGlowData2_g7509( Band2_g7509 , Delay2_g7509 );
-			float3 lerpResult17_g7509 = lerp( ( localgetThemeData16_g7509 * localLumaGlowData2_g7509 ) , localLumaGlowData2_g7509 , (float)temp_output_14_0_g7509);
-			int temp_output_21_0_g7503 = saturate( EmissionGlowZone47_g7503 );
-			float3 lerpResult20_g7503 = lerp( temp_cast_95 , lerpResult17_g7509 , (float)temp_output_21_0_g7503);
+			int EmissionGlowZone47_g7698 = _BlueChGlowZone;
+			int clampResult8_g7704 = clamp( EmissionGlowZone47_g7698 , 1 , 4 );
+			int temp_output_3_0_g7704 = ( clampResult8_g7704 - 1 );
+			int Zone16_g7704 = temp_output_3_0_g7704;
+			float3 localgetThemeData16_g7704 = getThemeData( Zone16_g7704 );
+			int Band11_g7705 = 56;
+			int localIsLumaActive11_g7705 = IsLumaActive11_g7705( Band11_g7705 );
+			int temp_output_14_0_g7704 = localIsLumaActive11_g7705;
+			int lerpResult15_g7704 = lerp( temp_output_3_0_g7704 , ( 63 - temp_output_3_0_g7704 ) , (float)temp_output_14_0_g7704);
+			int Band2_g7704 = lerpResult15_g7704;
+			int Delay2_g7704 = 0;
+			float3 localLumaGlowData2_g7704 = LumaGlowData2_g7704( Band2_g7704 , Delay2_g7704 );
+			float3 lerpResult17_g7704 = lerp( ( localgetThemeData16_g7704 * localLumaGlowData2_g7704 ) , localLumaGlowData2_g7704 , (float)temp_output_14_0_g7704);
+			int temp_output_21_0_g7698 = saturate( EmissionGlowZone47_g7698 );
+			float3 lerpResult20_g7698 = lerp( temp_cast_95 , lerpResult17_g7704 , (float)temp_output_21_0_g7698);
 			float3 temp_cast_99 = (1.0).xxx;
-			int clampResult8_g7511 = clamp( EmissionGlowZone47_g7503 , 1 , 4 );
-			int temp_output_3_0_g7511 = ( clampResult8_g7511 - 1 );
-			int Zone15_g7511 = temp_output_3_0_g7511;
-			float3 localgetThemeData15_g7511 = getThemeData( Zone15_g7511 );
-			int Band11_g7512 = 56;
-			int localIsLumaActive11_g7512 = IsLumaActive11_g7512( Band11_g7512 );
-			int temp_output_13_0_g7511 = localIsLumaActive11_g7512;
-			int lerpResult14_g7511 = lerp( temp_output_3_0_g7511 , ( 63 - temp_output_3_0_g7511 ) , (float)temp_output_13_0_g7511);
-			int Band11_g7511 = lerpResult14_g7511;
-			float cos6_g7503 = cos( radians( _BlueChGlowPulseDir ) );
-			float sin6_g7503 = sin( radians( _BlueChGlowPulseDir ) );
-			float2 rotator6_g7503 = mul( i.uv_texcoord - float2( 0.5,0.5 ) , float2x2( cos6_g7503 , -sin6_g7503 , sin6_g7503 , cos6_g7503 )) + float2( 0.5,0.5 );
-			int Band6_g7516 = _BlueChGlowAnimationBand;
-			int Mode6_g7516 = ( ( _BlueChGlowAnimationMode * 2 ) + _BlueChGlowAnimationSpeed );
-			int localAudioLinkDecodeDataAsUInt6_g7516 = AudioLinkDecodeDataAsUInt6_g7516( Band6_g7516 , Mode6_g7516 );
-			float localGetLocalTime2_g7517 = ( AudioLinkDecodeDataAsSeconds( ALPASS_GENERALVU_LOCAL_TIME ) );
-			float lerpResult206_g7503 = lerp( ( ( localAudioLinkDecodeDataAsUInt6_g7516 % 628319 ) / 100000.0 ) , localGetLocalTime2_g7517 , (float)saturate( ( _BlueChGlowAnimationMode - 3 ) ));
-			float EmissionGlowAnimation195_g7503 = ( _BlueChGlowAnimationStrength * lerpResult206_g7503 * step( _BlueChGlowAnimationBand , 9 ) );
-			float x13_g7503 = ( ( rotator6_g7503.x * _BlueChGlowPulseScale ) + _BlueChGlowPulseOffset + EmissionGlowAnimation195_g7503 );
-			float y13_g7503 = 127.0;
-			float localglslmod13_g7503 = glslmod13_g7503( x13_g7503 , y13_g7503 );
-			float2 temp_output_34_0_g7505 = ( i.uv_texcoord - _BlueChGlowRadialCenter );
-			float2 break39_g7505 = temp_output_34_0_g7505;
-			float2 appendResult50_g7505 = (float2(( _BlueChGlowPulseScale * ( length( temp_output_34_0_g7505 ) * 2.0 ) ) , ( ( atan2( break39_g7505.x , break39_g7505.y ) * ( 1.0 / 6.28318548202515 ) ) * 1.0 )));
-			float x12_g7503 = ( _BlueChGlowPulseOffset + appendResult50_g7505.x + EmissionGlowAnimation195_g7503 );
-			float y12_g7503 = 127.0;
-			float localglslmod12_g7503 = glslmod12_g7503( x12_g7503 , y12_g7503 );
-			int EmissionGlowMode35_g7503 = _BlueChGlowMode;
-			int temp_output_37_0_g7503 = ( EmissionGlowMode35_g7503 - 1 );
-			float lerpResult5_g7503 = lerp( localglslmod13_g7503 , localglslmod12_g7503 , (float)saturate( temp_output_37_0_g7503 ));
-			float DirectionalMap106_g7503 = Direction27_g7501;
-			float lerpResult179_g7503 = lerp( DirectionalMap106_g7503 , ( 1.0 - DirectionalMap106_g7503 ) , (float)saturate( ( EmissionGlowMode35_g7503 - 3 ) ));
-			float x34_g7503 = ( _BlueChGlowPulseOffset + ( _BlueChGlowPulseScale * lerpResult179_g7503 ) + EmissionGlowAnimation195_g7503 );
-			float y34_g7503 = 127.0;
-			float localglslmod34_g7503 = glslmod34_g7503( x34_g7503 , y34_g7503 );
-			float lerpResult30_g7503 = lerp( lerpResult5_g7503 , localglslmod34_g7503 , (float)saturate( ( temp_output_37_0_g7503 - 1 ) ));
-			float EmissionGlowDelay56_g7503 = lerpResult30_g7503;
-			float Delay11_g7511 = EmissionGlowDelay56_g7503;
-			float3 localLumaGlowLerp11_g7511 = LumaGlowLerp11_g7511( Band11_g7511 , Delay11_g7511 );
-			float3 lerpResult17_g7511 = lerp( ( localgetThemeData15_g7511 * localLumaGlowLerp11_g7511 ) , localLumaGlowLerp11_g7511 , (float)temp_output_13_0_g7511);
-			float3 lerpResult22_g7503 = lerp( temp_cast_99 , lerpResult17_g7511 , (float)temp_output_21_0_g7503);
-			float3 lerpResult23_g7503 = lerp( lerpResult20_g7503 , lerpResult22_g7503 , (float)saturate( EmissionGlowMode35_g7503 ));
+			int clampResult8_g7706 = clamp( EmissionGlowZone47_g7698 , 1 , 4 );
+			int temp_output_3_0_g7706 = ( clampResult8_g7706 - 1 );
+			int Zone15_g7706 = temp_output_3_0_g7706;
+			float3 localgetThemeData15_g7706 = getThemeData( Zone15_g7706 );
+			int Band11_g7707 = 56;
+			int localIsLumaActive11_g7707 = IsLumaActive11_g7707( Band11_g7707 );
+			int temp_output_13_0_g7706 = localIsLumaActive11_g7707;
+			int lerpResult14_g7706 = lerp( temp_output_3_0_g7706 , ( 63 - temp_output_3_0_g7706 ) , (float)temp_output_13_0_g7706);
+			int Band11_g7706 = lerpResult14_g7706;
+			float cos6_g7698 = cos( radians( _BlueChGlowPulseDir ) );
+			float sin6_g7698 = sin( radians( _BlueChGlowPulseDir ) );
+			float2 rotator6_g7698 = mul( i.uv_texcoord - float2( 0.5,0.5 ) , float2x2( cos6_g7698 , -sin6_g7698 , sin6_g7698 , cos6_g7698 )) + float2( 0.5,0.5 );
+			int Band6_g7711 = _BlueChGlowAnimationBand;
+			int Mode6_g7711 = ( ( _BlueChGlowAnimationMode * 2 ) + _BlueChGlowAnimationSpeed );
+			int localAudioLinkDecodeDataAsUInt6_g7711 = AudioLinkDecodeDataAsUInt6_g7711( Band6_g7711 , Mode6_g7711 );
+			float localGetLocalTime2_g7712 = ( AudioLinkDecodeDataAsSeconds( ALPASS_GENERALVU_LOCAL_TIME ) );
+			float lerpResult206_g7698 = lerp( ( ( localAudioLinkDecodeDataAsUInt6_g7711 % 628319 ) / 100000.0 ) , localGetLocalTime2_g7712 , (float)saturate( ( _BlueChGlowAnimationMode - 3 ) ));
+			float EmissionGlowAnimation195_g7698 = ( _BlueChGlowAnimationStrength * lerpResult206_g7698 * step( _BlueChGlowAnimationBand , 9 ) );
+			float x13_g7698 = ( ( rotator6_g7698.x * _BlueChGlowPulseScale ) + _BlueChGlowPulseOffset + EmissionGlowAnimation195_g7698 );
+			float y13_g7698 = 127.0;
+			float localglslmod13_g7698 = glslmod13_g7698( x13_g7698 , y13_g7698 );
+			float2 temp_output_34_0_g7700 = ( i.uv_texcoord - _BlueChGlowRadialCenter );
+			float2 break39_g7700 = temp_output_34_0_g7700;
+			float2 appendResult50_g7700 = (float2(( _BlueChGlowPulseScale * ( length( temp_output_34_0_g7700 ) * 2.0 ) ) , ( ( atan2( break39_g7700.x , break39_g7700.y ) * ( 1.0 / 6.28318548202515 ) ) * 1.0 )));
+			float x12_g7698 = ( _BlueChGlowPulseOffset + appendResult50_g7700.x + EmissionGlowAnimation195_g7698 );
+			float y12_g7698 = 127.0;
+			float localglslmod12_g7698 = glslmod12_g7698( x12_g7698 , y12_g7698 );
+			int EmissionGlowMode35_g7698 = _BlueChGlowMode;
+			int temp_output_37_0_g7698 = ( EmissionGlowMode35_g7698 - 1 );
+			float lerpResult5_g7698 = lerp( localglslmod13_g7698 , localglslmod12_g7698 , (float)saturate( temp_output_37_0_g7698 ));
+			float DirectionalMap106_g7698 = Direction27_g7679;
+			float lerpResult179_g7698 = lerp( DirectionalMap106_g7698 , ( 1.0 - DirectionalMap106_g7698 ) , (float)saturate( ( EmissionGlowMode35_g7698 - 3 ) ));
+			float x34_g7698 = ( _BlueChGlowPulseOffset + ( _BlueChGlowPulseScale * lerpResult179_g7698 ) + EmissionGlowAnimation195_g7698 );
+			float y34_g7698 = 127.0;
+			float localglslmod34_g7698 = glslmod34_g7698( x34_g7698 , y34_g7698 );
+			float lerpResult30_g7698 = lerp( lerpResult5_g7698 , localglslmod34_g7698 , (float)saturate( ( temp_output_37_0_g7698 - 1 ) ));
+			float EmissionGlowDelay56_g7698 = lerpResult30_g7698;
+			float Delay11_g7706 = EmissionGlowDelay56_g7698;
+			float3 localLumaGlowLerp11_g7706 = LumaGlowLerp11_g7706( Band11_g7706 , Delay11_g7706 );
+			float3 lerpResult17_g7706 = lerp( ( localgetThemeData15_g7706 * localLumaGlowLerp11_g7706 ) , localLumaGlowLerp11_g7706 , (float)temp_output_13_0_g7706);
+			float3 lerpResult22_g7698 = lerp( temp_cast_99 , lerpResult17_g7706 , (float)temp_output_21_0_g7698);
+			float3 lerpResult23_g7698 = lerp( lerpResult20_g7698 , lerpResult22_g7698 , (float)saturate( EmissionGlowMode35_g7698 ));
 			float4 temp_cast_109 = (1.0).xxxx;
-			float temp_output_10_0_g7513 = EmissionGlowDelay56_g7503;
-			float Position1_g7515 = ( temp_output_10_0_g7513 / 127.0 );
-			float4 localAudioLinkLerp1_g7515 = AudioLinkLerp1_g7515( Position1_g7515 );
-			int clampResult8_g7513 = clamp( ( EmissionGlowZone47_g7503 - 4 ) , 1 , 3 );
-			int Band11_g7513 = ( 59 - ( clampResult8_g7513 - 1 ) );
-			float Delay11_g7513 = temp_output_10_0_g7513;
-			float3 localLumaGlowLerp11_g7513 = LumaGlowLerp11_g7513( Band11_g7513 , Delay11_g7513 );
-			int Band11_g7514 = 56;
-			int localIsLumaActive11_g7514 = IsLumaActive11_g7514( Band11_g7514 );
-			float4 lerpResult14_g7513 = lerp( localAudioLinkLerp1_g7515 , float4( localLumaGlowLerp11_g7513 , 0.0 ) , (float)localIsLumaActive11_g7514);
-			float4 lerpResult52_g7503 = lerp( temp_cast_109 , lerpResult14_g7513 , (float)saturate( EmissionGlowZone47_g7503 ));
-			float4 lerpResult51_g7503 = lerp( float4( lerpResult23_g7503 , 0.0 ) , lerpResult52_g7503 , (float)saturate( ( EmissionGlowZone47_g7503 - 4 ) ));
+			float temp_output_10_0_g7708 = EmissionGlowDelay56_g7698;
+			float Position1_g7710 = ( temp_output_10_0_g7708 / 127.0 );
+			float4 localAudioLinkLerp1_g7710 = AudioLinkLerp1_g7710( Position1_g7710 );
+			int clampResult8_g7708 = clamp( ( EmissionGlowZone47_g7698 - 4 ) , 1 , 3 );
+			int Band11_g7708 = ( 59 - ( clampResult8_g7708 - 1 ) );
+			float Delay11_g7708 = temp_output_10_0_g7708;
+			float3 localLumaGlowLerp11_g7708 = LumaGlowLerp11_g7708( Band11_g7708 , Delay11_g7708 );
+			int Band11_g7709 = 56;
+			int localIsLumaActive11_g7709 = IsLumaActive11_g7709( Band11_g7709 );
+			float4 lerpResult14_g7708 = lerp( localAudioLinkLerp1_g7710 , float4( localLumaGlowLerp11_g7708 , 0.0 ) , (float)localIsLumaActive11_g7709);
+			float4 lerpResult52_g7698 = lerp( temp_cast_109 , lerpResult14_g7708 , (float)saturate( EmissionGlowZone47_g7698 ));
+			float4 lerpResult51_g7698 = lerp( float4( lerpResult23_g7698 , 0.0 ) , lerpResult52_g7698 , (float)saturate( ( EmissionGlowZone47_g7698 - 4 ) ));
 			float4 temp_cast_114 = (_BlueChGlowMinBrightness).xxxx;
 			float4 temp_cast_115 = (( _BlueChGlowMinBrightness + 1.0 )).xxxx;
-			int temp_output_258_0_g7503 = saturate( EmissionGlowZone47_g7503 );
-			int localIfAudioLinkv2Exists1_g7519 = IfAudioLinkv2Exists1_g7519();
-			float4 lerpResult283_g7503 = lerp( _BlueChGlowFallback , ( (temp_cast_114 + (lerpResult51_g7503 - float4( 0,0,0,0 )) * (temp_cast_115 - temp_cast_114) / (float4( 1,1,1,1 ) - float4( 0,0,0,0 ))) * _BlueChGlowTint * temp_output_258_0_g7503 ) , (float)localIfAudioLinkv2Exists1_g7519);
-			float4 EmissionGlow142_g7503 = lerpResult283_g7503;
-			float4 lerpResult261_g7503 = lerp( temp_cast_93 , EmissionGlow142_g7503 , (float)temp_output_258_0_g7503);
-			float4 EmissionGlowTog262_g7503 = lerpResult261_g7503;
-			int EmissionReactiveBand243_g7503 = _BlueChReactiveBand;
-			int Band3_g7504 = EmissionReactiveBand243_g7503;
-			int Delay3_g7504 = 0;
-			float localAudioLinkData3_g7504 = AudioLinkData3_g7504( Band3_g7504 , Delay3_g7504 );
-			int temp_output_64_0_g7503 = step( _BlueChReactiveBand , 9 );
-			float lerpResult66_g7503 = lerp( 1.0 , localAudioLinkData3_g7504 , (float)temp_output_64_0_g7503);
-			int Band3_g7506 = _BlueChReactiveBand;
-			float cos78_g7503 = cos( radians( _BlueChReactivePulseDir ) );
-			float sin78_g7503 = sin( radians( _BlueChReactivePulseDir ) );
-			float2 rotator78_g7503 = mul( i.uv_texcoord - float2( 0.5,0.5 ) , float2x2( cos78_g7503 , -sin78_g7503 , sin78_g7503 , cos78_g7503 )) + float2( 0.5,0.5 );
-			float x96_g7503 = ( ( rotator78_g7503.x * _BlueChReactivePulseScale ) + _BlueChReactivePulseOffset );
-			float y96_g7503 = 127.0;
-			float localglslmod96_g7503 = glslmod96_g7503( x96_g7503 , y96_g7503 );
-			float2 temp_output_34_0_g7507 = ( i.uv_texcoord - _BlueChReactiveRadialCenter );
-			float2 break39_g7507 = temp_output_34_0_g7507;
-			float2 appendResult50_g7507 = (float2(( _BlueChReactivePulseScale * ( length( temp_output_34_0_g7507 ) * 2.0 ) ) , ( ( atan2( break39_g7507.x , break39_g7507.y ) * ( 1.0 / 6.28318548202515 ) ) * 1.0 )));
-			float x97_g7503 = ( _BlueChReactivePulseOffset + appendResult50_g7507.x );
-			float y97_g7503 = 127.0;
-			float localglslmod97_g7503 = glslmod97_g7503( x97_g7503 , y97_g7503 );
-			int EmissionReactiveMode99_g7503 = _BlueChReactiveMode;
-			int temp_output_90_0_g7503 = ( EmissionReactiveMode99_g7503 - 1 );
-			float lerpResult77_g7503 = lerp( localglslmod96_g7503 , localglslmod97_g7503 , (float)saturate( temp_output_90_0_g7503 ));
-			float lerpResult174_g7503 = lerp( DirectionalMap106_g7503 , ( 1.0 - DirectionalMap106_g7503 ) , (float)saturate( ( EmissionReactiveMode99_g7503 - 3 ) ));
-			float x98_g7503 = ( _BlueChReactivePulseOffset + ( _BlueChReactivePulseScale * lerpResult174_g7503 ) );
-			float y98_g7503 = 127.0;
-			float localglslmod98_g7503 = glslmod98_g7503( x98_g7503 , y98_g7503 );
-			float lerpResult87_g7503 = lerp( lerpResult77_g7503 , localglslmod98_g7503 , (float)saturate( ( temp_output_90_0_g7503 - 1 ) ));
-			float Delay3_g7506 = lerpResult87_g7503;
-			float localAudioLinkLerp3_g7506 = AudioLinkLerp3_g7506( Band3_g7506 , Delay3_g7506 );
-			float lerpResult102_g7503 = lerp( 1.0 , localAudioLinkLerp3_g7506 , (float)temp_output_64_0_g7503);
-			float lerpResult103_g7503 = lerp( lerpResult66_g7503 , lerpResult102_g7503 , (float)saturate( EmissionReactiveMode99_g7503 ));
-			int Band3_g7508 = _BlueChReactiveBand;
-			float FilteredAmount3_g7508 = ( ( 1.0 - _BlueChReactiveGlobalSmoothing ) * 15.0 );
-			float localAudioLinkLerp3_g7508 = AudioLinkLerp3_g7508( Band3_g7508 , FilteredAmount3_g7508 );
-			float lerpResult168_g7503 = lerp( 1.0 , localAudioLinkLerp3_g7508 , (float)temp_output_64_0_g7503);
-			float lerpResult172_g7503 = lerp( lerpResult103_g7503 , lerpResult168_g7503 , (float)saturate( ( EmissionReactiveMode99_g7503 - 4 ) ));
-			float ReactivityAlpha132_g7503 = (_BlueChReactiveMinBrightness + (lerpResult172_g7503 - 0.0) * (( _BlueChReactiveMinBrightness + 1.0 ) - _BlueChReactiveMinBrightness) / (1.0 - 0.0));
+			int temp_output_258_0_g7698 = saturate( EmissionGlowZone47_g7698 );
+			int localIfAudioLinkv2Exists1_g7714 = IfAudioLinkv2Exists1_g7714();
+			float4 lerpResult283_g7698 = lerp( _BlueChGlowFallback , ( (temp_cast_114 + (lerpResult51_g7698 - float4( 0,0,0,0 )) * (temp_cast_115 - temp_cast_114) / (float4( 1,1,1,1 ) - float4( 0,0,0,0 ))) * _BlueChGlowTint * temp_output_258_0_g7698 ) , (float)localIfAudioLinkv2Exists1_g7714);
+			float4 EmissionGlow142_g7698 = lerpResult283_g7698;
+			float4 lerpResult261_g7698 = lerp( temp_cast_93 , EmissionGlow142_g7698 , (float)temp_output_258_0_g7698);
+			float4 EmissionGlowTog262_g7698 = lerpResult261_g7698;
+			int EmissionReactiveBand243_g7698 = _BlueChReactiveBand;
+			int Band3_g7699 = EmissionReactiveBand243_g7698;
+			int Delay3_g7699 = 0;
+			float localAudioLinkData3_g7699 = AudioLinkData3_g7699( Band3_g7699 , Delay3_g7699 );
+			int temp_output_64_0_g7698 = step( _BlueChReactiveBand , 9 );
+			float lerpResult66_g7698 = lerp( 1.0 , localAudioLinkData3_g7699 , (float)temp_output_64_0_g7698);
+			int Band3_g7701 = _BlueChReactiveBand;
+			float cos78_g7698 = cos( radians( _BlueChReactivePulseDir ) );
+			float sin78_g7698 = sin( radians( _BlueChReactivePulseDir ) );
+			float2 rotator78_g7698 = mul( i.uv_texcoord - float2( 0.5,0.5 ) , float2x2( cos78_g7698 , -sin78_g7698 , sin78_g7698 , cos78_g7698 )) + float2( 0.5,0.5 );
+			float x96_g7698 = ( ( rotator78_g7698.x * _BlueChReactivePulseScale ) + _BlueChReactivePulseOffset );
+			float y96_g7698 = 127.0;
+			float localglslmod96_g7698 = glslmod96_g7698( x96_g7698 , y96_g7698 );
+			float2 temp_output_34_0_g7702 = ( i.uv_texcoord - _BlueChReactiveRadialCenter );
+			float2 break39_g7702 = temp_output_34_0_g7702;
+			float2 appendResult50_g7702 = (float2(( _BlueChReactivePulseScale * ( length( temp_output_34_0_g7702 ) * 2.0 ) ) , ( ( atan2( break39_g7702.x , break39_g7702.y ) * ( 1.0 / 6.28318548202515 ) ) * 1.0 )));
+			float x97_g7698 = ( _BlueChReactivePulseOffset + appendResult50_g7702.x );
+			float y97_g7698 = 127.0;
+			float localglslmod97_g7698 = glslmod97_g7698( x97_g7698 , y97_g7698 );
+			int EmissionReactiveMode99_g7698 = _BlueChReactiveMode;
+			int temp_output_90_0_g7698 = ( EmissionReactiveMode99_g7698 - 1 );
+			float lerpResult77_g7698 = lerp( localglslmod96_g7698 , localglslmod97_g7698 , (float)saturate( temp_output_90_0_g7698 ));
+			float lerpResult174_g7698 = lerp( DirectionalMap106_g7698 , ( 1.0 - DirectionalMap106_g7698 ) , (float)saturate( ( EmissionReactiveMode99_g7698 - 3 ) ));
+			float x98_g7698 = ( _BlueChReactivePulseOffset + ( _BlueChReactivePulseScale * lerpResult174_g7698 ) );
+			float y98_g7698 = 127.0;
+			float localglslmod98_g7698 = glslmod98_g7698( x98_g7698 , y98_g7698 );
+			float lerpResult87_g7698 = lerp( lerpResult77_g7698 , localglslmod98_g7698 , (float)saturate( ( temp_output_90_0_g7698 - 1 ) ));
+			float Delay3_g7701 = lerpResult87_g7698;
+			float localAudioLinkLerp3_g7701 = AudioLinkLerp3_g7701( Band3_g7701 , Delay3_g7701 );
+			float lerpResult102_g7698 = lerp( 1.0 , localAudioLinkLerp3_g7701 , (float)temp_output_64_0_g7698);
+			float lerpResult103_g7698 = lerp( lerpResult66_g7698 , lerpResult102_g7698 , (float)saturate( EmissionReactiveMode99_g7698 ));
+			int Band3_g7703 = _BlueChReactiveBand;
+			float FilteredAmount3_g7703 = ( ( 1.0 - _BlueChReactiveGlobalSmoothing ) * 15.0 );
+			float localAudioLinkLerp3_g7703 = AudioLinkLerp3_g7703( Band3_g7703 , FilteredAmount3_g7703 );
+			float lerpResult168_g7698 = lerp( 1.0 , localAudioLinkLerp3_g7703 , (float)temp_output_64_0_g7698);
+			float lerpResult172_g7698 = lerp( lerpResult103_g7698 , lerpResult168_g7698 , (float)saturate( ( EmissionReactiveMode99_g7698 - 4 ) ));
+			float ReactivityAlpha132_g7698 = (_BlueChReactiveMinBrightness + (lerpResult172_g7698 - 0.0) * (( _BlueChReactiveMinBrightness + 1.0 ) - _BlueChReactiveMinBrightness) / (1.0 - 0.0));
 			float4 temp_cast_127 = (1.0).xxxx;
-			float4 lerpResult268_g7503 = lerp( temp_cast_127 , _BlueChReactiveTint , (float)step( EmissionReactiveBand243_g7503 , 9 ));
-			float4 FinalReactivity68_g7503 = ( ReactivityAlpha132_g7503 * lerpResult268_g7503 );
-			float4 lerpResult146_g7503 = lerp( ( EmissionGlowTog262_g7503 * FinalReactivity68_g7503 ) , ( EmissionGlow142_g7503 + FinalReactivity68_g7503 ) , (float)saturate( _BlueChReactiveBlendMode ));
-			float4 ReversedReactivity152_g7503 = ( ( 1.0 - ReactivityAlpha132_g7503 ) * lerpResult268_g7503 );
-			int temp_output_157_0_g7503 = ( _BlueChReactiveBlendMode - 1 );
-			float4 lerpResult114_g7503 = lerp( lerpResult146_g7503 , ( EmissionGlowTog262_g7503 * ReversedReactivity152_g7503 ) , (float)saturate( temp_output_157_0_g7503 ));
-			float4 lerpResult164_g7503 = lerp( lerpResult114_g7503 , ( EmissionGlow142_g7503 + ( ReversedReactivity152_g7503 * step( EmissionReactiveBand243_g7503 , 9 ) ) ) , (float)max( saturate( ( temp_output_157_0_g7503 - 1 ) ) , ( 1.0 - step( EmissionReactiveBand243_g7503 , 9 ) ) ));
-			int localIfAudioLinkv2Exists1_g7518 = IfAudioLinkv2Exists1_g7518();
-			float4 temp_output_213_0_g7503 = ( lerpResult164_g7503 * temp_output_236_0_g7503 * saturate( ( localIfAudioLinkv2Exists1_g7518 + _UseFallback2 ) ) );
-			float4 lerpResult278_g7503 = lerp( temp_output_286_0_g7503 , temp_output_213_0_g7503 , _EnableBlueChannel);
-			float temp_output_236_0_g7570 = (GlowMaskRGBA174_g7501).w;
-			float4 temp_output_286_0_g7570 = ( _AlphaChGlowFallback * temp_output_236_0_g7570 * _UseFallback3 );
+			float4 lerpResult268_g7698 = lerp( temp_cast_127 , _BlueChReactiveTint , (float)step( EmissionReactiveBand243_g7698 , 9 ));
+			float4 FinalReactivity68_g7698 = ( ReactivityAlpha132_g7698 * lerpResult268_g7698 );
+			float4 lerpResult146_g7698 = lerp( ( EmissionGlowTog262_g7698 * FinalReactivity68_g7698 ) , ( EmissionGlow142_g7698 + FinalReactivity68_g7698 ) , (float)saturate( _BlueChReactiveBlendMode ));
+			float4 ReversedReactivity152_g7698 = ( ( 1.0 - ReactivityAlpha132_g7698 ) * lerpResult268_g7698 );
+			int temp_output_157_0_g7698 = ( _BlueChReactiveBlendMode - 1 );
+			float4 lerpResult114_g7698 = lerp( lerpResult146_g7698 , ( EmissionGlowTog262_g7698 * ReversedReactivity152_g7698 ) , (float)saturate( temp_output_157_0_g7698 ));
+			float4 lerpResult164_g7698 = lerp( lerpResult114_g7698 , ( EmissionGlow142_g7698 + ( ReversedReactivity152_g7698 * step( EmissionReactiveBand243_g7698 , 9 ) ) ) , (float)max( saturate( ( temp_output_157_0_g7698 - 1 ) ) , ( 1.0 - step( EmissionReactiveBand243_g7698 , 9 ) ) ));
+			int localIfAudioLinkv2Exists1_g7713 = IfAudioLinkv2Exists1_g7713();
+			float4 temp_output_213_0_g7698 = ( lerpResult164_g7698 * temp_output_236_0_g7698 * saturate( ( localIfAudioLinkv2Exists1_g7713 + _UseFallback2 ) ) );
+			float4 lerpResult278_g7698 = lerp( temp_output_286_0_g7698 , temp_output_213_0_g7698 , _EnableBlueChannel);
+			float temp_output_236_0_g7715 = (GlowMaskRGBA174_g7679).w;
+			float4 temp_output_286_0_g7715 = ( _AlphaChGlowFallback * temp_output_236_0_g7715 * _UseFallback3 );
 			float4 temp_cast_137 = (1.0).xxxx;
 			float3 temp_cast_139 = (1.0).xxx;
-			int EmissionGlowZone47_g7570 = _AlphaChGlowZone;
-			int clampResult8_g7576 = clamp( EmissionGlowZone47_g7570 , 1 , 4 );
-			int temp_output_3_0_g7576 = ( clampResult8_g7576 - 1 );
-			int Zone16_g7576 = temp_output_3_0_g7576;
-			float3 localgetThemeData16_g7576 = getThemeData( Zone16_g7576 );
-			int Band11_g7577 = 56;
-			int localIsLumaActive11_g7577 = IsLumaActive11_g7577( Band11_g7577 );
-			int temp_output_14_0_g7576 = localIsLumaActive11_g7577;
-			int lerpResult15_g7576 = lerp( temp_output_3_0_g7576 , ( 63 - temp_output_3_0_g7576 ) , (float)temp_output_14_0_g7576);
-			int Band2_g7576 = lerpResult15_g7576;
-			int Delay2_g7576 = 0;
-			float3 localLumaGlowData2_g7576 = LumaGlowData2_g7576( Band2_g7576 , Delay2_g7576 );
-			float3 lerpResult17_g7576 = lerp( ( localgetThemeData16_g7576 * localLumaGlowData2_g7576 ) , localLumaGlowData2_g7576 , (float)temp_output_14_0_g7576);
-			int temp_output_21_0_g7570 = saturate( EmissionGlowZone47_g7570 );
-			float3 lerpResult20_g7570 = lerp( temp_cast_139 , lerpResult17_g7576 , (float)temp_output_21_0_g7570);
+			int EmissionGlowZone47_g7715 = _AlphaChGlowZone;
+			int clampResult8_g7721 = clamp( EmissionGlowZone47_g7715 , 1 , 4 );
+			int temp_output_3_0_g7721 = ( clampResult8_g7721 - 1 );
+			int Zone16_g7721 = temp_output_3_0_g7721;
+			float3 localgetThemeData16_g7721 = getThemeData( Zone16_g7721 );
+			int Band11_g7722 = 56;
+			int localIsLumaActive11_g7722 = IsLumaActive11_g7722( Band11_g7722 );
+			int temp_output_14_0_g7721 = localIsLumaActive11_g7722;
+			int lerpResult15_g7721 = lerp( temp_output_3_0_g7721 , ( 63 - temp_output_3_0_g7721 ) , (float)temp_output_14_0_g7721);
+			int Band2_g7721 = lerpResult15_g7721;
+			int Delay2_g7721 = 0;
+			float3 localLumaGlowData2_g7721 = LumaGlowData2_g7721( Band2_g7721 , Delay2_g7721 );
+			float3 lerpResult17_g7721 = lerp( ( localgetThemeData16_g7721 * localLumaGlowData2_g7721 ) , localLumaGlowData2_g7721 , (float)temp_output_14_0_g7721);
+			int temp_output_21_0_g7715 = saturate( EmissionGlowZone47_g7715 );
+			float3 lerpResult20_g7715 = lerp( temp_cast_139 , lerpResult17_g7721 , (float)temp_output_21_0_g7715);
 			float3 temp_cast_143 = (1.0).xxx;
-			int clampResult8_g7578 = clamp( EmissionGlowZone47_g7570 , 1 , 4 );
-			int temp_output_3_0_g7578 = ( clampResult8_g7578 - 1 );
-			int Zone15_g7578 = temp_output_3_0_g7578;
-			float3 localgetThemeData15_g7578 = getThemeData( Zone15_g7578 );
-			int Band11_g7579 = 56;
-			int localIsLumaActive11_g7579 = IsLumaActive11_g7579( Band11_g7579 );
-			int temp_output_13_0_g7578 = localIsLumaActive11_g7579;
-			int lerpResult14_g7578 = lerp( temp_output_3_0_g7578 , ( 63 - temp_output_3_0_g7578 ) , (float)temp_output_13_0_g7578);
-			int Band11_g7578 = lerpResult14_g7578;
-			float cos6_g7570 = cos( radians( _AlphaChGlowPulseDir ) );
-			float sin6_g7570 = sin( radians( _AlphaChGlowPulseDir ) );
-			float2 rotator6_g7570 = mul( i.uv_texcoord - float2( 0.5,0.5 ) , float2x2( cos6_g7570 , -sin6_g7570 , sin6_g7570 , cos6_g7570 )) + float2( 0.5,0.5 );
-			int Band6_g7583 = _AlphaChGlowAnimationBand;
-			int Mode6_g7583 = ( ( _AlphaChGlowAnimationMode * 2 ) + _AlphaChGlowAnimationSpeed );
-			int localAudioLinkDecodeDataAsUInt6_g7583 = AudioLinkDecodeDataAsUInt6_g7583( Band6_g7583 , Mode6_g7583 );
-			float localGetLocalTime2_g7584 = ( AudioLinkDecodeDataAsSeconds( ALPASS_GENERALVU_LOCAL_TIME ) );
-			float lerpResult206_g7570 = lerp( ( ( localAudioLinkDecodeDataAsUInt6_g7583 % 628319 ) / 100000.0 ) , localGetLocalTime2_g7584 , (float)saturate( ( _AlphaChGlowAnimationMode - 3 ) ));
-			float EmissionGlowAnimation195_g7570 = ( _AlphaChGlowAnimationStrength * lerpResult206_g7570 * step( _AlphaChGlowAnimationBand , 9 ) );
-			float x13_g7570 = ( ( rotator6_g7570.x * _AlphaChGlowPulseScale ) + _AlphaChGlowPulseOffset + EmissionGlowAnimation195_g7570 );
-			float y13_g7570 = 127.0;
-			float localglslmod13_g7570 = glslmod13_g7570( x13_g7570 , y13_g7570 );
-			float2 temp_output_34_0_g7572 = ( i.uv_texcoord - _AlphaChGlowRadialCenter );
-			float2 break39_g7572 = temp_output_34_0_g7572;
-			float2 appendResult50_g7572 = (float2(( _AlphaChGlowPulseScale * ( length( temp_output_34_0_g7572 ) * 2.0 ) ) , ( ( atan2( break39_g7572.x , break39_g7572.y ) * ( 1.0 / 6.28318548202515 ) ) * 1.0 )));
-			float x12_g7570 = ( _AlphaChGlowPulseOffset + appendResult50_g7572.x + EmissionGlowAnimation195_g7570 );
-			float y12_g7570 = 127.0;
-			float localglslmod12_g7570 = glslmod12_g7570( x12_g7570 , y12_g7570 );
-			int EmissionGlowMode35_g7570 = _AlphaChGlowMode;
-			int temp_output_37_0_g7570 = ( EmissionGlowMode35_g7570 - 1 );
-			float lerpResult5_g7570 = lerp( localglslmod13_g7570 , localglslmod12_g7570 , (float)saturate( temp_output_37_0_g7570 ));
-			float DirectionalMap106_g7570 = Direction27_g7501;
-			float lerpResult179_g7570 = lerp( DirectionalMap106_g7570 , ( 1.0 - DirectionalMap106_g7570 ) , (float)saturate( ( EmissionGlowMode35_g7570 - 3 ) ));
-			float x34_g7570 = ( _AlphaChGlowPulseOffset + ( _AlphaChGlowPulseScale * lerpResult179_g7570 ) + EmissionGlowAnimation195_g7570 );
-			float y34_g7570 = 127.0;
-			float localglslmod34_g7570 = glslmod34_g7570( x34_g7570 , y34_g7570 );
-			float lerpResult30_g7570 = lerp( lerpResult5_g7570 , localglslmod34_g7570 , (float)saturate( ( temp_output_37_0_g7570 - 1 ) ));
-			float EmissionGlowDelay56_g7570 = lerpResult30_g7570;
-			float Delay11_g7578 = EmissionGlowDelay56_g7570;
-			float3 localLumaGlowLerp11_g7578 = LumaGlowLerp11_g7578( Band11_g7578 , Delay11_g7578 );
-			float3 lerpResult17_g7578 = lerp( ( localgetThemeData15_g7578 * localLumaGlowLerp11_g7578 ) , localLumaGlowLerp11_g7578 , (float)temp_output_13_0_g7578);
-			float3 lerpResult22_g7570 = lerp( temp_cast_143 , lerpResult17_g7578 , (float)temp_output_21_0_g7570);
-			float3 lerpResult23_g7570 = lerp( lerpResult20_g7570 , lerpResult22_g7570 , (float)saturate( EmissionGlowMode35_g7570 ));
+			int clampResult8_g7723 = clamp( EmissionGlowZone47_g7715 , 1 , 4 );
+			int temp_output_3_0_g7723 = ( clampResult8_g7723 - 1 );
+			int Zone15_g7723 = temp_output_3_0_g7723;
+			float3 localgetThemeData15_g7723 = getThemeData( Zone15_g7723 );
+			int Band11_g7724 = 56;
+			int localIsLumaActive11_g7724 = IsLumaActive11_g7724( Band11_g7724 );
+			int temp_output_13_0_g7723 = localIsLumaActive11_g7724;
+			int lerpResult14_g7723 = lerp( temp_output_3_0_g7723 , ( 63 - temp_output_3_0_g7723 ) , (float)temp_output_13_0_g7723);
+			int Band11_g7723 = lerpResult14_g7723;
+			float cos6_g7715 = cos( radians( _AlphaChGlowPulseDir ) );
+			float sin6_g7715 = sin( radians( _AlphaChGlowPulseDir ) );
+			float2 rotator6_g7715 = mul( i.uv_texcoord - float2( 0.5,0.5 ) , float2x2( cos6_g7715 , -sin6_g7715 , sin6_g7715 , cos6_g7715 )) + float2( 0.5,0.5 );
+			int Band6_g7728 = _AlphaChGlowAnimationBand;
+			int Mode6_g7728 = ( ( _AlphaChGlowAnimationMode * 2 ) + _AlphaChGlowAnimationSpeed );
+			int localAudioLinkDecodeDataAsUInt6_g7728 = AudioLinkDecodeDataAsUInt6_g7728( Band6_g7728 , Mode6_g7728 );
+			float localGetLocalTime2_g7729 = ( AudioLinkDecodeDataAsSeconds( ALPASS_GENERALVU_LOCAL_TIME ) );
+			float lerpResult206_g7715 = lerp( ( ( localAudioLinkDecodeDataAsUInt6_g7728 % 628319 ) / 100000.0 ) , localGetLocalTime2_g7729 , (float)saturate( ( _AlphaChGlowAnimationMode - 3 ) ));
+			float EmissionGlowAnimation195_g7715 = ( _AlphaChGlowAnimationStrength * lerpResult206_g7715 * step( _AlphaChGlowAnimationBand , 9 ) );
+			float x13_g7715 = ( ( rotator6_g7715.x * _AlphaChGlowPulseScale ) + _AlphaChGlowPulseOffset + EmissionGlowAnimation195_g7715 );
+			float y13_g7715 = 127.0;
+			float localglslmod13_g7715 = glslmod13_g7715( x13_g7715 , y13_g7715 );
+			float2 temp_output_34_0_g7717 = ( i.uv_texcoord - _AlphaChGlowRadialCenter );
+			float2 break39_g7717 = temp_output_34_0_g7717;
+			float2 appendResult50_g7717 = (float2(( _AlphaChGlowPulseScale * ( length( temp_output_34_0_g7717 ) * 2.0 ) ) , ( ( atan2( break39_g7717.x , break39_g7717.y ) * ( 1.0 / 6.28318548202515 ) ) * 1.0 )));
+			float x12_g7715 = ( _AlphaChGlowPulseOffset + appendResult50_g7717.x + EmissionGlowAnimation195_g7715 );
+			float y12_g7715 = 127.0;
+			float localglslmod12_g7715 = glslmod12_g7715( x12_g7715 , y12_g7715 );
+			int EmissionGlowMode35_g7715 = _AlphaChGlowMode;
+			int temp_output_37_0_g7715 = ( EmissionGlowMode35_g7715 - 1 );
+			float lerpResult5_g7715 = lerp( localglslmod13_g7715 , localglslmod12_g7715 , (float)saturate( temp_output_37_0_g7715 ));
+			float DirectionalMap106_g7715 = Direction27_g7679;
+			float lerpResult179_g7715 = lerp( DirectionalMap106_g7715 , ( 1.0 - DirectionalMap106_g7715 ) , (float)saturate( ( EmissionGlowMode35_g7715 - 3 ) ));
+			float x34_g7715 = ( _AlphaChGlowPulseOffset + ( _AlphaChGlowPulseScale * lerpResult179_g7715 ) + EmissionGlowAnimation195_g7715 );
+			float y34_g7715 = 127.0;
+			float localglslmod34_g7715 = glslmod34_g7715( x34_g7715 , y34_g7715 );
+			float lerpResult30_g7715 = lerp( lerpResult5_g7715 , localglslmod34_g7715 , (float)saturate( ( temp_output_37_0_g7715 - 1 ) ));
+			float EmissionGlowDelay56_g7715 = lerpResult30_g7715;
+			float Delay11_g7723 = EmissionGlowDelay56_g7715;
+			float3 localLumaGlowLerp11_g7723 = LumaGlowLerp11_g7723( Band11_g7723 , Delay11_g7723 );
+			float3 lerpResult17_g7723 = lerp( ( localgetThemeData15_g7723 * localLumaGlowLerp11_g7723 ) , localLumaGlowLerp11_g7723 , (float)temp_output_13_0_g7723);
+			float3 lerpResult22_g7715 = lerp( temp_cast_143 , lerpResult17_g7723 , (float)temp_output_21_0_g7715);
+			float3 lerpResult23_g7715 = lerp( lerpResult20_g7715 , lerpResult22_g7715 , (float)saturate( EmissionGlowMode35_g7715 ));
 			float4 temp_cast_153 = (1.0).xxxx;
-			float temp_output_10_0_g7580 = EmissionGlowDelay56_g7570;
-			float Position1_g7582 = ( temp_output_10_0_g7580 / 127.0 );
-			float4 localAudioLinkLerp1_g7582 = AudioLinkLerp1_g7582( Position1_g7582 );
-			int clampResult8_g7580 = clamp( ( EmissionGlowZone47_g7570 - 0 ) , 1 , 3 );
-			int Band11_g7580 = ( 59 - ( clampResult8_g7580 - 1 ) );
-			float Delay11_g7580 = temp_output_10_0_g7580;
-			float3 localLumaGlowLerp11_g7580 = LumaGlowLerp11_g7580( Band11_g7580 , Delay11_g7580 );
-			int Band11_g7581 = 56;
-			int localIsLumaActive11_g7581 = IsLumaActive11_g7581( Band11_g7581 );
-			float4 lerpResult14_g7580 = lerp( localAudioLinkLerp1_g7582 , float4( localLumaGlowLerp11_g7580 , 0.0 ) , (float)localIsLumaActive11_g7581);
-			float4 lerpResult52_g7570 = lerp( temp_cast_153 , lerpResult14_g7580 , (float)saturate( EmissionGlowZone47_g7570 ));
-			float4 lerpResult51_g7570 = lerp( float4( lerpResult23_g7570 , 0.0 ) , lerpResult52_g7570 , (float)saturate( ( EmissionGlowZone47_g7570 - 0 ) ));
+			float temp_output_10_0_g7725 = EmissionGlowDelay56_g7715;
+			float Position1_g7727 = ( temp_output_10_0_g7725 / 127.0 );
+			float4 localAudioLinkLerp1_g7727 = AudioLinkLerp1_g7727( Position1_g7727 );
+			int clampResult8_g7725 = clamp( ( EmissionGlowZone47_g7715 - 4 ) , 1 , 3 );
+			int Band11_g7725 = ( 59 - ( clampResult8_g7725 - 1 ) );
+			float Delay11_g7725 = temp_output_10_0_g7725;
+			float3 localLumaGlowLerp11_g7725 = LumaGlowLerp11_g7725( Band11_g7725 , Delay11_g7725 );
+			int Band11_g7726 = 56;
+			int localIsLumaActive11_g7726 = IsLumaActive11_g7726( Band11_g7726 );
+			float4 lerpResult14_g7725 = lerp( localAudioLinkLerp1_g7727 , float4( localLumaGlowLerp11_g7725 , 0.0 ) , (float)localIsLumaActive11_g7726);
+			float4 lerpResult52_g7715 = lerp( temp_cast_153 , lerpResult14_g7725 , (float)saturate( EmissionGlowZone47_g7715 ));
+			float4 lerpResult51_g7715 = lerp( float4( lerpResult23_g7715 , 0.0 ) , lerpResult52_g7715 , (float)saturate( ( EmissionGlowZone47_g7715 - 4 ) ));
 			float4 temp_cast_158 = (_AlphaChGlowMinBrightness).xxxx;
 			float4 temp_cast_159 = (( _AlphaChGlowMinBrightness + 1.0 )).xxxx;
-			int temp_output_258_0_g7570 = saturate( EmissionGlowZone47_g7570 );
-			int localIfAudioLinkv2Exists1_g7586 = IfAudioLinkv2Exists1_g7586();
-			float4 lerpResult283_g7570 = lerp( _AlphaChGlowFallback , ( (temp_cast_158 + (lerpResult51_g7570 - float4( 0,0,0,0 )) * (temp_cast_159 - temp_cast_158) / (float4( 1,1,1,1 ) - float4( 0,0,0,0 ))) * _AlphaChGlowTint * temp_output_258_0_g7570 ) , (float)localIfAudioLinkv2Exists1_g7586);
-			float4 EmissionGlow142_g7570 = lerpResult283_g7570;
-			float4 lerpResult261_g7570 = lerp( temp_cast_137 , EmissionGlow142_g7570 , (float)temp_output_258_0_g7570);
-			float4 EmissionGlowTog262_g7570 = lerpResult261_g7570;
-			int EmissionReactiveBand243_g7570 = _AlphaChReactiveBand;
-			int Band3_g7571 = EmissionReactiveBand243_g7570;
-			int Delay3_g7571 = 0;
-			float localAudioLinkData3_g7571 = AudioLinkData3_g7571( Band3_g7571 , Delay3_g7571 );
-			int temp_output_64_0_g7570 = step( _AlphaChReactiveBand , 9 );
-			float lerpResult66_g7570 = lerp( 1.0 , localAudioLinkData3_g7571 , (float)temp_output_64_0_g7570);
-			int Band3_g7573 = _AlphaChReactiveBand;
-			float cos78_g7570 = cos( radians( _AlphaChReactivePulseDir ) );
-			float sin78_g7570 = sin( radians( _AlphaChReactivePulseDir ) );
-			float2 rotator78_g7570 = mul( i.uv_texcoord - float2( 0.5,0.5 ) , float2x2( cos78_g7570 , -sin78_g7570 , sin78_g7570 , cos78_g7570 )) + float2( 0.5,0.5 );
-			float x96_g7570 = ( ( rotator78_g7570.x * _AlphaChReactivePulseScale ) + _AlphaChReactivePulseOffset );
-			float y96_g7570 = 127.0;
-			float localglslmod96_g7570 = glslmod96_g7570( x96_g7570 , y96_g7570 );
-			float2 temp_output_34_0_g7574 = ( i.uv_texcoord - _AlphaChReactiveRadialCenter );
-			float2 break39_g7574 = temp_output_34_0_g7574;
-			float2 appendResult50_g7574 = (float2(( _AlphaChReactivePulseScale * ( length( temp_output_34_0_g7574 ) * 2.0 ) ) , ( ( atan2( break39_g7574.x , break39_g7574.y ) * ( 1.0 / 6.28318548202515 ) ) * 1.0 )));
-			float x97_g7570 = ( _AlphaChReactivePulseOffset + appendResult50_g7574.x );
-			float y97_g7570 = 127.0;
-			float localglslmod97_g7570 = glslmod97_g7570( x97_g7570 , y97_g7570 );
-			int EmissionReactiveMode99_g7570 = _AlphaChReactiveMode;
-			int temp_output_90_0_g7570 = ( EmissionReactiveMode99_g7570 - 1 );
-			float lerpResult77_g7570 = lerp( localglslmod96_g7570 , localglslmod97_g7570 , (float)saturate( temp_output_90_0_g7570 ));
-			float lerpResult174_g7570 = lerp( DirectionalMap106_g7570 , ( 1.0 - DirectionalMap106_g7570 ) , (float)saturate( ( EmissionReactiveMode99_g7570 - 0 ) ));
-			float x98_g7570 = ( _AlphaChReactivePulseOffset + ( _AlphaChReactivePulseScale * lerpResult174_g7570 ) );
-			float y98_g7570 = 127.0;
-			float localglslmod98_g7570 = glslmod98_g7570( x98_g7570 , y98_g7570 );
-			float lerpResult87_g7570 = lerp( lerpResult77_g7570 , localglslmod98_g7570 , (float)saturate( ( temp_output_90_0_g7570 - 1 ) ));
-			float Delay3_g7573 = lerpResult87_g7570;
-			float localAudioLinkLerp3_g7573 = AudioLinkLerp3_g7573( Band3_g7573 , Delay3_g7573 );
-			float lerpResult102_g7570 = lerp( 1.0 , localAudioLinkLerp3_g7573 , (float)temp_output_64_0_g7570);
-			float lerpResult103_g7570 = lerp( lerpResult66_g7570 , lerpResult102_g7570 , (float)saturate( EmissionReactiveMode99_g7570 ));
-			int Band3_g7575 = _AlphaChReactiveBand;
-			float FilteredAmount3_g7575 = ( ( 1.0 - _AlphaChReactiveGlobalSmoothing ) * 15.0 );
-			float localAudioLinkLerp3_g7575 = AudioLinkLerp3_g7575( Band3_g7575 , FilteredAmount3_g7575 );
-			float lerpResult168_g7570 = lerp( 1.0 , localAudioLinkLerp3_g7575 , (float)temp_output_64_0_g7570);
-			float lerpResult172_g7570 = lerp( lerpResult103_g7570 , lerpResult168_g7570 , (float)saturate( ( EmissionReactiveMode99_g7570 - 0 ) ));
-			float ReactivityAlpha132_g7570 = (_AlphaChReactiveMinBrightness + (lerpResult172_g7570 - 0.0) * (( _AlphaChReactiveMinBrightness + 1.0 ) - _AlphaChReactiveMinBrightness) / (1.0 - 0.0));
+			int temp_output_258_0_g7715 = saturate( EmissionGlowZone47_g7715 );
+			int localIfAudioLinkv2Exists1_g7731 = IfAudioLinkv2Exists1_g7731();
+			float4 lerpResult283_g7715 = lerp( _AlphaChGlowFallback , ( (temp_cast_158 + (lerpResult51_g7715 - float4( 0,0,0,0 )) * (temp_cast_159 - temp_cast_158) / (float4( 1,1,1,1 ) - float4( 0,0,0,0 ))) * _AlphaChGlowTint * temp_output_258_0_g7715 ) , (float)localIfAudioLinkv2Exists1_g7731);
+			float4 EmissionGlow142_g7715 = lerpResult283_g7715;
+			float4 lerpResult261_g7715 = lerp( temp_cast_137 , EmissionGlow142_g7715 , (float)temp_output_258_0_g7715);
+			float4 EmissionGlowTog262_g7715 = lerpResult261_g7715;
+			int EmissionReactiveBand243_g7715 = _AlphaChReactiveBand;
+			int Band3_g7716 = EmissionReactiveBand243_g7715;
+			int Delay3_g7716 = 0;
+			float localAudioLinkData3_g7716 = AudioLinkData3_g7716( Band3_g7716 , Delay3_g7716 );
+			int temp_output_64_0_g7715 = step( _AlphaChReactiveBand , 9 );
+			float lerpResult66_g7715 = lerp( 1.0 , localAudioLinkData3_g7716 , (float)temp_output_64_0_g7715);
+			int Band3_g7718 = _AlphaChReactiveBand;
+			float cos78_g7715 = cos( radians( _AlphaChReactivePulseDir ) );
+			float sin78_g7715 = sin( radians( _AlphaChReactivePulseDir ) );
+			float2 rotator78_g7715 = mul( i.uv_texcoord - float2( 0.5,0.5 ) , float2x2( cos78_g7715 , -sin78_g7715 , sin78_g7715 , cos78_g7715 )) + float2( 0.5,0.5 );
+			float x96_g7715 = ( ( rotator78_g7715.x * _AlphaChReactivePulseScale ) + _AlphaChReactivePulseOffset );
+			float y96_g7715 = 127.0;
+			float localglslmod96_g7715 = glslmod96_g7715( x96_g7715 , y96_g7715 );
+			float2 temp_output_34_0_g7719 = ( i.uv_texcoord - _AlphaChReactiveRadialCenter );
+			float2 break39_g7719 = temp_output_34_0_g7719;
+			float2 appendResult50_g7719 = (float2(( _AlphaChReactivePulseScale * ( length( temp_output_34_0_g7719 ) * 2.0 ) ) , ( ( atan2( break39_g7719.x , break39_g7719.y ) * ( 1.0 / 6.28318548202515 ) ) * 1.0 )));
+			float x97_g7715 = ( _AlphaChReactivePulseOffset + appendResult50_g7719.x );
+			float y97_g7715 = 127.0;
+			float localglslmod97_g7715 = glslmod97_g7715( x97_g7715 , y97_g7715 );
+			int EmissionReactiveMode99_g7715 = _AlphaChReactiveMode;
+			int temp_output_90_0_g7715 = ( EmissionReactiveMode99_g7715 - 1 );
+			float lerpResult77_g7715 = lerp( localglslmod96_g7715 , localglslmod97_g7715 , (float)saturate( temp_output_90_0_g7715 ));
+			float lerpResult174_g7715 = lerp( DirectionalMap106_g7715 , ( 1.0 - DirectionalMap106_g7715 ) , (float)saturate( ( EmissionReactiveMode99_g7715 - 3 ) ));
+			float x98_g7715 = ( _AlphaChReactivePulseOffset + ( _AlphaChReactivePulseScale * lerpResult174_g7715 ) );
+			float y98_g7715 = 127.0;
+			float localglslmod98_g7715 = glslmod98_g7715( x98_g7715 , y98_g7715 );
+			float lerpResult87_g7715 = lerp( lerpResult77_g7715 , localglslmod98_g7715 , (float)saturate( ( temp_output_90_0_g7715 - 1 ) ));
+			float Delay3_g7718 = lerpResult87_g7715;
+			float localAudioLinkLerp3_g7718 = AudioLinkLerp3_g7718( Band3_g7718 , Delay3_g7718 );
+			float lerpResult102_g7715 = lerp( 1.0 , localAudioLinkLerp3_g7718 , (float)temp_output_64_0_g7715);
+			float lerpResult103_g7715 = lerp( lerpResult66_g7715 , lerpResult102_g7715 , (float)saturate( EmissionReactiveMode99_g7715 ));
+			int Band3_g7720 = _AlphaChReactiveBand;
+			float FilteredAmount3_g7720 = ( ( 1.0 - _AlphaChReactiveGlobalSmoothing ) * 15.0 );
+			float localAudioLinkLerp3_g7720 = AudioLinkLerp3_g7720( Band3_g7720 , FilteredAmount3_g7720 );
+			float lerpResult168_g7715 = lerp( 1.0 , localAudioLinkLerp3_g7720 , (float)temp_output_64_0_g7715);
+			float lerpResult172_g7715 = lerp( lerpResult103_g7715 , lerpResult168_g7715 , (float)saturate( ( EmissionReactiveMode99_g7715 - 4 ) ));
+			float ReactivityAlpha132_g7715 = (_AlphaChReactiveMinBrightness + (lerpResult172_g7715 - 0.0) * (( _AlphaChReactiveMinBrightness + 1.0 ) - _AlphaChReactiveMinBrightness) / (1.0 - 0.0));
 			float4 temp_cast_171 = (1.0).xxxx;
-			float4 lerpResult268_g7570 = lerp( temp_cast_171 , _AlphaChReactiveTint , (float)step( EmissionReactiveBand243_g7570 , 0 ));
-			float4 FinalReactivity68_g7570 = ( ReactivityAlpha132_g7570 * lerpResult268_g7570 );
-			float4 lerpResult146_g7570 = lerp( ( EmissionGlowTog262_g7570 * FinalReactivity68_g7570 ) , ( EmissionGlow142_g7570 + FinalReactivity68_g7570 ) , (float)saturate( _AlphaChReactiveBlendMode ));
-			float4 ReversedReactivity152_g7570 = ( ( 1.0 - ReactivityAlpha132_g7570 ) * lerpResult268_g7570 );
-			int temp_output_157_0_g7570 = ( _AlphaChReactiveBlendMode - 1 );
-			float4 lerpResult114_g7570 = lerp( lerpResult146_g7570 , ( EmissionGlowTog262_g7570 * ReversedReactivity152_g7570 ) , (float)saturate( temp_output_157_0_g7570 ));
-			float4 lerpResult164_g7570 = lerp( lerpResult114_g7570 , ( EmissionGlow142_g7570 + ( ReversedReactivity152_g7570 * step( EmissionReactiveBand243_g7570 , 0 ) ) ) , (float)max( saturate( ( temp_output_157_0_g7570 - 1 ) ) , ( 1.0 - step( EmissionReactiveBand243_g7570 , 0 ) ) ));
-			int localIfAudioLinkv2Exists1_g7585 = IfAudioLinkv2Exists1_g7585();
-			float4 temp_output_213_0_g7570 = ( lerpResult164_g7570 * temp_output_236_0_g7570 * saturate( ( localIfAudioLinkv2Exists1_g7585 + _UseFallback3 ) ) );
-			float4 lerpResult278_g7570 = lerp( temp_output_286_0_g7570 , temp_output_213_0_g7570 , _EnableAlphaChannel);
+			float4 lerpResult268_g7715 = lerp( temp_cast_171 , _AlphaChReactiveTint , (float)step( EmissionReactiveBand243_g7715 , 9 ));
+			float4 FinalReactivity68_g7715 = ( ReactivityAlpha132_g7715 * lerpResult268_g7715 );
+			float4 lerpResult146_g7715 = lerp( ( EmissionGlowTog262_g7715 * FinalReactivity68_g7715 ) , ( EmissionGlow142_g7715 + FinalReactivity68_g7715 ) , (float)saturate( _AlphaChReactiveBlendMode ));
+			float4 ReversedReactivity152_g7715 = ( ( 1.0 - ReactivityAlpha132_g7715 ) * lerpResult268_g7715 );
+			int temp_output_157_0_g7715 = ( _AlphaChReactiveBlendMode - 1 );
+			float4 lerpResult114_g7715 = lerp( lerpResult146_g7715 , ( EmissionGlowTog262_g7715 * ReversedReactivity152_g7715 ) , (float)saturate( temp_output_157_0_g7715 ));
+			float4 lerpResult164_g7715 = lerp( lerpResult114_g7715 , ( EmissionGlow142_g7715 + ( ReversedReactivity152_g7715 * step( EmissionReactiveBand243_g7715 , 9 ) ) ) , (float)max( saturate( ( temp_output_157_0_g7715 - 1 ) ) , ( 1.0 - step( EmissionReactiveBand243_g7715 , 9 ) ) ));
+			int localIfAudioLinkv2Exists1_g7730 = IfAudioLinkv2Exists1_g7730();
+			float4 temp_output_213_0_g7715 = ( lerpResult164_g7715 * temp_output_236_0_g7715 * saturate( ( localIfAudioLinkv2Exists1_g7730 + _UseFallback3 ) ) );
+			float4 lerpResult278_g7715 = lerp( temp_output_286_0_g7715 , temp_output_213_0_g7715 , _EnableAlphaChannel);
 			float2 uv_EmissionMap = i.uv_texcoord * _EmissionMap_ST.xy + _EmissionMap_ST.zw;
 			float4 EmissionRGBA590 = ( _EmissionColor * tex2D( _EmissionMap, uv_EmissionMap ) );
 			float4 lerpResult656 = lerp( MM01RGBA295 , MM02RGBA296 , saturate( _EmissionMaskMap ));
@@ -2960,147 +2960,147 @@ Shader "Furality/Umbra Shader/Umbra Opaque"
 			#else
 				float4 staticSwitch886 = float4( 0,0,0,0 );
 			#endif
-			float4 temp_output_211_0_g7520 = staticSwitch886;
+			float4 temp_output_211_0_g7732 = staticSwitch886;
 			float4 temp_cast_182 = (1.0).xxxx;
 			float3 temp_cast_183 = (1.0).xxx;
-			int EmissionGlowZone47_g7520 = _EmissionGlowZone;
-			int clampResult8_g7531 = clamp( EmissionGlowZone47_g7520 , 1 , 4 );
-			int temp_output_3_0_g7531 = ( clampResult8_g7531 - 1 );
-			int Zone16_g7531 = temp_output_3_0_g7531;
-			float3 localgetThemeData16_g7531 = getThemeData( Zone16_g7531 );
-			int Band11_g7532 = 56;
-			int localIsLumaActive11_g7532 = IsLumaActive11_g7532( Band11_g7532 );
-			int temp_output_14_0_g7531 = localIsLumaActive11_g7532;
-			int lerpResult15_g7531 = lerp( temp_output_3_0_g7531 , ( 63 - temp_output_3_0_g7531 ) , (float)temp_output_14_0_g7531);
-			int Band2_g7531 = lerpResult15_g7531;
-			int Delay2_g7531 = 0;
-			float3 localLumaGlowData2_g7531 = LumaGlowData2_g7531( Band2_g7531 , Delay2_g7531 );
-			float3 lerpResult17_g7531 = lerp( ( localgetThemeData16_g7531 * localLumaGlowData2_g7531 ) , localLumaGlowData2_g7531 , (float)temp_output_14_0_g7531);
-			int temp_output_21_0_g7520 = saturate( EmissionGlowZone47_g7520 );
-			float3 lerpResult20_g7520 = lerp( temp_cast_183 , lerpResult17_g7531 , (float)temp_output_21_0_g7520);
+			int EmissionGlowZone47_g7732 = _EmissionGlowZone;
+			int clampResult8_g7743 = clamp( EmissionGlowZone47_g7732 , 1 , 4 );
+			int temp_output_3_0_g7743 = ( clampResult8_g7743 - 1 );
+			int Zone16_g7743 = temp_output_3_0_g7743;
+			float3 localgetThemeData16_g7743 = getThemeData( Zone16_g7743 );
+			int Band11_g7744 = 56;
+			int localIsLumaActive11_g7744 = IsLumaActive11_g7744( Band11_g7744 );
+			int temp_output_14_0_g7743 = localIsLumaActive11_g7744;
+			int lerpResult15_g7743 = lerp( temp_output_3_0_g7743 , ( 63 - temp_output_3_0_g7743 ) , (float)temp_output_14_0_g7743);
+			int Band2_g7743 = lerpResult15_g7743;
+			int Delay2_g7743 = 0;
+			float3 localLumaGlowData2_g7743 = LumaGlowData2_g7743( Band2_g7743 , Delay2_g7743 );
+			float3 lerpResult17_g7743 = lerp( ( localgetThemeData16_g7743 * localLumaGlowData2_g7743 ) , localLumaGlowData2_g7743 , (float)temp_output_14_0_g7743);
+			int temp_output_21_0_g7732 = saturate( EmissionGlowZone47_g7732 );
+			float3 lerpResult20_g7732 = lerp( temp_cast_183 , lerpResult17_g7743 , (float)temp_output_21_0_g7732);
 			float3 temp_cast_187 = (1.0).xxx;
-			int clampResult8_g7533 = clamp( EmissionGlowZone47_g7520 , 1 , 4 );
-			int temp_output_3_0_g7533 = ( clampResult8_g7533 - 1 );
-			int Zone15_g7533 = temp_output_3_0_g7533;
-			float3 localgetThemeData15_g7533 = getThemeData( Zone15_g7533 );
-			int Band11_g7534 = 56;
-			int localIsLumaActive11_g7534 = IsLumaActive11_g7534( Band11_g7534 );
-			int temp_output_13_0_g7533 = localIsLumaActive11_g7534;
-			int lerpResult14_g7533 = lerp( temp_output_3_0_g7533 , ( 63 - temp_output_3_0_g7533 ) , (float)temp_output_13_0_g7533);
-			int Band11_g7533 = lerpResult14_g7533;
-			float cos6_g7520 = cos( radians( _EmissionGlowPulseDir ) );
-			float sin6_g7520 = sin( radians( _EmissionGlowPulseDir ) );
-			float2 rotator6_g7520 = mul( i.uv_texcoord - float2( 0.5,0.5 ) , float2x2( cos6_g7520 , -sin6_g7520 , sin6_g7520 , cos6_g7520 )) + float2( 0.5,0.5 );
-			int Band6_g7526 = _EmissionGlowAnimationBand;
-			int Mode6_g7526 = ( ( _EmissionGlowAnimationMode * 2 ) + _EmissionGlowAnimationSpeed );
-			int localAudioLinkDecodeDataAsUInt6_g7526 = AudioLinkDecodeDataAsUInt6_g7526( Band6_g7526 , Mode6_g7526 );
-			float localGetLocalTime2_g7527 = ( AudioLinkDecodeDataAsSeconds( ALPASS_GENERALVU_LOCAL_TIME ) );
-			float lerpResult206_g7520 = lerp( ( ( localAudioLinkDecodeDataAsUInt6_g7526 % 628319 ) / 100000.0 ) , localGetLocalTime2_g7527 , (float)saturate( ( _EmissionGlowAnimationMode - 3 ) ));
-			float EmissionGlowAnimation195_g7520 = ( _EmissionGlowAnimationStrength * lerpResult206_g7520 * step( _EmissionGlowAnimationBand , 9 ) );
-			float x13_g7520 = ( ( rotator6_g7520.x * _EmissionGlowPulseScale ) + _EmissionGlowPulseOffset + EmissionGlowAnimation195_g7520 );
-			float y13_g7520 = 127.0;
-			float localglslmod13_g7520 = glslmod13_g7520( x13_g7520 , y13_g7520 );
-			float2 temp_output_34_0_g7522 = ( i.uv_texcoord - _EmissionGlowRadialCenter );
-			float2 break39_g7522 = temp_output_34_0_g7522;
-			float2 appendResult50_g7522 = (float2(( _EmissionGlowPulseScale * ( length( temp_output_34_0_g7522 ) * 2.0 ) ) , ( ( atan2( break39_g7522.x , break39_g7522.y ) * ( 1.0 / 6.28318548202515 ) ) * 1.0 )));
-			float x12_g7520 = ( _EmissionGlowPulseOffset + appendResult50_g7522.x + EmissionGlowAnimation195_g7520 );
-			float y12_g7520 = 127.0;
-			float localglslmod12_g7520 = glslmod12_g7520( x12_g7520 , y12_g7520 );
-			int EmissionGlowMode35_g7520 = _EmissionGlowMode;
-			int temp_output_37_0_g7520 = ( EmissionGlowMode35_g7520 - 1 );
-			float lerpResult5_g7520 = lerp( localglslmod13_g7520 , localglslmod12_g7520 , (float)saturate( temp_output_37_0_g7520 ));
-			float DirectionalMap106_g7520 = Direction27_g7501;
-			float lerpResult179_g7520 = lerp( DirectionalMap106_g7520 , ( 1.0 - DirectionalMap106_g7520 ) , (float)saturate( ( EmissionGlowMode35_g7520 - 0 ) ));
-			float x34_g7520 = ( _EmissionGlowPulseOffset + ( _EmissionGlowPulseScale * lerpResult179_g7520 ) + EmissionGlowAnimation195_g7520 );
-			float y34_g7520 = 127.0;
-			float localglslmod34_g7520 = glslmod34_g7520( x34_g7520 , y34_g7520 );
-			float lerpResult30_g7520 = lerp( lerpResult5_g7520 , localglslmod34_g7520 , (float)saturate( ( temp_output_37_0_g7520 - 1 ) ));
-			float EmissionGlowDelay56_g7520 = lerpResult30_g7520;
-			float Delay11_g7533 = EmissionGlowDelay56_g7520;
-			float3 localLumaGlowLerp11_g7533 = LumaGlowLerp11_g7533( Band11_g7533 , Delay11_g7533 );
-			float3 lerpResult17_g7533 = lerp( ( localgetThemeData15_g7533 * localLumaGlowLerp11_g7533 ) , localLumaGlowLerp11_g7533 , (float)temp_output_13_0_g7533);
-			float3 lerpResult22_g7520 = lerp( temp_cast_187 , lerpResult17_g7533 , (float)temp_output_21_0_g7520);
-			float3 lerpResult23_g7520 = lerp( lerpResult20_g7520 , lerpResult22_g7520 , (float)saturate( EmissionGlowMode35_g7520 ));
+			int clampResult8_g7745 = clamp( EmissionGlowZone47_g7732 , 1 , 4 );
+			int temp_output_3_0_g7745 = ( clampResult8_g7745 - 1 );
+			int Zone15_g7745 = temp_output_3_0_g7745;
+			float3 localgetThemeData15_g7745 = getThemeData( Zone15_g7745 );
+			int Band11_g7746 = 56;
+			int localIsLumaActive11_g7746 = IsLumaActive11_g7746( Band11_g7746 );
+			int temp_output_13_0_g7745 = localIsLumaActive11_g7746;
+			int lerpResult14_g7745 = lerp( temp_output_3_0_g7745 , ( 63 - temp_output_3_0_g7745 ) , (float)temp_output_13_0_g7745);
+			int Band11_g7745 = lerpResult14_g7745;
+			float cos6_g7732 = cos( radians( _EmissionGlowPulseDir ) );
+			float sin6_g7732 = sin( radians( _EmissionGlowPulseDir ) );
+			float2 rotator6_g7732 = mul( i.uv_texcoord - float2( 0.5,0.5 ) , float2x2( cos6_g7732 , -sin6_g7732 , sin6_g7732 , cos6_g7732 )) + float2( 0.5,0.5 );
+			int Band6_g7738 = _EmissionGlowAnimationBand;
+			int Mode6_g7738 = ( ( _EmissionGlowAnimationMode * 2 ) + _EmissionGlowAnimationSpeed );
+			int localAudioLinkDecodeDataAsUInt6_g7738 = AudioLinkDecodeDataAsUInt6_g7738( Band6_g7738 , Mode6_g7738 );
+			float localGetLocalTime2_g7739 = ( AudioLinkDecodeDataAsSeconds( ALPASS_GENERALVU_LOCAL_TIME ) );
+			float lerpResult206_g7732 = lerp( ( ( localAudioLinkDecodeDataAsUInt6_g7738 % 628319 ) / 100000.0 ) , localGetLocalTime2_g7739 , (float)saturate( ( _EmissionGlowAnimationMode - 3 ) ));
+			float EmissionGlowAnimation195_g7732 = ( _EmissionGlowAnimationStrength * lerpResult206_g7732 * step( _EmissionGlowAnimationBand , 9 ) );
+			float x13_g7732 = ( ( rotator6_g7732.x * _EmissionGlowPulseScale ) + _EmissionGlowPulseOffset + EmissionGlowAnimation195_g7732 );
+			float y13_g7732 = 127.0;
+			float localglslmod13_g7732 = glslmod13_g7732( x13_g7732 , y13_g7732 );
+			float2 temp_output_34_0_g7734 = ( i.uv_texcoord - _EmissionGlowRadialCenter );
+			float2 break39_g7734 = temp_output_34_0_g7734;
+			float2 appendResult50_g7734 = (float2(( _EmissionGlowPulseScale * ( length( temp_output_34_0_g7734 ) * 2.0 ) ) , ( ( atan2( break39_g7734.x , break39_g7734.y ) * ( 1.0 / 6.28318548202515 ) ) * 1.0 )));
+			float x12_g7732 = ( _EmissionGlowPulseOffset + appendResult50_g7734.x + EmissionGlowAnimation195_g7732 );
+			float y12_g7732 = 127.0;
+			float localglslmod12_g7732 = glslmod12_g7732( x12_g7732 , y12_g7732 );
+			int EmissionGlowMode35_g7732 = _EmissionGlowMode;
+			int temp_output_37_0_g7732 = ( EmissionGlowMode35_g7732 - 1 );
+			float lerpResult5_g7732 = lerp( localglslmod13_g7732 , localglslmod12_g7732 , (float)saturate( temp_output_37_0_g7732 ));
+			float DirectionalMap106_g7732 = Direction27_g7679;
+			float lerpResult179_g7732 = lerp( DirectionalMap106_g7732 , ( 1.0 - DirectionalMap106_g7732 ) , (float)saturate( ( EmissionGlowMode35_g7732 - 3 ) ));
+			float x34_g7732 = ( _EmissionGlowPulseOffset + ( _EmissionGlowPulseScale * lerpResult179_g7732 ) + EmissionGlowAnimation195_g7732 );
+			float y34_g7732 = 127.0;
+			float localglslmod34_g7732 = glslmod34_g7732( x34_g7732 , y34_g7732 );
+			float lerpResult30_g7732 = lerp( lerpResult5_g7732 , localglslmod34_g7732 , (float)saturate( ( temp_output_37_0_g7732 - 1 ) ));
+			float EmissionGlowDelay56_g7732 = lerpResult30_g7732;
+			float Delay11_g7745 = EmissionGlowDelay56_g7732;
+			float3 localLumaGlowLerp11_g7745 = LumaGlowLerp11_g7745( Band11_g7745 , Delay11_g7745 );
+			float3 lerpResult17_g7745 = lerp( ( localgetThemeData15_g7745 * localLumaGlowLerp11_g7745 ) , localLumaGlowLerp11_g7745 , (float)temp_output_13_0_g7745);
+			float3 lerpResult22_g7732 = lerp( temp_cast_187 , lerpResult17_g7745 , (float)temp_output_21_0_g7732);
+			float3 lerpResult23_g7732 = lerp( lerpResult20_g7732 , lerpResult22_g7732 , (float)saturate( EmissionGlowMode35_g7732 ));
 			float4 temp_cast_197 = (1.0).xxxx;
-			float temp_output_10_0_g7528 = EmissionGlowDelay56_g7520;
-			float Position1_g7530 = ( temp_output_10_0_g7528 / 127.0 );
-			float4 localAudioLinkLerp1_g7530 = AudioLinkLerp1_g7530( Position1_g7530 );
-			int clampResult8_g7528 = clamp( ( EmissionGlowZone47_g7520 - 0 ) , 1 , 3 );
-			int Band11_g7528 = ( 59 - ( clampResult8_g7528 - 1 ) );
-			float Delay11_g7528 = temp_output_10_0_g7528;
-			float3 localLumaGlowLerp11_g7528 = LumaGlowLerp11_g7528( Band11_g7528 , Delay11_g7528 );
-			int Band11_g7529 = 56;
-			int localIsLumaActive11_g7529 = IsLumaActive11_g7529( Band11_g7529 );
-			float4 lerpResult14_g7528 = lerp( localAudioLinkLerp1_g7530 , float4( localLumaGlowLerp11_g7528 , 0.0 ) , (float)localIsLumaActive11_g7529);
-			float4 lerpResult52_g7520 = lerp( temp_cast_197 , lerpResult14_g7528 , (float)saturate( EmissionGlowZone47_g7520 ));
-			float4 lerpResult51_g7520 = lerp( float4( lerpResult23_g7520 , 0.0 ) , lerpResult52_g7520 , (float)saturate( ( EmissionGlowZone47_g7520 - 0 ) ));
+			float temp_output_10_0_g7740 = EmissionGlowDelay56_g7732;
+			float Position1_g7742 = ( temp_output_10_0_g7740 / 127.0 );
+			float4 localAudioLinkLerp1_g7742 = AudioLinkLerp1_g7742( Position1_g7742 );
+			int clampResult8_g7740 = clamp( ( EmissionGlowZone47_g7732 - 4 ) , 1 , 3 );
+			int Band11_g7740 = ( 59 - ( clampResult8_g7740 - 1 ) );
+			float Delay11_g7740 = temp_output_10_0_g7740;
+			float3 localLumaGlowLerp11_g7740 = LumaGlowLerp11_g7740( Band11_g7740 , Delay11_g7740 );
+			int Band11_g7741 = 56;
+			int localIsLumaActive11_g7741 = IsLumaActive11_g7741( Band11_g7741 );
+			float4 lerpResult14_g7740 = lerp( localAudioLinkLerp1_g7742 , float4( localLumaGlowLerp11_g7740 , 0.0 ) , (float)localIsLumaActive11_g7741);
+			float4 lerpResult52_g7732 = lerp( temp_cast_197 , lerpResult14_g7740 , (float)saturate( EmissionGlowZone47_g7732 ));
+			float4 lerpResult51_g7732 = lerp( float4( lerpResult23_g7732 , 0.0 ) , lerpResult52_g7732 , (float)saturate( ( EmissionGlowZone47_g7732 - 4 ) ));
 			float4 temp_cast_202 = (_EmissionGlowMinBrightness).xxxx;
 			float4 temp_cast_203 = (( _EmissionGlowMinBrightness + 1.0 )).xxxx;
-			int temp_output_245_0_g7520 = saturate( EmissionGlowZone47_g7520 );
-			float4 EmissionGlow142_g7520 = ( (temp_cast_202 + (lerpResult51_g7520 - float4( 0,0,0,0 )) * (temp_cast_203 - temp_cast_202) / (float4( 1,1,1,1 ) - float4( 0,0,0,0 ))) * _EmissionGlowTint * temp_output_245_0_g7520 );
-			float4 lerpResult248_g7520 = lerp( temp_cast_182 , EmissionGlow142_g7520 , (float)temp_output_245_0_g7520);
-			float4 EmissionGlowTog249_g7520 = lerpResult248_g7520;
-			int EmissionReactiveBand254_g7520 = _EmissionReactiveBand;
-			int Band3_g7521 = EmissionReactiveBand254_g7520;
-			int Delay3_g7521 = 0;
-			float localAudioLinkData3_g7521 = AudioLinkData3_g7521( Band3_g7521 , Delay3_g7521 );
-			int temp_output_64_0_g7520 = step( _EmissionReactiveBand , 9 );
-			float lerpResult66_g7520 = lerp( 1.0 , localAudioLinkData3_g7521 , (float)temp_output_64_0_g7520);
-			int Band3_g7523 = _EmissionReactiveBand;
-			float cos78_g7520 = cos( radians( _EmissionReactivePulseDir ) );
-			float sin78_g7520 = sin( radians( _EmissionReactivePulseDir ) );
-			float2 rotator78_g7520 = mul( i.uv_texcoord - float2( 0.5,0.5 ) , float2x2( cos78_g7520 , -sin78_g7520 , sin78_g7520 , cos78_g7520 )) + float2( 0.5,0.5 );
-			float x96_g7520 = ( ( rotator78_g7520.x * _EmissionReactivePulseScale ) + _EmissionReactivePulseOffset );
-			float y96_g7520 = 127.0;
-			float localglslmod96_g7520 = glslmod96_g7520( x96_g7520 , y96_g7520 );
-			float2 temp_output_34_0_g7524 = ( i.uv_texcoord - _EmissionReactiveRadialCenter );
-			float2 break39_g7524 = temp_output_34_0_g7524;
-			float2 appendResult50_g7524 = (float2(( _EmissionReactivePulseScale * ( length( temp_output_34_0_g7524 ) * 2.0 ) ) , ( ( atan2( break39_g7524.x , break39_g7524.y ) * ( 1.0 / 6.28318548202515 ) ) * 1.0 )));
-			float x97_g7520 = ( _EmissionReactivePulseOffset + appendResult50_g7524.x );
-			float y97_g7520 = 127.0;
-			float localglslmod97_g7520 = glslmod97_g7520( x97_g7520 , y97_g7520 );
-			int EmissionReactiveMode99_g7520 = _EmissionReactiveMode;
-			int temp_output_90_0_g7520 = ( EmissionReactiveMode99_g7520 - 1 );
-			float lerpResult77_g7520 = lerp( localglslmod96_g7520 , localglslmod97_g7520 , (float)saturate( temp_output_90_0_g7520 ));
-			float lerpResult174_g7520 = lerp( DirectionalMap106_g7520 , ( 1.0 - DirectionalMap106_g7520 ) , (float)saturate( ( EmissionReactiveMode99_g7520 - 0 ) ));
-			float x98_g7520 = ( _EmissionReactivePulseOffset + ( _EmissionReactivePulseScale * lerpResult174_g7520 ) );
-			float y98_g7520 = 127.0;
-			float localglslmod98_g7520 = glslmod98_g7520( x98_g7520 , y98_g7520 );
-			float lerpResult87_g7520 = lerp( lerpResult77_g7520 , localglslmod98_g7520 , (float)saturate( ( temp_output_90_0_g7520 - 1 ) ));
-			float Delay3_g7523 = lerpResult87_g7520;
-			float localAudioLinkLerp3_g7523 = AudioLinkLerp3_g7523( Band3_g7523 , Delay3_g7523 );
-			float lerpResult102_g7520 = lerp( 1.0 , localAudioLinkLerp3_g7523 , (float)temp_output_64_0_g7520);
-			float lerpResult103_g7520 = lerp( lerpResult66_g7520 , lerpResult102_g7520 , (float)saturate( EmissionReactiveMode99_g7520 ));
-			int Band3_g7525 = _EmissionReactiveBand;
-			float FilteredAmount3_g7525 = ( ( 1.0 - _EmissionReactiveGlobalSmoothing ) * 15.0 );
-			float localAudioLinkLerp3_g7525 = AudioLinkLerp3_g7525( Band3_g7525 , FilteredAmount3_g7525 );
-			float lerpResult168_g7520 = lerp( 1.0 , localAudioLinkLerp3_g7525 , (float)temp_output_64_0_g7520);
-			float lerpResult172_g7520 = lerp( lerpResult103_g7520 , lerpResult168_g7520 , (float)saturate( ( EmissionReactiveMode99_g7520 - 0 ) ));
-			float ReactivityAlpha132_g7520 = (_EmissionReactiveMinBrightness + (lerpResult172_g7520 - 0.0) * (( _EmissionReactiveMinBrightness + 1.0 ) - _EmissionReactiveMinBrightness) / (1.0 - 0.0));
+			int temp_output_245_0_g7732 = saturate( EmissionGlowZone47_g7732 );
+			float4 EmissionGlow142_g7732 = ( (temp_cast_202 + (lerpResult51_g7732 - float4( 0,0,0,0 )) * (temp_cast_203 - temp_cast_202) / (float4( 1,1,1,1 ) - float4( 0,0,0,0 ))) * _EmissionGlowTint * temp_output_245_0_g7732 );
+			float4 lerpResult248_g7732 = lerp( temp_cast_182 , EmissionGlow142_g7732 , (float)temp_output_245_0_g7732);
+			float4 EmissionGlowTog249_g7732 = lerpResult248_g7732;
+			int EmissionReactiveBand254_g7732 = _EmissionReactiveBand;
+			int Band3_g7733 = EmissionReactiveBand254_g7732;
+			int Delay3_g7733 = 0;
+			float localAudioLinkData3_g7733 = AudioLinkData3_g7733( Band3_g7733 , Delay3_g7733 );
+			int temp_output_64_0_g7732 = step( _EmissionReactiveBand , 9 );
+			float lerpResult66_g7732 = lerp( 1.0 , localAudioLinkData3_g7733 , (float)temp_output_64_0_g7732);
+			int Band3_g7735 = _EmissionReactiveBand;
+			float cos78_g7732 = cos( radians( _EmissionReactivePulseDir ) );
+			float sin78_g7732 = sin( radians( _EmissionReactivePulseDir ) );
+			float2 rotator78_g7732 = mul( i.uv_texcoord - float2( 0.5,0.5 ) , float2x2( cos78_g7732 , -sin78_g7732 , sin78_g7732 , cos78_g7732 )) + float2( 0.5,0.5 );
+			float x96_g7732 = ( ( rotator78_g7732.x * _EmissionReactivePulseScale ) + _EmissionReactivePulseOffset );
+			float y96_g7732 = 127.0;
+			float localglslmod96_g7732 = glslmod96_g7732( x96_g7732 , y96_g7732 );
+			float2 temp_output_34_0_g7736 = ( i.uv_texcoord - _EmissionReactiveRadialCenter );
+			float2 break39_g7736 = temp_output_34_0_g7736;
+			float2 appendResult50_g7736 = (float2(( _EmissionReactivePulseScale * ( length( temp_output_34_0_g7736 ) * 2.0 ) ) , ( ( atan2( break39_g7736.x , break39_g7736.y ) * ( 1.0 / 6.28318548202515 ) ) * 1.0 )));
+			float x97_g7732 = ( _EmissionReactivePulseOffset + appendResult50_g7736.x );
+			float y97_g7732 = 127.0;
+			float localglslmod97_g7732 = glslmod97_g7732( x97_g7732 , y97_g7732 );
+			int EmissionReactiveMode99_g7732 = _EmissionReactiveMode;
+			int temp_output_90_0_g7732 = ( EmissionReactiveMode99_g7732 - 1 );
+			float lerpResult77_g7732 = lerp( localglslmod96_g7732 , localglslmod97_g7732 , (float)saturate( temp_output_90_0_g7732 ));
+			float lerpResult174_g7732 = lerp( DirectionalMap106_g7732 , ( 1.0 - DirectionalMap106_g7732 ) , (float)saturate( ( EmissionReactiveMode99_g7732 - 3 ) ));
+			float x98_g7732 = ( _EmissionReactivePulseOffset + ( _EmissionReactivePulseScale * lerpResult174_g7732 ) );
+			float y98_g7732 = 127.0;
+			float localglslmod98_g7732 = glslmod98_g7732( x98_g7732 , y98_g7732 );
+			float lerpResult87_g7732 = lerp( lerpResult77_g7732 , localglslmod98_g7732 , (float)saturate( ( temp_output_90_0_g7732 - 1 ) ));
+			float Delay3_g7735 = lerpResult87_g7732;
+			float localAudioLinkLerp3_g7735 = AudioLinkLerp3_g7735( Band3_g7735 , Delay3_g7735 );
+			float lerpResult102_g7732 = lerp( 1.0 , localAudioLinkLerp3_g7735 , (float)temp_output_64_0_g7732);
+			float lerpResult103_g7732 = lerp( lerpResult66_g7732 , lerpResult102_g7732 , (float)saturate( EmissionReactiveMode99_g7732 ));
+			int Band3_g7737 = _EmissionReactiveBand;
+			float FilteredAmount3_g7737 = ( ( 1.0 - _EmissionReactiveGlobalSmoothing ) * 15.0 );
+			float localAudioLinkLerp3_g7737 = AudioLinkLerp3_g7737( Band3_g7737 , FilteredAmount3_g7737 );
+			float lerpResult168_g7732 = lerp( 1.0 , localAudioLinkLerp3_g7737 , (float)temp_output_64_0_g7732);
+			float lerpResult172_g7732 = lerp( lerpResult103_g7732 , lerpResult168_g7732 , (float)saturate( ( EmissionReactiveMode99_g7732 - 4 ) ));
+			float ReactivityAlpha132_g7732 = (_EmissionReactiveMinBrightness + (lerpResult172_g7732 - 0.0) * (( _EmissionReactiveMinBrightness + 1.0 ) - _EmissionReactiveMinBrightness) / (1.0 - 0.0));
 			float4 temp_cast_214 = (1.0).xxxx;
-			float4 lerpResult265_g7520 = lerp( temp_cast_214 , _EmissionReactiveTint , (float)step( EmissionReactiveBand254_g7520 , 0 ));
-			float4 FinalReactivity68_g7520 = ( ReactivityAlpha132_g7520 * lerpResult265_g7520 );
-			float4 lerpResult146_g7520 = lerp( ( EmissionGlowTog249_g7520 * FinalReactivity68_g7520 ) , ( EmissionGlow142_g7520 + FinalReactivity68_g7520 ) , (float)saturate( _EmissionReactiveBlendMode ));
-			float4 ReversedReactivity152_g7520 = ( ( 1.0 - ReactivityAlpha132_g7520 ) * lerpResult265_g7520 );
-			int temp_output_157_0_g7520 = ( _EmissionReactiveBlendMode - 1 );
-			float4 lerpResult114_g7520 = lerp( lerpResult146_g7520 , ( EmissionGlowTog249_g7520 * ReversedReactivity152_g7520 ) , (float)saturate( temp_output_157_0_g7520 ));
-			float4 lerpResult164_g7520 = lerp( lerpResult114_g7520 , ( EmissionGlow142_g7520 + ( ReversedReactivity152_g7520 * step( EmissionReactiveBand254_g7520 , 0 ) ) ) , (float)saturate( ( temp_output_157_0_g7520 - 1 ) ));
-			float grayscale214_g7520 = Luminance(temp_output_211_0_g7520.rgb);
-			float smoothstepResult215_g7520 = smoothstep( 0.0 , 0.5 , grayscale214_g7520);
-			int ReactiveBlendmode272_g7520 = _EmissionReactiveBlendMode;
-			float x270_g7520 = (float)ReactiveBlendmode272_g7520;
-			float y270_g7520 = 2.0;
-			float localglslmod270_g7520 = glslmod270_g7520( x270_g7520 , y270_g7520 );
-			float lerpResult271_g7520 = lerp( localglslmod270_g7520 , (float)_EmissionGlowBlendMode , (float)saturate( EmissionGlowZone47_g7520 ));
-			float4 lerpResult212_g7520 = lerp( ( lerpResult164_g7520 * temp_output_211_0_g7520 ) , ( ( lerpResult164_g7520 * smoothstepResult215_g7520 ) + temp_output_211_0_g7520 ) , lerpResult271_g7520);
-			int localIfAudioLinkv2Exists1_g7535 = IfAudioLinkv2Exists1_g7535();
-			float4 lerpResult281_g7520 = lerp( temp_output_211_0_g7520 , lerpResult212_g7520 , (float)localIfAudioLinkv2Exists1_g7535);
+			float4 lerpResult265_g7732 = lerp( temp_cast_214 , _EmissionReactiveTint , (float)step( EmissionReactiveBand254_g7732 , 9 ));
+			float4 FinalReactivity68_g7732 = ( ReactivityAlpha132_g7732 * lerpResult265_g7732 );
+			float4 lerpResult146_g7732 = lerp( ( EmissionGlowTog249_g7732 * FinalReactivity68_g7732 ) , ( EmissionGlow142_g7732 + FinalReactivity68_g7732 ) , (float)saturate( _EmissionReactiveBlendMode ));
+			float4 ReversedReactivity152_g7732 = ( ( 1.0 - ReactivityAlpha132_g7732 ) * lerpResult265_g7732 );
+			int temp_output_157_0_g7732 = ( _EmissionReactiveBlendMode - 1 );
+			float4 lerpResult114_g7732 = lerp( lerpResult146_g7732 , ( EmissionGlowTog249_g7732 * ReversedReactivity152_g7732 ) , (float)saturate( temp_output_157_0_g7732 ));
+			float4 lerpResult164_g7732 = lerp( lerpResult114_g7732 , ( EmissionGlow142_g7732 + ( ReversedReactivity152_g7732 * step( EmissionReactiveBand254_g7732 , 9 ) ) ) , (float)saturate( ( temp_output_157_0_g7732 - 1 ) ));
+			float grayscale214_g7732 = Luminance(temp_output_211_0_g7732.rgb);
+			float smoothstepResult215_g7732 = smoothstep( 0.0 , 0.5 , grayscale214_g7732);
+			int ReactiveBlendmode272_g7732 = _EmissionReactiveBlendMode;
+			float x270_g7732 = (float)ReactiveBlendmode272_g7732;
+			float y270_g7732 = 2.0;
+			float localglslmod270_g7732 = glslmod270_g7732( x270_g7732 , y270_g7732 );
+			float lerpResult271_g7732 = lerp( localglslmod270_g7732 , (float)_EmissionGlowBlendMode , (float)saturate( EmissionGlowZone47_g7732 ));
+			float4 lerpResult212_g7732 = lerp( ( lerpResult164_g7732 * temp_output_211_0_g7732 ) , ( ( lerpResult164_g7732 * smoothstepResult215_g7732 ) + temp_output_211_0_g7732 ) , lerpResult271_g7732);
+			int localIfAudioLinkv2Exists1_g7747 = IfAudioLinkv2Exists1_g7747();
+			float4 lerpResult281_g7732 = lerp( temp_output_211_0_g7732 , lerpResult212_g7732 , (float)localIfAudioLinkv2Exists1_g7747);
 			#ifdef _EMISSION
-				float4 staticSwitch284_g7520 = lerpResult281_g7520;
+				float4 staticSwitch284_g7732 = lerpResult281_g7732;
 			#else
-				float4 staticSwitch284_g7520 = float4( 0,0,0,0 );
+				float4 staticSwitch284_g7732 = float4( 0,0,0,0 );
 			#endif
-			float4 Emiss1322 = ( ( lerpResult280_g7536 + lerpResult276_g7553 + lerpResult278_g7503 + lerpResult278_g7570 ) + staticSwitch284_g7520 );
+			float4 Emiss1322 = ( ( lerpResult280_g7748 + lerpResult276_g7681 + lerpResult278_g7698 + lerpResult278_g7715 ) + staticSwitch284_g7732 );
 			o.Emission = Emiss1322.xyz;
 		}
 
@@ -3164,7 +3164,7 @@ Shader "Furality/Umbra Shader/Umbra Opaque"
 				o.customPack2.zw = customInputData.vertexToFrag51_g5489;
 				o.customPack3.xy = customInputData.uv_texcoord;
 				o.customPack3.xy = v.texcoord;
-				o.customPack3.zw = customInputData.vertexToFrag51_g7502;
+				o.customPack3.zw = customInputData.vertexToFrag51_g7680;
 				o.customPack4.xy = customInputData.vertexToFrag51_g5577;
 				TRANSFER_SHADOW_CASTER_NORMALOFFSET( o )
 				return o;
@@ -3183,7 +3183,7 @@ Shader "Furality/Umbra Shader/Umbra Opaque"
 				surfIN.vertexToFrag51_g5488 = IN.customPack2.xy;
 				surfIN.vertexToFrag51_g5489 = IN.customPack2.zw;
 				surfIN.uv_texcoord = IN.customPack3.xy;
-				surfIN.vertexToFrag51_g7502 = IN.customPack3.zw;
+				surfIN.vertexToFrag51_g7680 = IN.customPack3.zw;
 				surfIN.vertexToFrag51_g5577 = IN.customPack4.xy;
 				float3 worldPos = float3( IN.tSpace0.w, IN.tSpace1.w, IN.tSpace2.w );
 				half3 worldViewDir = normalize( UnityWorldSpaceViewDir( worldPos ) );
@@ -4256,7 +4256,6 @@ Node;AmplifyShaderEditor.GetLocalVarNode;582;6073.168,-6176.331;Inherit;False;58
 Node;AmplifyShaderEditor.GetLocalVarNode;578;6085.467,-6260.397;Inherit;False;572;GlintFinal;1;0;OBJECT;;False;1;FLOAT4;0
 Node;AmplifyShaderEditor.GetLocalVarNode;591;-10015.99,-3215.344;Inherit;False;688;EmissionFinal;1;0;OBJECT;;False;1;COLOR;0
 Node;AmplifyShaderEditor.GetLocalVarNode;1115;-10059.38,-3374.352;Inherit;False;1076;GlowMask2Channel;1;0;OBJECT;;False;1;FLOAT;0
-Node;AmplifyShaderEditor.GetLocalVarNode;1114;-10059.38,-3450.352;Inherit;False;1042;GlowMask1Channel;1;0;OBJECT;;False;1;FLOAT;0
 Node;AmplifyShaderEditor.GetLocalVarNode;1113;-10055.68,-3522.17;Inherit;False;1009;GlowMask0Channel;1;0;OBJECT;;False;1;FLOAT;0
 Node;AmplifyShaderEditor.GetLocalVarNode;1116;-10057.38,-3305.352;Inherit;False;1110;GlowMask3Channel;1;0;OBJECT;;False;1;FLOAT;0
 Node;AmplifyShaderEditor.LerpOp;509;5379.057,-5189.546;Inherit;False;3;0;FLOAT4;0,0,0,0;False;1;FLOAT4;0,0,0,0;False;2;FLOAT;0;False;1;FLOAT4;0
@@ -4264,6 +4263,7 @@ Node;AmplifyShaderEditor.RegisterLocalVarNode;402;-8432.971,-5162.108;Inherit;Fa
 Node;AmplifyShaderEditor.LerpOp;576;6325.767,-6229.603;Inherit;False;3;0;FLOAT4;0,0,0,0;False;1;FLOAT4;0,0,0,0;False;2;FLOAT;0;False;1;FLOAT4;0
 Node;AmplifyShaderEditor.GetLocalVarNode;575;6300.651,-6313.146;Inherit;False;572;GlintFinal;1;0;OBJECT;;False;1;FLOAT4;0
 Node;AmplifyShaderEditor.GetLocalVarNode;510;5364.176,-5260.846;Inherit;False;192;IndirectSpec;1;0;OBJECT;;False;1;FLOAT4;0
+Node;AmplifyShaderEditor.GetLocalVarNode;1114;-10059.38,-3450.352;Inherit;False;1042;GlowMask1Channel;1;0;OBJECT;;False;1;FLOAT;0
 Node;AmplifyShaderEditor.DynamicAppendNode;1117;-9777.38,-3454.352;Inherit;False;FLOAT4;4;0;FLOAT;0;False;1;FLOAT;0;False;2;FLOAT;0;False;3;FLOAT;0;False;1;FLOAT4;0
 Node;AmplifyShaderEditor.StaticSwitch;886;-9796.092,-3237.98;Inherit;False;Property;_EnableEmission;Emission;193;0;Create;False;0;0;0;False;0;False;0;0;0;True;_EMISSION;Toggle;2;Key0;Key1;Create;True;False;All;9;1;COLOR;0,0,0,0;False;0;COLOR;0,0,0,0;False;2;COLOR;0,0,0,0;False;3;COLOR;0,0,0,0;False;4;COLOR;0,0,0,0;False;5;COLOR;0,0,0,0;False;6;COLOR;0,0,0,0;False;7;COLOR;0,0,0,0;False;8;COLOR;0,0,0,0;False;1;COLOR;0
 Node;AmplifyShaderEditor.StaticSwitch;574;6530.651,-6251.146;Inherit;False;Property;_ClearCoat1;Clear Coat;243;0;Create;True;0;0;0;False;0;False;0;0;0;True;;Toggle;2;Key0;Key1;Reference;503;True;True;All;9;1;FLOAT4;0,0,0,0;False;0;FLOAT4;0,0,0,0;False;2;FLOAT4;0,0,0,0;False;3;FLOAT4;0,0,0,0;False;4;FLOAT4;0,0,0,0;False;5;FLOAT4;0,0,0,0;False;6;FLOAT4;0,0,0,0;False;7;FLOAT4;0,0,0,0;False;8;FLOAT4;0,0,0,0;False;1;FLOAT4;0
@@ -4272,16 +4272,16 @@ Node;AmplifyShaderEditor.StaticSwitch;503;5667.337,-5251.328;Inherit;False;Prope
 Node;AmplifyShaderEditor.RangedFloatNode;1373;4810.437,-841.1832;Inherit;False;Property;_TileDiscardUV;TileDiscardUV;311;1;[Enum];Create;True;0;5;UV0;0;UV1;1;UV2;2;UV3;3;UV4;4;0;False;0;False;0;0;0;0;0;1;FLOAT;0
 Node;AmplifyShaderEditor.StaticSwitch;73;5879.576,-5249.74;Inherit;False;Property;_UNITY_PASS_FORWARD_ADD;UNITY_PASS_FORWARD_ADD;39;0;Create;True;0;0;0;False;0;False;0;0;0;False;UNITY_PASS_FORWARDADD;ToggleOff;2;Key0;Key1;Fetch;False;True;All;9;1;FLOAT4;0,0,0,0;False;0;FLOAT4;0,0,0,0;False;2;FLOAT4;0,0,0,0;False;3;FLOAT4;0,0,0,0;False;4;FLOAT4;0,0,0,0;False;5;FLOAT4;0,0,0,0;False;6;FLOAT4;0,0,0,0;False;7;FLOAT4;0,0,0,0;False;8;FLOAT4;0,0,0,0;False;1;FLOAT4;0
 Node;AmplifyShaderEditor.SimpleMultiplyOpNode;586;6783.801,-6245.819;Inherit;False;2;2;0;FLOAT4;0,0,0,0;False;1;FLOAT;0;False;1;FLOAT4;0
-Node;AmplifyShaderEditor.FunctionNode;1694;-9583.693,-3302.96;Inherit;False;Luma Glow Properties;8;;7501;601d9734366b2cb4e9b77694fc25ef31;1,260,0;3;266;FLOAT4;0,0,0,0;False;1;COLOR;0,0,0,0;False;155;FLOAT3;0,0,0;False;3;FLOAT;244;FLOAT4;183;FLOAT4;0
+Node;AmplifyShaderEditor.FunctionNode;1745;-9583.693,-3302.96;Inherit;False;Luma Glow Properties;8;;7679;601d9734366b2cb4e9b77694fc25ef31;1,260,0;3;266;FLOAT4;0,0,0,0;False;1;COLOR;0,0,0,0;False;155;FLOAT3;0,0,0;False;3;FLOAT;244;FLOAT4;183;FLOAT4;0
 Node;AmplifyShaderEditor.RangedFloatNode;769;5144.872,-619.409;Inherit;False;Constant;_Float26;Float 26;49;0;Create;True;0;0;0;False;0;False;0;0;0;0;0;1;FLOAT;0
 Node;AmplifyShaderEditor.SimpleAddOpNode;883;-9277.568,-3279.069;Inherit;False;2;2;0;FLOAT4;0,0,0,0;False;1;FLOAT4;0,0,0,0;False;1;FLOAT4;0
-Node;AmplifyShaderEditor.FunctionNode;1608;4996.493,-841.9552;Inherit;False;UV Channel Select;-1;;7587;756457f5c2398324eb74b053d38f83bd;1,50,0;2;2;SAMPLER2D;0;False;14;FLOAT;0;False;1;FLOAT2;0
+Node;AmplifyShaderEditor.FunctionNode;1608;4996.493,-841.9552;Inherit;False;UV Channel Select;-1;;7676;756457f5c2398324eb74b053d38f83bd;1,50,0;2;2;SAMPLER2D;0;False;14;FLOAT;0;False;1;FLOAT2;0
 Node;AmplifyShaderEditor.RegisterLocalVarNode;195;6154.94,-5249.196;Inherit;False;IndirectSpecFinal;-1;True;1;0;FLOAT4;0,0,0,0;False;1;FLOAT4;0
 Node;AmplifyShaderEditor.RegisterLocalVarNode;188;6940.674,-6243.694;Inherit;False;SpecularFinal;-1;True;1;0;FLOAT4;0,0,0,0;False;1;FLOAT4;0
 Node;AmplifyShaderEditor.RegisterLocalVarNode;190;4658.432,-5157.637;Inherit;False;AlbedoFinal;-1;True;1;0;FLOAT3;0,0,0;False;1;FLOAT3;0
 Node;AmplifyShaderEditor.PosVertexDataNode;159;5229.119,-771.5396;Inherit;False;0;0;5;FLOAT3;0;FLOAT;1;FLOAT;2;FLOAT;3;FLOAT;4
 Node;AmplifyShaderEditor.SimpleDivideOpNode;770;5287.872,-626.4091;Inherit;False;2;0;FLOAT;0;False;1;FLOAT;0;False;1;FLOAT;0
-Node;AmplifyShaderEditor.FunctionNode;1406;5226.854,-843.709;Inherit;False;UVTileDiscard;278;;7588;495696ca07f989c468e0b68e1fa68101;0;1;19;FLOAT2;0,0;False;1;FLOAT;0
+Node;AmplifyShaderEditor.FunctionNode;1406;5226.854,-843.709;Inherit;False;UVTileDiscard;278;;7677;495696ca07f989c468e0b68e1fa68101;0;1;19;FLOAT2;0,0;False;1;FLOAT;0
 Node;AmplifyShaderEditor.CommentaryNode;1286;-4211.222,-2272.866;Inherit;False;2359.104;566.9634;Comment;33;1319;1318;1317;1316;1315;1314;1313;1312;1311;1310;1309;1308;1307;1306;1305;1304;1303;1302;1301;1300;1299;1298;1297;1296;1295;1294;1293;1292;1291;1290;1289;1288;1287;Iridescence Mask;1,1,1,1;0;0
 Node;AmplifyShaderEditor.RegisterLocalVarNode;1322;-9152.007,-3277.63;Inherit;False;Emiss;-1;True;1;0;FLOAT4;0,0,0,0;False;1;FLOAT4;0
 Node;AmplifyShaderEditor.GetLocalVarNode;191;5073.197,-1125.172;Inherit;False;190;AlbedoFinal;1;0;OBJECT;;False;1;FLOAT3;0
@@ -4346,7 +4346,7 @@ Node;AmplifyShaderEditor.SimpleAddOpNode;1278;-9256.417,-2899.682;Inherit;False;
 Node;AmplifyShaderEditor.SaturateNode;1279;-9141.417,-2904.682;Inherit;False;1;0;FLOAT;0;False;1;FLOAT;0
 Node;AmplifyShaderEditor.LightAttenuation;1280;-9613.907,-2891.097;Inherit;False;0;1;FLOAT;0
 Node;AmplifyShaderEditor.SimpleMaxOpNode;1281;-9393.286,-2917.828;Inherit;False;2;0;FLOAT;0;False;1;FLOAT;0;False;1;FLOAT;0
-Node;AmplifyShaderEditor.FunctionNode;1282;-9668.417,-2815.682;Inherit;False;Detect Light;-1;;7589;ca949bbda0856d040a3b3a723d67d4ef;0;0;2;FLOAT;0;FLOAT;10
+Node;AmplifyShaderEditor.FunctionNode;1282;-9668.417,-2815.682;Inherit;False;Detect Light;-1;;7678;ca949bbda0856d040a3b3a723d67d4ef;0;0;2;FLOAT;0;FLOAT;10
 Node;AmplifyShaderEditor.OneMinusNode;1283;-9430.286,-2815.828;Inherit;False;1;0;FLOAT;0;False;1;FLOAT;0
 Node;AmplifyShaderEditor.GetLocalVarNode;1284;-9256.288,-2807.134;Inherit;False;776;LightDir;1;0;OBJECT;;False;1;FLOAT3;0
 Node;AmplifyShaderEditor.GetLocalVarNode;1285;-9256.691,-2740.051;Inherit;False;643;NormalFinal;1;0;OBJECT;;False;1;FLOAT3;0
@@ -5598,10 +5598,10 @@ WireConnection;503;0;509;0
 WireConnection;73;1;503;0
 WireConnection;586;0;574;0
 WireConnection;586;1;36;0
-WireConnection;1694;266;1117;0
-WireConnection;1694;1;886;0
-WireConnection;883;0;1694;183
-WireConnection;883;1;1694;0
+WireConnection;1745;266;1117;0
+WireConnection;1745;1;886;0
+WireConnection;883;0;1745;183
+WireConnection;883;1;1745;0
 WireConnection;1608;14;1373;0
 WireConnection;195;0;73;0
 WireConnection;188;0;586;0
@@ -5721,4 +5721,4 @@ WireConnection;0;2;1323;0
 WireConnection;0;13;56;0
 WireConnection;0;11;768;0
 ASEEND*/
-//CHKSM=6F30ADD140663765AA47230A43757E35A4C795FD
+//CHKSM=65D22B1CFB6364F17E4744FA1B6F99FD6BDE2C42
