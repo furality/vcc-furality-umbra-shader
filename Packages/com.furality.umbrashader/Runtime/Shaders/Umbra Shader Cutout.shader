@@ -1697,7 +1697,7 @@ Shader "Furality/Umbra Shader/Umbra Cutout"
 			float2 FleckID79_g7489 = id10_g7489;
 			float2 p19_g7489 = FleckID79_g7489;
 			float3 localHash3219_g7489 = Hash32( p19_g7489 );
-			float3 temp_output_23_0_g7489 = (float3( -1,-1,-1 ) + (localHash3219_g7489 - float3( 0,0,0 )) * (float3( 1,1,1 ) - float3( -1,-1,-1 )) / (float3( 1,1,1 ) - float3( 0,0,0 )));
+			float3 temp_output_23_0_g7489 = (float3( -1,-1,0 ) + (localHash3219_g7489 - float3( 0,0,0 )) * (float3( 1,1,0 ) - float3( -1,-1,0 )) / (float3( 1,1,1 ) - float3( 0,0,0 )));
 			float dotResult4_g7490 = dot( FleckID79_g7489 , float2( 12.9898,78.233 ) );
 			float lerpResult10_g7490 = lerp( 0.0 , 360.0 , frac( ( sin( dotResult4_g7490 ) * 43758.55 ) ));
 			float cos182_g7489 = cos( radians( lerpResult10_g7490 ) );
@@ -5862,4 +5862,4 @@ WireConnection;0;10;1831;0
 WireConnection;0;13;56;0
 WireConnection;0;11;768;0
 ASEEND*/
-//CHKSM=C7B47A3550D6D61AD31B85CA1AF8C9B3EF8F2C94
+//CHKSM=877E71C21FA37AF362EFBA8E82AB5E832ECF1D07
