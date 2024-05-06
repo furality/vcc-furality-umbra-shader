@@ -124,6 +124,7 @@ Material:
     - _BlendOPIndex: 0
     - _BlendOPdst: 10
     - _BlendOPsrc: 5
+    - _BlendOpRGB: 0
     - _BlueChGlowAnimationBand: 10
     - _BlueChGlowAnimationMode: 0
     - _BlueChGlowAnimationSpeed: 0
@@ -158,6 +159,7 @@ Material:
     - _ClearCoatReflectionMap: 1
     - _Culling: 2
     - _Cutoff: 0.5
+    - _DestinationBlendRGB: 10
     - _DetailNormalChannel: 0
     - _DetailNormalMapScale: 1
     - _DetailNormalMask: 4
@@ -247,6 +249,7 @@ Material:
     - _InvertGloss: 0
     - _InvertHighlightGloss: 0
     - _InvertReflectionGloss: 1
+    - _MaskClipValue: 0.5
     - _MaskMap01UV: 0
     - _MaskMap02UV: 0
     - _MaskMap03UV: 0
@@ -260,6 +263,8 @@ Material:
     - _OcclusionMap: 0
     - _OcclusionPower: 1
     - _OcclusionStrength: 1
+    - _OpacityChannel: 3
+    - _OpacityMap: 5
     - _Parallax: 0.02
     - _RedChGlowAnimationBand: 10
     - _RedChGlowAnimationMode: 0
@@ -303,6 +308,7 @@ Material:
     - _ShowRedGlow: 0
     - _ShowTileDiscard: 0
     - _SmoothnessTextureChannel: 0
+    - _SourceBlendRGB: 1
     - _SpecularGlint: 0
     - _SpecularHighlights: 1
     - _SpecularMask: 4
@@ -348,7 +354,7 @@ Material:
     - _UseFallback1: 0
     - _UseFallback2: 0
     - _UseFallback3: 0
-    - _Workflow: 2
+    - _Workflow: 3
     - _ZWrite: 1
     - __dirty: 1
     m_Colors:
