@@ -8,7 +8,7 @@ Material:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_Name: Syntex
-  m_Shader: {fileID: 4800000, guid: fd46671929b20c7479986a4e2fd9a834, type: 3}
+  m_Shader: {fileID: 4800000, guid: 5b8282887b1524f46870dbfb6239cdca, type: 3}
   m_Parent: {fileID: 0}
   m_ModifiedSerializedProperties: 0
   m_ValidKeywords:
@@ -121,7 +121,7 @@ Material:
     - _AlphaChReactivePulseDir: 0
     - _AlphaChReactivePulseOffset: 0
     - _AlphaChReactivePulseScale: 127
-    - _BlendModeIndex: 0
+    - _BlendModeIndex: 2
     - _BlendOPIndex: 0
     - _BlendOPdst: 10
     - _BlendOPsrc: 5
@@ -258,7 +258,7 @@ Material:
     - _Metallic: 0
     - _MetallicChannel: 0
     - _MetallicMask: 0
-    - _MetallicMult: 0
+    - _MetallicMult: 1
     - _Mode: 0
     - _OcclusionChannel: 1
     - _OcclusionMap: 0
