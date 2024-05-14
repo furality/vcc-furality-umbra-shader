@@ -1389,7 +1389,7 @@ Shader "Furality/Umbra Shader/Umbra Transparent"
 		}
 
 
-		int IfAudioLinkv2Exists1_g8215(  )
+		int IfAudioLinkv2Exists1_g8214(  )
 		{
 			int w = 0; 
 			int h; 
@@ -1847,14 +1847,14 @@ Shader "Furality/Umbra Shader/Umbra Transparent"
 			#else //aselc
 			float4 ase_lightColor = _LightColor0;
 			#endif //aselc
-			float luminance15_g8214 = Luminance(ase_lightColor.rgb);
-			float smoothstepResult14_g8214 = smoothstep( 0.0 , 0.15 , saturate( luminance15_g8214 ));
+			float luminance15_g8215 = Luminance(ase_lightColor.rgb);
+			float smoothstepResult14_g8215 = smoothstep( 0.0 , 0.15 , saturate( luminance15_g8215 ));
 			#ifdef UNITY_PASS_FORWARDBASE
-				float staticSwitch7_g8214 = smoothstepResult14_g8214;
+				float staticSwitch7_g8215 = smoothstepResult14_g8215;
 			#else
-				float staticSwitch7_g8214 = 1.0;
+				float staticSwitch7_g8215 = 1.0;
 			#endif
-			float temp_output_11_10_g8212 = staticSwitch7_g8214;
+			float temp_output_11_10_g8212 = staticSwitch7_g8215;
 			float3 lerpResult15_g8212 = lerp( normalizeResult2_g8212 , ase_worldlightDir , temp_output_11_10_g8212);
 			float3 LightDir776 = lerpResult15_g8212;
 			float3 lightDir14_g8224 = LightDir776;
@@ -2121,7 +2121,7 @@ Shader "Furality/Umbra Shader/Umbra Transparent"
 			float3 SpecColor140_g8224 = SpecularColor42;
 			float SpecularTerm34_g8224 = ( staticSwitch119_g8224 * ( SpecColor140_g8224.x == float3( 0,0,0 ) ? 0.0 : 1.0 ) );
 			UnityGI gi22_g8212 = gi;
-			float3 diffNorm22_g8212 = normalize( WorldNormalVector( i , normalizeResult2_g8212 ) );
+			float3 diffNorm22_g8212 = normalizeResult2_g8212;
 			gi22_g8212 = UnityGI_Base( data, 1, diffNorm22_g8212 );
 			float3 indirectDiffuse22_g8212 = gi22_g8212.indirect.diffuse + diffNorm22_g8212 * 0.0001;
 			float3 temp_output_7_0_g8212 = max( indirectDiffuse22_g8212 , float3( 0,0,0 ) );
@@ -2130,8 +2130,8 @@ Shader "Furality/Umbra Shader/Umbra Transparent"
 			float3 lerpResult9_g8212 = lerp( temp_output_7_0_g8212 , localsampleReflectionProbe5_g8212 , 0.85);
 			int Band11_g8213 = 56;
 			int localIsLumaActive11_g8213 = IsLumaActive11_g8213( Band11_g8213 );
-			int localIfAudioLinkv2Exists1_g8215 = IfAudioLinkv2Exists1_g8215();
-			float3 lerpResult14_g8212 = lerp( temp_output_7_0_g8212 , lerpResult9_g8212 , (float)min( localIsLumaActive11_g8213 , localIfAudioLinkv2Exists1_g8215 ));
+			int localIfAudioLinkv2Exists1_g8214 = IfAudioLinkv2Exists1_g8214();
+			float3 lerpResult14_g8212 = lerp( temp_output_7_0_g8212 , lerpResult9_g8212 , (float)min( localIsLumaActive11_g8213 , localIfAudioLinkv2Exists1_g8214 ));
 			float3 lerpResult16_g8212 = lerp( lerpResult14_g8212 , ase_lightColor.rgb , temp_output_11_10_g8212);
 			float3 LightCol782 = lerpResult16_g8212;
 			float3 temp_output_328_0_g8224 = LightCol782;
@@ -5055,4 +5055,4 @@ WireConnection;0;9;1747;0
 WireConnection;0;13;56;0
 WireConnection;0;11;768;0
 ASEEND*/
-//CHKSM=291BFBD6A7184AC4225EB01CAB37643A0D1E5142
+//CHKSM=AEBF8ED0888FCBF99531CEE1D5277F6BFFA624E7

@@ -356,6 +356,16 @@ Shader "Furality/Umbra Shader/Umbra Opaque"
 			UnityGIInput GIData;
 		};
 
+		uniform float _ShowEmissGlow;
+		uniform float _ShowEmissAL;
+		uniform float _ShowRedGlow;
+		uniform float _ShowRedAL;
+		uniform float _ShowGreenGlow;
+		uniform float _ShowGreenAL;
+		uniform float _ShowBlueGlow;
+		uniform float _ShowBlueAL;
+		uniform float _ShowAlphaGlow;
+		uniform float _ShowAlphaAL;
 		uniform float _Culling;
 		uniform float _BlendOPdst;
 		uniform float _BlendOPsrc;
@@ -379,16 +389,6 @@ Shader "Furality/Umbra Shader/Umbra Opaque"
 		uniform float _MaskClipValue;
 		uniform float _OpacityMap;
 		uniform float _OpacityChannel;
-		uniform float _ShowEmissGlow;
-		uniform float _ShowEmissAL;
-		uniform float _ShowRedGlow;
-		uniform float _ShowRedAL;
-		uniform float _ShowGreenGlow;
-		uniform float _ShowGreenAL;
-		uniform float _ShowBlueGlow;
-		uniform float _ShowBlueAL;
-		uniform float _ShowAlphaGlow;
-		uniform float _ShowAlphaAL;
 		uniform float _TileDiscardUV;
 		uniform float _UVTileDissolveAlpha_Row0_0;
 		uniform float _UDIMDiscardRow0_0;
@@ -645,12 +645,6 @@ Shader "Furality/Umbra Shader/Umbra Opaque"
 		uniform float _ClearCoatReflectionMap;
 
 
-		float3 ProbeDir(  )
-		{
-			return half3(unity_SHAr.r,unity_SHAg.g,unity_SHAb.b);
-		}
-
-
 		float3 Hash32( float2 p )
 		{
 				float3 p3 = frac(float3(p.xyx) * float3(.1031, .1030, .0973));
@@ -671,6 +665,12 @@ Shader "Furality/Umbra Shader/Umbra Opaque"
 			result = lerp(result,AudioLinkData(ALPASS_THEME_COLOR2),saturate(Zone-1));
 			result = lerp(result,AudioLinkData(ALPASS_THEME_COLOR3),saturate(Zone-2));
 			return result;
+		}
+
+
+		float3 ProbeDir(  )
+		{
+			return half3(unity_SHAr.r,unity_SHAg.g,unity_SHAb.b);
 		}
 
 
@@ -1367,7 +1367,7 @@ Shader "Furality/Umbra Shader/Umbra Opaque"
 			return float3( abs(q.z + (q.w - q.y) / (6.0 * d + e)), d / (q.x + e), q.x);
 		}
 
-		float3 sampleReflectionProbe5_g8212( float3 uvw )
+		float3 sampleReflectionProbe5_g8492( float3 uvw )
 		{
 			half4 skyData = UNITY_SAMPLE_TEXCUBE_LOD(unity_SpecCube0, uvw, 5); //('cubemap', 'sample coordinate', 'map-map level')
 			         half3 skyColor = DecodeHDR (skyData, unity_SpecCube0_HDR);
@@ -1375,13 +1375,13 @@ Shader "Furality/Umbra Shader/Umbra Opaque"
 		}
 
 
-		inline int IsLumaActive11_g8213( int Band )
+		inline int IsLumaActive11_g8493( int Band )
 		{
 			return AudioLinkData( ALPASS_AUDIOLINK + uint2( 0, Band ) ).r;
 		}
 
 
-		int IfAudioLinkv2Exists1_g8215(  )
+		int IfAudioLinkv2Exists1_g8494(  )
 		{
 			int w = 0; 
 			int h; 
@@ -1451,65 +1451,65 @@ Shader "Furality/Umbra Shader/Umbra Opaque"
 		{
 			UNITY_INITIALIZE_OUTPUT( Input, o );
 			float2 _Vector4 = float2(0,0);
-			float temp_output_14_0_g8314 = _TileDiscardUV;
-			float2 lerpResult31_g8314 = lerp( v.texcoord.xy , v.texcoord1.xy , saturate( temp_output_14_0_g8314 ));
-			float temp_output_36_0_g8314 = ( temp_output_14_0_g8314 - 1.0 );
-			float2 lerpResult34_g8314 = lerp( lerpResult31_g8314 , v.texcoord2.xy , saturate( temp_output_36_0_g8314 ));
-			float temp_output_40_0_g8314 = ( temp_output_36_0_g8314 - 1.0 );
-			float2 lerpResult38_g8314 = lerp( lerpResult34_g8314 , v.texcoord3.xy , saturate( temp_output_40_0_g8314 ));
-			float2 lerpResult41_g8314 = lerp( lerpResult38_g8314 , v.ase_texcoord4.xy , saturate( ( temp_output_40_0_g8314 - 1.0 ) ));
-			float2 vertexToFrag51_g8314 = lerpResult41_g8314;
-			float2 TileDiscardUVs18_g8315 = ( vertexToFrag51_g8314 + -1.0 );
-			float2 break10_g8315 = TileDiscardUVs18_g8315;
-			float Row0Col071_g8315 = saturate( ( max( max( step( _Vector4.x , break10_g8315.x ) , step( -( _Vector4.x - 1.0 ) , -break10_g8315.x ) ) , max( step( _Vector4.y , break10_g8315.y ) , step( -( _Vector4.y - 1.0 ) , -break10_g8315.y ) ) ) + ( ( 1.0 - _UVTileDissolveAlpha_Row0_0 ) * ( 1.0 - _UDIMDiscardRow0_0 ) ) ) );
+			float temp_output_14_0_g8489 = _TileDiscardUV;
+			float2 lerpResult31_g8489 = lerp( v.texcoord.xy , v.texcoord1.xy , saturate( temp_output_14_0_g8489 ));
+			float temp_output_36_0_g8489 = ( temp_output_14_0_g8489 - 1.0 );
+			float2 lerpResult34_g8489 = lerp( lerpResult31_g8489 , v.texcoord2.xy , saturate( temp_output_36_0_g8489 ));
+			float temp_output_40_0_g8489 = ( temp_output_36_0_g8489 - 1.0 );
+			float2 lerpResult38_g8489 = lerp( lerpResult34_g8489 , v.texcoord3.xy , saturate( temp_output_40_0_g8489 ));
+			float2 lerpResult41_g8489 = lerp( lerpResult38_g8489 , v.ase_texcoord4.xy , saturate( ( temp_output_40_0_g8489 - 1.0 ) ));
+			float2 vertexToFrag51_g8489 = lerpResult41_g8489;
+			float2 TileDiscardUVs18_g8490 = ( vertexToFrag51_g8489 + -1.0 );
+			float2 break10_g8490 = TileDiscardUVs18_g8490;
+			float Row0Col071_g8490 = saturate( ( max( max( step( _Vector4.x , break10_g8490.x ) , step( -( _Vector4.x - 1.0 ) , -break10_g8490.x ) ) , max( step( _Vector4.y , break10_g8490.y ) , step( -( _Vector4.y - 1.0 ) , -break10_g8490.y ) ) ) + ( ( 1.0 - _UVTileDissolveAlpha_Row0_0 ) * ( 1.0 - _UDIMDiscardRow0_0 ) ) ) );
 			float2 _Vector5 = float2(1,0);
-			float2 break82_g8315 = TileDiscardUVs18_g8315;
-			float Row0Col189_g8315 = saturate( ( max( max( step( _Vector5.x , break82_g8315.x ) , step( -( _Vector5.x - 1.0 ) , -break82_g8315.x ) ) , max( step( _Vector5.y , break82_g8315.y ) , step( -( _Vector5.y - 1.0 ) , -break82_g8315.y ) ) ) + ( ( 1.0 - _UVTileDissolveAlpha_Row0_1 ) * ( 1.0 - _UDIMDiscardRow0_1 ) ) ) );
+			float2 break82_g8490 = TileDiscardUVs18_g8490;
+			float Row0Col189_g8490 = saturate( ( max( max( step( _Vector5.x , break82_g8490.x ) , step( -( _Vector5.x - 1.0 ) , -break82_g8490.x ) ) , max( step( _Vector5.y , break82_g8490.y ) , step( -( _Vector5.y - 1.0 ) , -break82_g8490.y ) ) ) + ( ( 1.0 - _UVTileDissolveAlpha_Row0_1 ) * ( 1.0 - _UDIMDiscardRow0_1 ) ) ) );
 			float2 _Vector6 = float2(2,0);
-			float2 break100_g8315 = TileDiscardUVs18_g8315;
-			float Row0Col2106_g8315 = saturate( ( max( max( step( _Vector6.x , break100_g8315.x ) , step( -( _Vector6.x - 1.0 ) , -break100_g8315.x ) ) , max( step( _Vector6.y , break100_g8315.y ) , step( -( _Vector6.y - 1.0 ) , -break100_g8315.y ) ) ) + ( ( 1.0 - _UVTileDissolveAlpha_Row0_2 ) * ( 1.0 - _UDIMDiscardRow0_2 ) ) ) );
+			float2 break100_g8490 = TileDiscardUVs18_g8490;
+			float Row0Col2106_g8490 = saturate( ( max( max( step( _Vector6.x , break100_g8490.x ) , step( -( _Vector6.x - 1.0 ) , -break100_g8490.x ) ) , max( step( _Vector6.y , break100_g8490.y ) , step( -( _Vector6.y - 1.0 ) , -break100_g8490.y ) ) ) + ( ( 1.0 - _UVTileDissolveAlpha_Row0_2 ) * ( 1.0 - _UDIMDiscardRow0_2 ) ) ) );
 			float2 _Vector7 = float2(3,0);
-			float2 break118_g8315 = TileDiscardUVs18_g8315;
-			float Row0Col3124_g8315 = saturate( ( max( max( step( _Vector7.x , break118_g8315.x ) , step( -( _Vector7.x - 1.0 ) , -break118_g8315.x ) ) , max( step( _Vector7.y , break118_g8315.y ) , step( -( _Vector7.y - 1.0 ) , -break118_g8315.y ) ) ) + ( ( 1.0 - _UVTileDissolveAlpha_Row0_3 ) * ( 1.0 - _UDIMDiscardRow0_3 ) ) ) );
+			float2 break118_g8490 = TileDiscardUVs18_g8490;
+			float Row0Col3124_g8490 = saturate( ( max( max( step( _Vector7.x , break118_g8490.x ) , step( -( _Vector7.x - 1.0 ) , -break118_g8490.x ) ) , max( step( _Vector7.y , break118_g8490.y ) , step( -( _Vector7.y - 1.0 ) , -break118_g8490.y ) ) ) + ( ( 1.0 - _UVTileDissolveAlpha_Row0_3 ) * ( 1.0 - _UDIMDiscardRow0_3 ) ) ) );
 			float2 _Vector8 = float2(0,1);
-			float2 break141_g8315 = TileDiscardUVs18_g8315;
-			float Row1Col0148_g8315 = saturate( ( max( max( step( _Vector8.x , break141_g8315.x ) , step( -( _Vector8.x - 1.0 ) , -break141_g8315.x ) ) , max( step( _Vector8.y , break141_g8315.y ) , step( -( _Vector8.y - 1.0 ) , -break141_g8315.y ) ) ) + ( ( 1.0 - _UVTileDissolveAlpha_Row1_0 ) * ( 1.0 - _UDIMDiscardRow1_0 ) ) ) );
+			float2 break141_g8490 = TileDiscardUVs18_g8490;
+			float Row1Col0148_g8490 = saturate( ( max( max( step( _Vector8.x , break141_g8490.x ) , step( -( _Vector8.x - 1.0 ) , -break141_g8490.x ) ) , max( step( _Vector8.y , break141_g8490.y ) , step( -( _Vector8.y - 1.0 ) , -break141_g8490.y ) ) ) + ( ( 1.0 - _UVTileDissolveAlpha_Row1_0 ) * ( 1.0 - _UDIMDiscardRow1_0 ) ) ) );
 			float2 _Vector9 = float2(1,1);
-			float2 break159_g8315 = TileDiscardUVs18_g8315;
-			float Row1Col1165_g8315 = saturate( ( max( max( step( _Vector9.x , break159_g8315.x ) , step( -( _Vector9.x - 1.0 ) , -break159_g8315.x ) ) , max( step( _Vector9.y , break159_g8315.y ) , step( -( _Vector9.y - 1.0 ) , -break159_g8315.y ) ) ) + ( ( 1.0 - _UVTileDissolveAlpha_Row1_1 ) * ( 1.0 - _UDIMDiscardRow1_1 ) ) ) );
+			float2 break159_g8490 = TileDiscardUVs18_g8490;
+			float Row1Col1165_g8490 = saturate( ( max( max( step( _Vector9.x , break159_g8490.x ) , step( -( _Vector9.x - 1.0 ) , -break159_g8490.x ) ) , max( step( _Vector9.y , break159_g8490.y ) , step( -( _Vector9.y - 1.0 ) , -break159_g8490.y ) ) ) + ( ( 1.0 - _UVTileDissolveAlpha_Row1_1 ) * ( 1.0 - _UDIMDiscardRow1_1 ) ) ) );
 			float2 _Vector10 = float2(2,1);
-			float2 break177_g8315 = TileDiscardUVs18_g8315;
-			float Row1Col2183_g8315 = saturate( ( max( max( step( _Vector10.x , break177_g8315.x ) , step( -( _Vector10.x - 1.0 ) , -break177_g8315.x ) ) , max( step( _Vector10.y , break177_g8315.y ) , step( -( _Vector10.y - 1.0 ) , -break177_g8315.y ) ) ) + ( ( 1.0 - _UVTileDissolveAlpha_Row1_2 ) * ( 1.0 - _UDIMDiscardRow1_2 ) ) ) );
+			float2 break177_g8490 = TileDiscardUVs18_g8490;
+			float Row1Col2183_g8490 = saturate( ( max( max( step( _Vector10.x , break177_g8490.x ) , step( -( _Vector10.x - 1.0 ) , -break177_g8490.x ) ) , max( step( _Vector10.y , break177_g8490.y ) , step( -( _Vector10.y - 1.0 ) , -break177_g8490.y ) ) ) + ( ( 1.0 - _UVTileDissolveAlpha_Row1_2 ) * ( 1.0 - _UDIMDiscardRow1_2 ) ) ) );
 			float2 _Vector11 = float2(3,1);
-			float2 break195_g8315 = TileDiscardUVs18_g8315;
-			float Row1Col3201_g8315 = saturate( ( max( max( step( _Vector11.x , break195_g8315.x ) , step( -( _Vector11.x - 1.0 ) , -break195_g8315.x ) ) , max( step( _Vector11.y , break195_g8315.y ) , step( -( _Vector11.y - 1.0 ) , -break195_g8315.y ) ) ) + ( ( 1.0 - _UVTileDissolveAlpha_Row1_3 ) * ( 1.0 - _UDIMDiscardRow1_3 ) ) ) );
+			float2 break195_g8490 = TileDiscardUVs18_g8490;
+			float Row1Col3201_g8490 = saturate( ( max( max( step( _Vector11.x , break195_g8490.x ) , step( -( _Vector11.x - 1.0 ) , -break195_g8490.x ) ) , max( step( _Vector11.y , break195_g8490.y ) , step( -( _Vector11.y - 1.0 ) , -break195_g8490.y ) ) ) + ( ( 1.0 - _UVTileDissolveAlpha_Row1_3 ) * ( 1.0 - _UDIMDiscardRow1_3 ) ) ) );
 			float2 _Vector12 = float2(0,2);
-			float2 break222_g8315 = TileDiscardUVs18_g8315;
-			float Row2Col0229_g8315 = saturate( ( max( max( step( _Vector12.x , break222_g8315.x ) , step( -( _Vector12.x - 1.0 ) , -break222_g8315.x ) ) , max( step( _Vector12.y , break222_g8315.y ) , step( -( _Vector12.y - 1.0 ) , -break222_g8315.y ) ) ) + ( ( 1.0 - _UVTileDissolveAlpha_Row2_0 ) * ( 1.0 - _UDIMDiscardRow2_0 ) ) ) );
+			float2 break222_g8490 = TileDiscardUVs18_g8490;
+			float Row2Col0229_g8490 = saturate( ( max( max( step( _Vector12.x , break222_g8490.x ) , step( -( _Vector12.x - 1.0 ) , -break222_g8490.x ) ) , max( step( _Vector12.y , break222_g8490.y ) , step( -( _Vector12.y - 1.0 ) , -break222_g8490.y ) ) ) + ( ( 1.0 - _UVTileDissolveAlpha_Row2_0 ) * ( 1.0 - _UDIMDiscardRow2_0 ) ) ) );
 			float2 _Vector13 = float2(1,2);
-			float2 break239_g8315 = TileDiscardUVs18_g8315;
-			float Row2Col1245_g8315 = saturate( ( max( max( step( _Vector13.x , break239_g8315.x ) , step( -( _Vector13.x - 1.0 ) , -break239_g8315.x ) ) , max( step( _Vector13.y , break239_g8315.y ) , step( -( _Vector13.y - 1.0 ) , -break239_g8315.y ) ) ) + ( ( 1.0 - _UVTileDissolveAlpha_Row2_1 ) * ( 1.0 - _UDIMDiscardRow2_1 ) ) ) );
+			float2 break239_g8490 = TileDiscardUVs18_g8490;
+			float Row2Col1245_g8490 = saturate( ( max( max( step( _Vector13.x , break239_g8490.x ) , step( -( _Vector13.x - 1.0 ) , -break239_g8490.x ) ) , max( step( _Vector13.y , break239_g8490.y ) , step( -( _Vector13.y - 1.0 ) , -break239_g8490.y ) ) ) + ( ( 1.0 - _UVTileDissolveAlpha_Row2_1 ) * ( 1.0 - _UDIMDiscardRow2_1 ) ) ) );
 			float2 _Vector14 = float2(2,2);
-			float2 break256_g8315 = TileDiscardUVs18_g8315;
-			float Row2Col2262_g8315 = saturate( ( max( max( step( _Vector14.x , break256_g8315.x ) , step( -( _Vector14.x - 1.0 ) , -break256_g8315.x ) ) , max( step( _Vector14.y , break256_g8315.y ) , step( -( _Vector14.y - 1.0 ) , -break256_g8315.y ) ) ) + ( ( 1.0 - _UVTileDissolveAlpha_Row2_2 ) * ( 1.0 - _UDIMDiscardRow2_2 ) ) ) );
+			float2 break256_g8490 = TileDiscardUVs18_g8490;
+			float Row2Col2262_g8490 = saturate( ( max( max( step( _Vector14.x , break256_g8490.x ) , step( -( _Vector14.x - 1.0 ) , -break256_g8490.x ) ) , max( step( _Vector14.y , break256_g8490.y ) , step( -( _Vector14.y - 1.0 ) , -break256_g8490.y ) ) ) + ( ( 1.0 - _UVTileDissolveAlpha_Row2_2 ) * ( 1.0 - _UDIMDiscardRow2_2 ) ) ) );
 			float2 _Vector15 = float2(3,2);
-			float2 break273_g8315 = TileDiscardUVs18_g8315;
-			float Row2Col3279_g8315 = saturate( ( max( max( step( _Vector15.x , break273_g8315.x ) , step( -( _Vector15.x - 1.0 ) , -break273_g8315.x ) ) , max( step( _Vector15.y , break273_g8315.y ) , step( -( _Vector15.y - 1.0 ) , -break273_g8315.y ) ) ) + ( ( 1.0 - _UVTileDissolveAlpha_Row2_3 ) * ( 1.0 - _UDIMDiscardRow2_3 ) ) ) );
+			float2 break273_g8490 = TileDiscardUVs18_g8490;
+			float Row2Col3279_g8490 = saturate( ( max( max( step( _Vector15.x , break273_g8490.x ) , step( -( _Vector15.x - 1.0 ) , -break273_g8490.x ) ) , max( step( _Vector15.y , break273_g8490.y ) , step( -( _Vector15.y - 1.0 ) , -break273_g8490.y ) ) ) + ( ( 1.0 - _UVTileDissolveAlpha_Row2_3 ) * ( 1.0 - _UDIMDiscardRow2_3 ) ) ) );
 			float2 _Vector19 = float2(0,3);
-			float2 break294_g8315 = TileDiscardUVs18_g8315;
-			float Row3Col0352_g8315 = saturate( ( max( max( step( _Vector19.x , break294_g8315.x ) , step( -( _Vector19.x - 1.0 ) , -break294_g8315.x ) ) , max( step( _Vector19.y , break294_g8315.y ) , step( -( _Vector19.y - 1.0 ) , -break294_g8315.y ) ) ) + ( ( 1.0 - _UVTileDissolveAlpha_Row3_0 ) * ( 1.0 - _UDIMDiscardRow3_0 ) ) ) );
+			float2 break294_g8490 = TileDiscardUVs18_g8490;
+			float Row3Col0352_g8490 = saturate( ( max( max( step( _Vector19.x , break294_g8490.x ) , step( -( _Vector19.x - 1.0 ) , -break294_g8490.x ) ) , max( step( _Vector19.y , break294_g8490.y ) , step( -( _Vector19.y - 1.0 ) , -break294_g8490.y ) ) ) + ( ( 1.0 - _UVTileDissolveAlpha_Row3_0 ) * ( 1.0 - _UDIMDiscardRow3_0 ) ) ) );
 			float2 _Vector16 = float2(1,3);
-			float2 break309_g8315 = TileDiscardUVs18_g8315;
-			float Row3Col1351_g8315 = saturate( ( max( max( step( _Vector16.x , break309_g8315.x ) , step( -( _Vector16.x - 1.0 ) , -break309_g8315.x ) ) , max( step( _Vector16.y , break309_g8315.y ) , step( -( _Vector16.y - 1.0 ) , -break309_g8315.y ) ) ) + ( ( 1.0 - _UVTileDissolveAlpha_Row3_1 ) * ( 1.0 - _UDIMDiscardRow3_1 ) ) ) );
+			float2 break309_g8490 = TileDiscardUVs18_g8490;
+			float Row3Col1351_g8490 = saturate( ( max( max( step( _Vector16.x , break309_g8490.x ) , step( -( _Vector16.x - 1.0 ) , -break309_g8490.x ) ) , max( step( _Vector16.y , break309_g8490.y ) , step( -( _Vector16.y - 1.0 ) , -break309_g8490.y ) ) ) + ( ( 1.0 - _UVTileDissolveAlpha_Row3_1 ) * ( 1.0 - _UDIMDiscardRow3_1 ) ) ) );
 			float2 _Vector17 = float2(2,3);
-			float2 break325_g8315 = TileDiscardUVs18_g8315;
-			float Row3Col2350_g8315 = saturate( ( max( max( step( _Vector17.x , break325_g8315.x ) , step( -( _Vector17.x - 1.0 ) , -break325_g8315.x ) ) , max( step( _Vector17.y , break325_g8315.y ) , step( -( _Vector17.y - 1.0 ) , -break325_g8315.y ) ) ) + ( ( 1.0 - _UVTileDissolveAlpha_Row3_2 ) * ( 1.0 - _UDIMDiscardRow3_2 ) ) ) );
+			float2 break325_g8490 = TileDiscardUVs18_g8490;
+			float Row3Col2350_g8490 = saturate( ( max( max( step( _Vector17.x , break325_g8490.x ) , step( -( _Vector17.x - 1.0 ) , -break325_g8490.x ) ) , max( step( _Vector17.y , break325_g8490.y ) , step( -( _Vector17.y - 1.0 ) , -break325_g8490.y ) ) ) + ( ( 1.0 - _UVTileDissolveAlpha_Row3_2 ) * ( 1.0 - _UDIMDiscardRow3_2 ) ) ) );
 			float2 _Vector18 = float2(3,3);
-			float2 break341_g8315 = TileDiscardUVs18_g8315;
-			float Row3Col3349_g8315 = saturate( ( max( max( step( _Vector18.x , break341_g8315.x ) , step( -( _Vector18.x - 1.0 ) , -break341_g8315.x ) ) , max( step( _Vector18.y , break341_g8315.y ) , step( -( _Vector18.y - 1.0 ) , -break341_g8315.y ) ) ) + ( ( 1.0 - _UVTileDissolveAlpha_Row3_3 ) * ( 1.0 - _UDIMDiscardRow3_3 ) ) ) );
+			float2 break341_g8490 = TileDiscardUVs18_g8490;
+			float Row3Col3349_g8490 = saturate( ( max( max( step( _Vector18.x , break341_g8490.x ) , step( -( _Vector18.x - 1.0 ) , -break341_g8490.x ) ) , max( step( _Vector18.y , break341_g8490.y ) , step( -( _Vector18.y - 1.0 ) , -break341_g8490.y ) ) ) + ( ( 1.0 - _UVTileDissolveAlpha_Row3_3 ) * ( 1.0 - _UDIMDiscardRow3_3 ) ) ) );
 			float3 temp_cast_0 = (( 0.0 / 0.0 )).xxx;
 			float3 ase_vertex3Pos = v.vertex.xyz;
-			v.vertex.xyz = ( ( ( ( Row0Col071_g8315 * Row0Col189_g8315 * Row0Col2106_g8315 * Row0Col3124_g8315 ) * ( Row1Col0148_g8315 * Row1Col1165_g8315 * Row1Col2183_g8315 * Row1Col3201_g8315 ) ) * ( ( Row2Col0229_g8315 * Row2Col1245_g8315 * Row2Col2262_g8315 * Row2Col3279_g8315 ) * ( Row3Col0352_g8315 * Row3Col1351_g8315 * Row3Col2350_g8315 * Row3Col3349_g8315 ) ) ) < 0.001 ? temp_cast_0 : ase_vertex3Pos );
+			v.vertex.xyz = ( ( ( ( Row0Col071_g8490 * Row0Col189_g8490 * Row0Col2106_g8490 * Row0Col3124_g8490 ) * ( Row1Col0148_g8490 * Row1Col1165_g8490 * Row1Col2183_g8490 * Row1Col3201_g8490 ) ) * ( ( Row2Col0229_g8490 * Row2Col1245_g8490 * Row2Col2262_g8490 * Row2Col3279_g8490 ) * ( Row3Col0352_g8490 * Row3Col1351_g8490 * Row3Col2350_g8490 * Row3Col3349_g8490 ) ) ) < 0.001 ? temp_cast_0 : ase_vertex3Pos );
 			v.vertex.w = 1;
 			float2 uv_DirectionalMap = v.texcoord.xy * _DirectionalMap_ST.xy + _DirectionalMap_ST.zw;
 			float2 uv2_DirectionalMap = v.texcoord1.xy * _DirectionalMap_ST.xy + _DirectionalMap_ST.zw;
@@ -1827,8 +1827,8 @@ Shader "Furality/Umbra Shader/Umbra Opaque"
 			float smoothness169_g8224 = temp_output_147_0_g8224;
 			float perceprualRoughness188_g8224 = ( 1.0 - smoothness169_g8224 );
 			half Roughness64_g8224 = max( ( perceprualRoughness188_g8224 * perceprualRoughness188_g8224 ) , 0.002 );
-			float3 localProbeDir1_g8212 = ProbeDir();
-			float3 normalizeResult2_g8212 = ASESafeNormalize( localProbeDir1_g8212 );
+			float3 localProbeDir1_g8492 = ProbeDir();
+			float3 normalizeResult2_g8492 = ASESafeNormalize( localProbeDir1_g8492 );
 			#if defined(LIGHTMAP_ON) && UNITY_VERSION < 560 //aseld
 			float3 ase_worldlightDir = 0;
 			#else //aseld
@@ -1839,16 +1839,16 @@ Shader "Furality/Umbra Shader/Umbra Opaque"
 			#else //aselc
 			float4 ase_lightColor = _LightColor0;
 			#endif //aselc
-			float luminance15_g8214 = Luminance(ase_lightColor.rgb);
-			float smoothstepResult14_g8214 = smoothstep( 0.0 , 0.15 , saturate( luminance15_g8214 ));
+			float luminance15_g8495 = Luminance(ase_lightColor.rgb);
+			float smoothstepResult14_g8495 = smoothstep( 0.0 , 0.15 , saturate( luminance15_g8495 ));
 			#ifdef UNITY_PASS_FORWARDBASE
-				float staticSwitch7_g8214 = smoothstepResult14_g8214;
+				float staticSwitch7_g8495 = smoothstepResult14_g8495;
 			#else
-				float staticSwitch7_g8214 = 1.0;
+				float staticSwitch7_g8495 = 1.0;
 			#endif
-			float temp_output_11_10_g8212 = staticSwitch7_g8214;
-			float3 lerpResult15_g8212 = lerp( normalizeResult2_g8212 , ase_worldlightDir , temp_output_11_10_g8212);
-			float3 LightDir776 = lerpResult15_g8212;
+			float temp_output_11_10_g8492 = staticSwitch7_g8495;
+			float3 lerpResult15_g8492 = lerp( normalizeResult2_g8492 , ase_worldlightDir , temp_output_11_10_g8492);
+			float3 LightDir776 = lerpResult15_g8492;
 			float3 lightDir14_g8224 = LightDir776;
 			float dotResult21_g8224 = dot( lightDir14_g8224 , normalDir28_g8224 );
 			float temp_output_347_0_g8224 = max( dotResult21_g8224 , 0.0 );
@@ -2112,20 +2112,20 @@ Shader "Furality/Umbra Shader/Umbra Opaque"
 			float3 SpecularColor42 = staticSwitch1488;
 			float3 SpecColor140_g8224 = SpecularColor42;
 			float SpecularTerm34_g8224 = ( staticSwitch119_g8224 * ( SpecColor140_g8224.x == float3( 0,0,0 ) ? 0.0 : 1.0 ) );
-			UnityGI gi22_g8212 = gi;
-			float3 diffNorm22_g8212 = normalize( WorldNormalVector( i , normalizeResult2_g8212 ) );
-			gi22_g8212 = UnityGI_Base( data, 1, diffNorm22_g8212 );
-			float3 indirectDiffuse22_g8212 = gi22_g8212.indirect.diffuse + diffNorm22_g8212 * 0.0001;
-			float3 temp_output_7_0_g8212 = max( indirectDiffuse22_g8212 , float3( 0,0,0 ) );
-			float3 uvw5_g8212 = (WorldNormalVector( i , InitialNormal1580 ));
-			float3 localsampleReflectionProbe5_g8212 = sampleReflectionProbe5_g8212( uvw5_g8212 );
-			float3 lerpResult9_g8212 = lerp( temp_output_7_0_g8212 , localsampleReflectionProbe5_g8212 , 0.85);
-			int Band11_g8213 = 56;
-			int localIsLumaActive11_g8213 = IsLumaActive11_g8213( Band11_g8213 );
-			int localIfAudioLinkv2Exists1_g8215 = IfAudioLinkv2Exists1_g8215();
-			float3 lerpResult14_g8212 = lerp( temp_output_7_0_g8212 , lerpResult9_g8212 , (float)min( localIsLumaActive11_g8213 , localIfAudioLinkv2Exists1_g8215 ));
-			float3 lerpResult16_g8212 = lerp( lerpResult14_g8212 , ase_lightColor.rgb , temp_output_11_10_g8212);
-			float3 LightCol782 = lerpResult16_g8212;
+			UnityGI gi22_g8492 = gi;
+			float3 diffNorm22_g8492 = normalizeResult2_g8492;
+			gi22_g8492 = UnityGI_Base( data, 1, diffNorm22_g8492 );
+			float3 indirectDiffuse22_g8492 = gi22_g8492.indirect.diffuse + diffNorm22_g8492 * 0.0001;
+			float3 temp_output_7_0_g8492 = max( indirectDiffuse22_g8492 , float3( 0,0,0 ) );
+			float3 uvw5_g8492 = (WorldNormalVector( i , InitialNormal1580 ));
+			float3 localsampleReflectionProbe5_g8492 = sampleReflectionProbe5_g8492( uvw5_g8492 );
+			float3 lerpResult9_g8492 = lerp( temp_output_7_0_g8492 , localsampleReflectionProbe5_g8492 , 0.85);
+			int Band11_g8493 = 56;
+			int localIsLumaActive11_g8493 = IsLumaActive11_g8493( Band11_g8493 );
+			int localIfAudioLinkv2Exists1_g8494 = IfAudioLinkv2Exists1_g8494();
+			float3 lerpResult14_g8492 = lerp( temp_output_7_0_g8492 , lerpResult9_g8492 , (float)min( localIsLumaActive11_g8493 , localIfAudioLinkv2Exists1_g8494 ));
+			float3 lerpResult16_g8492 = lerp( lerpResult14_g8492 , ase_lightColor.rgb , temp_output_11_10_g8492);
+			float3 LightCol782 = lerpResult16_g8492;
 			float3 temp_output_328_0_g8224 = LightCol782;
 			int localLightExists8_g8225 = LightExists8_g8225();
 			float luminance15_g8225 = Luminance(ase_lightColor.rgb);
@@ -4032,7 +4032,7 @@ Node;AmplifyShaderEditor.SimpleSubtractOpNode;1724;-6048.134,-5421.394;Inherit;F
 Node;AmplifyShaderEditor.SaturateNode;253;-6049.585,-5494.774;Inherit;False;1;0;FLOAT;0;False;1;FLOAT;0
 Node;AmplifyShaderEditor.GetLocalVarNode;255;-6094.73,-5681.594;Inherit;False;217;MM02G;1;0;OBJECT;;False;1;FLOAT;0
 Node;AmplifyShaderEditor.GetLocalVarNode;252;-6096.346,-5586.934;Inherit;False;257;OcclusionChannel;1;0;OBJECT;;False;1;FLOAT;0
-Node;AmplifyShaderEditor.CommentaryNode;202;3688.677,-6496.571;Inherit;False;4100.554;2387.413;Comment;32;200;548;581;553;579;198;176;783;1127;1126;1125;1128;1129;1333;1429;1430;1411;1427;192;1573;1585;1586;1587;1588;1654;1655;1518;1589;1688;1769;776;782;Lighting;1,1,0,1;0;0
+Node;AmplifyShaderEditor.CommentaryNode;202;3688.677,-6496.571;Inherit;False;4100.554;2387.413;Comment;31;200;548;581;553;579;198;176;783;1127;1126;1125;1128;1129;1333;1429;1430;1411;1427;192;1573;1585;1586;1587;1588;1654;1655;1518;1589;1688;776;782;Lighting;1,1,0,1;0;0
 Node;AmplifyShaderEditor.RegisterLocalVarNode;1580;-7021.11,-5141.565;Inherit;False;InitialNormal;-1;True;1;0;FLOAT3;0,0,0;False;1;FLOAT3;0
 Node;AmplifyShaderEditor.RangedFloatNode;1390;-5562.837,-5443.929;Inherit;False;Property;_OcclusionPower;Occlusion Power;254;0;Create;False;0;0;0;True;0;False;1;1;0;1;0;1;FLOAT;0
 Node;AmplifyShaderEditor.SwizzleNode;1387;-7022.228,-5997.815;Inherit;False;FLOAT3;0;1;2;3;1;0;COLOR;0,0,0,0;False;1;FLOAT3;0
@@ -4057,8 +4057,8 @@ Node;AmplifyShaderEditor.LerpOp;267;-6195.638,-6223.406;Inherit;False;3;0;FLOAT3
 Node;AmplifyShaderEditor.GetLocalVarNode;274;-7281.698,-5551.418;Inherit;False;279;ReflectionMaskChannel;1;0;OBJECT;;False;1;FLOAT;0
 Node;AmplifyShaderEditor.CommentaryNode;176;3788.802,-6379.216;Inherit;False;1688.495;505.423;Comment;13;32;35;34;60;33;1275;1324;1417;1422;1424;1328;780;1412;GlintSpecular;1,1,1,1;0;0
 Node;AmplifyShaderEditor.SaturateNode;1508;-5650.964,-4586.379;Inherit;False;1;0;FLOAT;0;False;1;FLOAT;0
-Node;AmplifyShaderEditor.FunctionNode;1769;6865.567,-5238.322;Inherit;False;VRC Light;-1;;8212;675a2dca12829524d8a7f69e08069f38;0;1;23;FLOAT3;0,0,0;False;2;FLOAT3;21;FLOAT3;0
 Node;AmplifyShaderEditor.RegisterLocalVarNode;1240;-823.0872,-3019.278;Inherit;False;GlintGlossChannel;-1;True;1;0;FLOAT;0;False;1;FLOAT;0
+Node;AmplifyShaderEditor.FunctionNode;1905;6865.567,-5238.322;Inherit;False;VRC Light;-1;;8492;675a2dca12829524d8a7f69e08069f38;0;1;23;FLOAT3;0,0,0;False;2;FLOAT3;21;FLOAT3;0
 Node;AmplifyShaderEditor.RegisterLocalVarNode;1489;-5899.582,-6176.917;Inherit;False;InitialSpec;-1;True;1;0;FLOAT3;0,0,0;False;1;FLOAT3;0
 Node;AmplifyShaderEditor.RegisterLocalVarNode;277;-6837.318,-5668.423;Inherit;False;ReflectionMask;-1;True;1;0;FLOAT;0;False;1;FLOAT;0
 Node;AmplifyShaderEditor.GetLocalVarNode;33;3908.608,-6210.92;Inherit;False;1240;GlintGlossChannel;1;0;OBJECT;;False;1;FLOAT;0
@@ -4306,13 +4306,13 @@ Node;AmplifyShaderEditor.SimpleMultiplyOpNode;586;6783.801,-6245.819;Inherit;Fal
 Node;AmplifyShaderEditor.FunctionNode;1904;-9583.693,-3302.96;Inherit;False;Luma Glow Properties;49;;8403;601d9734366b2cb4e9b77694fc25ef31;1,260,0;3;266;FLOAT4;0,0,0,0;False;1;COLOR;0,0,0,0;False;155;FLOAT3;0,0,0;False;3;FLOAT;244;FLOAT4;183;FLOAT4;0
 Node;AmplifyShaderEditor.RangedFloatNode;769;5144.872,-619.409;Inherit;False;Constant;_Float26;Float 26;49;0;Create;True;0;0;0;False;0;False;0;0;0;0;0;1;FLOAT;0
 Node;AmplifyShaderEditor.SimpleAddOpNode;883;-9277.568,-3279.069;Inherit;False;2;2;0;FLOAT4;0,0,0,0;False;1;FLOAT4;0,0,0,0;False;1;FLOAT4;0
-Node;AmplifyShaderEditor.FunctionNode;1608;4996.493,-841.9552;Inherit;False;UV Channel Select;-1;;8314;756457f5c2398324eb74b053d38f83bd;1,50,0;2;2;SAMPLER2D;0;False;14;FLOAT;0;False;1;FLOAT2;0
+Node;AmplifyShaderEditor.FunctionNode;1608;4996.493,-841.9552;Inherit;False;UV Channel Select;-1;;8489;756457f5c2398324eb74b053d38f83bd;1,50,0;2;2;SAMPLER2D;0;False;14;FLOAT;0;False;1;FLOAT2;0
 Node;AmplifyShaderEditor.RegisterLocalVarNode;195;6154.94,-5249.196;Inherit;False;IndirectSpecFinal;-1;True;1;0;FLOAT4;0,0,0,0;False;1;FLOAT4;0
 Node;AmplifyShaderEditor.RegisterLocalVarNode;188;6940.674,-6243.694;Inherit;False;SpecularFinal;-1;True;1;0;FLOAT4;0,0,0,0;False;1;FLOAT4;0
 Node;AmplifyShaderEditor.RegisterLocalVarNode;190;4658.432,-5157.637;Inherit;False;AlbedoFinal;-1;True;1;0;FLOAT3;0,0,0;False;1;FLOAT3;0
 Node;AmplifyShaderEditor.PosVertexDataNode;159;5229.119,-771.5396;Inherit;False;0;0;5;FLOAT3;0;FLOAT;1;FLOAT;2;FLOAT;3;FLOAT;4
 Node;AmplifyShaderEditor.SimpleDivideOpNode;770;5287.872,-626.4091;Inherit;False;2;0;FLOAT;0;False;1;FLOAT;0;False;1;FLOAT;0
-Node;AmplifyShaderEditor.FunctionNode;1406;5226.854,-843.709;Inherit;False;UVTileDiscard;277;;8315;495696ca07f989c468e0b68e1fa68101;0;1;19;FLOAT2;0,0;False;1;FLOAT;0
+Node;AmplifyShaderEditor.FunctionNode;1406;5226.854,-843.709;Inherit;False;UVTileDiscard;277;;8490;495696ca07f989c468e0b68e1fa68101;0;1;19;FLOAT2;0,0;False;1;FLOAT;0
 Node;AmplifyShaderEditor.RegisterLocalVarNode;1322;-9152.007,-3277.63;Inherit;False;Emiss;-1;True;1;0;FLOAT4;0,0,0,0;False;1;FLOAT4;0
 Node;AmplifyShaderEditor.GetLocalVarNode;191;5073.197,-1125.172;Inherit;False;190;AlbedoFinal;1;0;OBJECT;;False;1;FLOAT3;0
 Node;AmplifyShaderEditor.GetLocalVarNode;189;5053.949,-1203.042;Inherit;False;188;SpecularFinal;1;0;OBJECT;;False;1;FLOAT4;0
@@ -4418,7 +4418,7 @@ Node;AmplifyShaderEditor.RangedFloatNode;1358;-6664.266,-1437.581;Inherit;False;
 Node;AmplifyShaderEditor.RangedFloatNode;1739;-6319.992,-1614.718;Inherit;False;Property;_MaskClipValue;MaskClipValue;206;0;Create;True;0;0;0;True;0;False;0.5;0;0;0;0;1;FLOAT;0
 Node;AmplifyShaderEditor.RangedFloatNode;1741;-6251.046,-1524.512;Inherit;False;Property;_OpacityMap;Opacity Map;269;2;[Header];[Enum];Create;False;1;;6;Map 01;0;Map 02;1;Map 03;2;Map 04;3;MainTex;5;None;4;0;True;0;False;5;4;0;0;0;1;FLOAT;0
 Node;AmplifyShaderEditor.RangedFloatNode;1740;-6248.937,-1440.924;Inherit;False;Property;_OpacityChannel;Opacity Channel;272;1;[Enum];Create;False;0;4;Red;0;Green;1;Blue;2;Alpha;3;0;True;0;False;3;0;0;0;0;1;FLOAT;0
-Node;AmplifyShaderEditor.FunctionNode;1764;-9668.417,-2815.682;Inherit;False;Detect Light;-1;;8316;ca949bbda0856d040a3b3a723d67d4ef;0;0;2;FLOAT;0;FLOAT;10
+Node;AmplifyShaderEditor.FunctionNode;1764;-9668.417,-2815.682;Inherit;False;Detect Light;-1;;8491;ca949bbda0856d040a3b3a723d67d4ef;0;0;2;FLOAT;0;FLOAT;10
 Node;AmplifyShaderEditor.StandardSurfaceOutputNode;0;6404.777,-1299.916;Float;False;True;-1;4;UmbraShaderUI;0;0;CustomLighting;Furality/Umbra Shader/Umbra Opaque;False;False;False;False;False;False;True;False;True;False;True;False;False;False;False;False;False;False;False;False;False;Back;0;False;;0;False;;False;0;False;;0;False;;False;0;Opaque;0.5;True;True;0;False;Opaque;;Geometry;All;12;all;True;True;True;True;0;False;;False;0;False;;255;False;;255;False;;0;False;;0;False;;0;False;;0;False;;0;False;;0;False;;0;False;;0;False;;False;2;15;10;25;False;0.5;True;0;5;False;;10;False;;0;0;False;;0;False;;0;False;;0;False;;0;False;0;0,0,0,0;VertexOffset;True;False;Cylindrical;False;True;Absolute;0;;-1;-1;-1;-1;0;False;0;0;True;_Culling;-1;0;False;;1;Include;;True;1ec20832dfbb48343b8e0764e0864276;Custom;False;0;0;;0;0;False;0.1;False;;0;False;;False;16;0;FLOAT3;0,0,0;False;1;FLOAT3;0,0,0;False;2;FLOAT3;0,0,0;False;3;FLOAT3;0,0,0;False;4;FLOAT;0;False;6;FLOAT3;0,0,0;False;7;FLOAT3;0,0,0;False;8;FLOAT;0;False;9;FLOAT;0;False;10;FLOAT;0;False;13;FLOAT3;0,0,0;False;11;FLOAT3;0,0,0;False;12;FLOAT3;0,0,0;False;16;FLOAT4;0,0,0,0;False;14;FLOAT4;0,0,0,0;False;15;FLOAT3;0,0,0;False;0
 WireConnection;1675;0;1673;0
 WireConnection;1676;0;1673;0
@@ -4565,16 +4565,16 @@ WireConnection;267;0;264;0
 WireConnection;267;1;220;0
 WireConnection;267;2;266;0
 WireConnection;1508;0;1507;0
-WireConnection;1769;23;1688;0
 WireConnection;1240;0;1901;529
+WireConnection;1905;23;1688;0
 WireConnection;1489;0;267;0
 WireConnection;277;0;274;0
 WireConnection;1509;0;1508;0
 WireConnection;1510;0;223;0
 WireConnection;246;0;1389;0
 WireConnection;1511;0;1387;0
-WireConnection;776;0;1769;21
-WireConnection;782;0;1769;0
+WireConnection;776;0;1905;21
+WireConnection;782;0;1905;0
 WireConnection;1633;0;1901;531
 WireConnection;1422;0;34;0
 WireConnection;1275;0;60;0
@@ -4906,4 +4906,4 @@ WireConnection;0;2;1323;0
 WireConnection;0;13;56;0
 WireConnection;0;11;768;0
 ASEEND*/
-//CHKSM=DA3125D873AA6177E56EC10F883E356B3710CDEC
+//CHKSM=A34E05FE3B483F668CBEE2C31EA6ACE33C477A66
