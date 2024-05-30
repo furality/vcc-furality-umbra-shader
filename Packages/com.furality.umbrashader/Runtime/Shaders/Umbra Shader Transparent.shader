@@ -1442,14 +1442,6 @@ Shader "Furality/Umbra Shader/Umbra Transparent"
 		}
 
 
-		float3 sampleReflectionProbe381_g8329( float3 uvw )
-		{
-			half4 skyData = UNITY_SAMPLE_TEXCUBE_LOD(unity_SpecCube0, uvw, 5); //('cubemap', 'sample coordinate', 'map-map level')
-			         half3 skyColor = DecodeHDR (skyData, unity_SpecCube0_HDR);
-			         return half4(skyColor, 1.0);
-		}
-
-
 		void vertexDataFunc( inout appdata_full_custom v, out Input o )
 		{
 			UNITY_INITIALIZE_OUTPUT( Input, o );
@@ -2124,17 +2116,17 @@ Shader "Furality/Umbra Shader/Umbra Transparent"
 			float3 diffNorm22_g8317 = normalizeResult2_g8317;
 			gi22_g8317 = UnityGI_Base( data, 1, diffNorm22_g8317 );
 			float3 indirectDiffuse22_g8317 = gi22_g8317.indirect.diffuse + diffNorm22_g8317 * 0.0001;
-			float3 uvw5_g8317 = (WorldNormalVector( i , InitialNormal1580 ));
-			float3 localsampleReflectionProbe5_g8317 = sampleReflectionProbe5_g8317( uvw5_g8317 );
 			float luminance26_g8317 = Luminance(indirectDiffuse22_g8317);
 			float smoothstepResult27_g8317 = smoothstep( 0.0 , 0.05 , luminance26_g8317);
-			float3 lerpResult28_g8317 = lerp( localsampleReflectionProbe5_g8317 , indirectDiffuse22_g8317 , smoothstepResult27_g8317);
+			float3 lerpResult28_g8317 = lerp( indirectDiffuse22_g8317 , indirectDiffuse22_g8317 , smoothstepResult27_g8317);
 			#ifdef UNITY_PASS_FORWARDBASE
 				float3 staticSwitch29_g8317 = lerpResult28_g8317;
 			#else
 				float3 staticSwitch29_g8317 = indirectDiffuse22_g8317;
 			#endif
 			float3 temp_output_7_0_g8317 = max( staticSwitch29_g8317 , float3( 0,0,0 ) );
+			float3 uvw5_g8317 = (WorldNormalVector( i , InitialNormal1580 ));
+			float3 localsampleReflectionProbe5_g8317 = sampleReflectionProbe5_g8317( uvw5_g8317 );
 			float3 lerpResult9_g8317 = lerp( temp_output_7_0_g8317 , localsampleReflectionProbe5_g8317 , 0.85);
 			int Band11_g8318 = 56;
 			int localIsLumaActive11_g8318 = IsLumaActive11_g8318( Band11_g8318 );
@@ -2876,11 +2868,9 @@ Shader "Furality/Umbra Shader/Umbra Transparent"
 			float3 diffNorm203_g8329 = normalize( WorldNormalVector( i , normal198_g8329 ) );
 			gi203_g8329 = UnityGI_Base( data, 1, diffNorm203_g8329 );
 			float3 indirectDiffuse203_g8329 = gi203_g8329.indirect.diffuse + diffNorm203_g8329 * 0.0001;
-			float3 uvw381_g8329 = (WorldNormalVector( i , float3(0,0,1) ));
-			float3 localsampleReflectionProbe381_g8329 = sampleReflectionProbe381_g8329( uvw381_g8329 );
 			float luminance377_g8329 = Luminance(indirectDiffuse203_g8329);
 			float smoothstepResult378_g8329 = smoothstep( 0.0 , 0.05 , luminance377_g8329);
-			float3 lerpResult379_g8329 = lerp( localsampleReflectionProbe381_g8329 , indirectDiffuse203_g8329 , smoothstepResult378_g8329);
+			float3 lerpResult379_g8329 = lerp( indirectDiffuse203_g8329 , indirectDiffuse203_g8329 , smoothstepResult378_g8329);
 			#ifdef UNITY_PASS_FORWARDBASE
 				float3 staticSwitch384_g8329 = lerpResult379_g8329;
 			#else
@@ -5077,4 +5067,4 @@ WireConnection;0;9;1747;0
 WireConnection;0;13;56;0
 WireConnection;0;11;768;0
 ASEEND*/
-//CHKSM=3EC52322550D9D9C249FE426FDFBC07B669993E1
+//CHKSM=4D4E186283F6F84D01B200A821269FFCAB801B7F
